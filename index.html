@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Felidae Conservation Fund — Protecting Wild Cats</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Design Tokens ────────────────────────────────────────────── */
+    :root {
+      --nav-bg:       #211102;
+      --espresso-900: #1f1204;
+      --espresso-800: #2e1a06;
+      --espresso-700: #3d2209;
+      --brown-800:    #5a3e1e;
+      --brown-700:    #814e12;
+      --brown-600:    #9a5e1a;
+      --brown-500:    #b87333;
+      --brown-400:    #8a6240;
+      --brown-300:    #b8906a;
+      --gold-500:     #c4963a;
+      --gold-400:     #d7b765;
+      --gold-300:     #e4ca8a;
+      --gold-200:     #efddb0;
+      --gold-100:     #f8f0d6;
+      --cream-100:    #fffbf0;
+      --cream-200:    #fff8e6;
+      --cream-300:    #fdf4dd;
+      --white:        #ffffff;
+
+      --font-display: 'Raleway', system-ui, sans-serif;
+      --font-body:    'Literata', Georgia, 'Times New Roman', serif;
+
+      --nav-h: 86px;
+      --max-w: 1280px;
+      --r-sm:  6px;
+      --r-md:  12px;
+      --r-lg:  20px;
+
+      --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
+      --shadow-md: 0 4px 16px rgba(31,18,4,.14);
+      --shadow-lg: 0 12px 40px rgba(31,18,4,.12);
+    }
+    [data-theme="2"] {
+      --nav-bg:       #2D1B06;
+      --espresso-900: #3C2203;
+      --espresso-800: #7a4a12;
+      --espresso-700: #914f14;
+    }
+
+    /* ─── Reset ────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--espresso-900); overflow-x: hidden; }
+    @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+    body {
+      font-family: var(--font-body);
+      touch-action: pan-y;
+      overflow-x: hidden;
+      background: var(--cream-100);
+      color: var(--espresso-900);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ─── Utilities ─────────────────────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--brown-700); color: var(--cream-100);
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 12px 24px; border-radius: var(--r-sm);
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--brown-600); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid currentColor; color: var(--cream-100);
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 10px 22px; border-radius: var(--r-sm);
+      transition: background .2s, color .2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,.12); }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold-400); color: var(--espresso-900);
+      font-family: var(--font-display); font-weight: 700; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 12px 28px; border-radius: var(--r-sm);
+      transition: background .2s, transform .15s;
+    }
+    .btn-gold:hover { background: var(--gold-300); transform: translateY(-1px); }
+
+    .section-label {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--brown-700);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.15; color: var(--espresso-900);
+    }
+    .section-body {
+      font-family: var(--font-body); font-size: 17px; line-height: 1.75;
+      color: var(--brown-800); max-width: 52ch;
+    }
+
+    /* ─── Navigation ────────────────────────────────────────────────── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: var(--nav-bg);
+      border-bottom: 1px solid rgba(215,183,101,.15);
+      transition: box-shadow .3s;
+    }
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,.35);
+    }
+    .nav__inner {
+      display: flex; align-items: center; height: 100%;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
+      gap: 0;
+    }
+
+    /* Logo */
+    .nav__logo {
+      display: flex; align-items: center;
+      flex-shrink: 0; margin-right: 40px;
+    }
+    .nav__logo-img {
+      height: 48px; width: auto;
+    }
+    .footer__logo-img {
+      height: 48px; width: auto; margin-bottom: 12px;
+    }
+
+    /* Main links */
+    .nav__links {
+      display: flex; align-items: center; gap: 2px; flex: 1;
+      list-style: none; margin: 0; padding: 0;
+    }
+    .nav__item { position: relative; list-style: none; }
+    .nav__link {
+      display: flex; align-items: center; gap: 5px;
+      padding: 8px 16px; border-radius: var(--r-sm);
+      font-family: var(--font-display); font-weight: 500; font-size: 14px;
+      color: rgba(255,251,240,.85); letter-spacing: .02em;
+      transition: color .2s, background .2s;
+    }
+    .nav__link:hover, .nav__item:hover .nav__link {
+      color: var(--gold-300); background: rgba(215,183,101,.08);
+    }
+    .nav__chevron {
+      width: 12px; height: 12px; stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      transition: transform .2s;
+    }
+    .nav__item:hover .nav__chevron { transform: rotate(180deg); }
+
+    /* Dropdown */
+    .nav__dropdown {
+      position: absolute; top: 100%; left: 0;
+      background: var(--espresso-800);
+      border: 1px solid rgba(215,183,101,.15);
+      border-radius: var(--r-md); min-width: 220px;
+      box-shadow: var(--shadow-lg);
+      padding: 16px 0 8px; opacity: 0; pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .18s, transform .18s;
+    }
+    .nav__item:hover .nav__dropdown,
+    .nav__item:focus-within .nav__dropdown {
+      opacity: 1; pointer-events: auto; transform: translateY(0);
+    }
+    .nav__dropdown a {
+      display: block; padding: 9px 20px;
+      font-family: var(--font-display); font-size: 13.5px; font-weight: 400;
+      color: rgba(255,251,240,.8);
+      transition: color .15s, background .15s;
+    }
+    .nav__dropdown a:hover { color: var(--gold-300); background: rgba(215,183,101,.07); }
+    .nav__dropdown-divider {
+      height: 1px; background: rgba(215,183,101,.1); margin: 6px 0;
+    }
+    /* Two-column mega dropdown (Projects) */
+    .nav__dropdown--mega { display: flex; gap: 4px; min-width: 520px; padding: 16px 4px 12px; }
+    .nav__dropdown--mega .nav__col { flex: 1; min-width: 244px; }
+    .nav__dropdown--mega .nav__col + .nav__col { border-left: 1px solid rgba(215,183,101,.1); }
+    .nav__col-head {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--gold-400);
+      padding: 2px 20px 10px;
+    }
+
+    /* Right side */
+    .nav__right {
+      display: flex; align-items: center; gap: 12px; margin-left: auto;
+    }
+    .nav__search {
+      display: none; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      color: rgba(255,251,240,.6); transition: color .2s, background .2s;
+    }
+    .nav__search:hover { color: var(--gold-300); background: rgba(215,183,101,.08); }
+    .nav__search svg { width: 18px; height: 18px; }
+    .nav__donate {
+      background: var(--gold-400); color: var(--espresso-900);
+      font-family: var(--font-display); font-weight: 700; font-size: 12px;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 9px 20px; border-radius: var(--r-sm);
+      transition: background .2s;
+    }
+    .nav__donate:hover { background: var(--gold-300); }
+
+    /* Mobile hamburger */
+    .nav__hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      padding: 8px; margin-left: auto; color: var(--cream-100);
+    }
+    .nav__hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: currentColor; border-radius: 2px;
+      transition: transform .25s, opacity .25s;
+    }
+    .nav__hamburger.open span { border-radius: 0; }
+    .nav__hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .nav__mobile {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; bottom: 0;
+      background: var(--espresso-900); border-top: 1px solid rgba(215,183,101,.15);
+      z-index: 999; overflow: hidden;
+    }
+    .nav__mobile.open { display: flex; }
+    .mob-panels {
+      display: flex; width: 200%; height: 100%; flex-shrink: 0;
+      transition: transform .28s cubic-bezier(.4,0,.2,1);
+    }
+    .mob-panels.show-sub { transform: translateX(-50%); }
+    .mob-panel {
+      width: 50%; height: 100%; overflow-y: auto; padding-bottom: 40px;
+    }
+    .mob-top-item {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; padding: 18px 24px;
+      font-family: var(--font-display); font-size: 22px; font-weight: 600;
+      color: var(--cream-100); background: none; border: none; cursor: pointer;
+      text-align: left;
+    }
+    .mob-top-item:active { background: rgba(255,255,255,.05); }
+    .mob-top-item svg { width: 18px; height: 18px; stroke: var(--gold-400); stroke-width: 2; fill: none; flex-shrink: 0; }
+    .mob-back {
+      display: flex; align-items: center; gap: 8px;
+      width: 100%; padding: 22px 24px;
+      background: none; border: none;
+      cursor: pointer; font-family: var(--font-display); font-size: 14px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 4px;
+    }
+    .mob-back svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+    .mob-panel-title {
+      font-family: var(--font-display); font-size: 26px; font-weight: 700;
+      color: var(--cream-100); padding: 8px 24px 16px;
+    }
+    .mob-sub-link {
+      display: block; padding: 14px 24px;
+      font-family: var(--font-display); font-size: 19px; color: rgba(255,251,240,.8);
+    }
+    .mob-sub-link:active { background: rgba(255,255,255,.05); color: var(--gold-300); }
+    .mob-sub-divider { height: 1px; background: rgba(215,183,101,.12); margin: 8px 24px; }
+    .mob-sub-heading {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--gold-400);
+      padding: 20px 24px 6px;
+    }
+    .mob-donate {
+      display: block; margin: 24px 24px 0; text-align: center;
+      background: var(--gold-400); color: var(--espresso-900);
+      font-family: var(--font-display); font-weight: 700; font-size: 14px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 14px; border-radius: var(--r-sm);
+    }
+    /* Trust badges in the open mobile menu, below Donate */
+    .mob-badges {
+      display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+      gap: 16px; margin: 34px 24px 0;
+    }
+    .mob-badges a { display: inline-flex; }
+    .mob-badges img { height: 44px; width: auto; display: block; }
+    .mob-search {
+      display: none; align-items: center; gap: 10px;
+      margin: 16px 24px 0;
+      background: rgba(255,251,240,.08); border: 1px solid rgba(215,183,101,.2);
+      border-radius: var(--r-sm); padding: 12px 16px;
+    }
+    .mob-search svg { width: 18px; height: 18px; flex-shrink: 0; color: rgba(215,183,101,.6); }
+    .mob-search__input {
+      background: none; border: none; outline: none; width: 100%;
+      font-family: var(--font-display); font-size: 16px; color: var(--cream-100);
+    }
+    .mob-search__input::placeholder { color: rgba(255,251,240,.4); }
+
+    /* ─── Hero ──────────────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      height: 100vh;        /* fallback for older browsers */
+      height: 100dvh;       /* fill the *visible* viewport as mobile browser chrome shows/hides */
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero__video-wrap {
+      position: absolute; inset: 0;
+    }
+    .hero__video {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+    }
+    /* Hero background image */
+    .hero__bg-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+    /* Tint layer under overlay — shows if image fails to load */
+    .hero__gradient-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 60% 40%, var(--espresso-700) 0%, var(--espresso-900) 60%),
+        linear-gradient(160deg, var(--espresso-800) 0%, #0d0a04 100%);
+    }
+    /* Dark overlay for text legibility */
+    .hero__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(20,10,2,.85) 0%,
+        rgba(20,10,2,.45) 28%,
+        transparent 45%
+      );
+    }
+    /* Decorative paw texture */
+    .hero__texture {
+      position: absolute; inset: 0; opacity: .04;
+      background-image: radial-gradient(circle, var(--gold-400) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .hero__content {
+      position: relative; z-index: 2;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 32px;
+      padding-bottom: 32px; width: 100%;
+    }
+    .hero__eyebrow {
+      font-family: var(--font-display); font-weight: 600; font-size: 12px;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gold-400); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero__eyebrow::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--gold-400);
+    }
+    .hero__title {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(40px, 6vw, 80px);
+      line-height: 1.05; letter-spacing: -.02em;
+      color: var(--cream-100); max-width: 14ch; margin-bottom: 24px;
+    }
+    .hero__title em {
+      font-style: normal; color: var(--gold-400);
+    }
+    .hero__subtitle {
+      font-family: var(--font-body); font-size: clamp(27px, 3.15vw, 36px);
+      line-height: 1.3; color: rgba(255,251,240,.8);
+      max-width: 36ch; margin-bottom: 36px;
+    }
+    .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero__credit {
+      margin: 20px 0 0; font-family: var(--font-display);
+      font-size: 11px; letter-spacing: .08em;
+      color: rgba(255,251,240,.5);
+    }
+
+    /* Trust badges in the header, beside Donate */
+    .nav__badges { display: flex; align-items: center; gap: 8px; margin-right: 4px; }
+    .nav__badges a { display: inline-flex; transition: opacity .2s ease; }
+    .nav__badges a:hover { opacity: .8; }
+    .nav__badges img { height: 30px; width: auto; display: block; }
+
+    .hero__scroll {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: rgba(255,251,240,.45); font-family: var(--font-display); font-size: 10px;
+      letter-spacing: .14em; text-transform: uppercase;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    .hero__scroll svg { width: 20px; height: 20px; }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* Optional: cat silhouette decoration */
+    .hero__cat-silhouette {
+      position: absolute; bottom: 0; right: 5%;
+      width: clamp(200px, 28vw, 420px); opacity: .07; pointer-events: none;
+    }
+
+
+    /* ─── Mission Pillars ────────────────────────────────────────────── */
+    .mission {
+      padding: 100px 0;
+      background: var(--cream-100);
+    }
+    .mission__header {
+      text-align: center; margin-bottom: 64px;
+    }
+    .mission__header .section-body { margin: 16px auto 0; text-align: center; }
+
+    .mission__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .mission__card {
+      background: var(--white);
+      border-radius: var(--r-lg);
+      padding: 0;
+      border: 1px solid rgba(215,183,101,.2);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .25s, transform .3s;
+      position: relative; overflow: hidden;
+    }
+    .mission__card::before { display: none; }
+    .mission__card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px) scale(1.02); }
+    .mission__card-img {
+      width: 100%; aspect-ratio: 16/9; height: auto; object-fit: cover; display: block;
+      transition: transform .5s ease;
+    }
+    .mission__card:hover .mission__card-img { transform: scale(1.05); }
+    .mission__card-content { padding: 32px 32px 36px; }
+    .mission__icon {
+      width: 52px; height: 52px; border-radius: var(--r-md);
+      background: var(--gold-100); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .mission__icon svg { width: 26px; height: 26px; color: var(--brown-700); }
+    .mission__card-title {
+      font-family: var(--font-display); font-weight: 700; font-size: 22px;
+      color: var(--espresso-900); margin-bottom: 12px;
+    }
+    .mission__card-body {
+      font-size: 15.5px; line-height: 1.75; color: var(--brown-800);
+      margin-bottom: 24px;
+    }
+    .mission__link {
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .06em; color: var(--brown-700);
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: gap .2s;
+    }
+    .mission__link:hover { gap: 10px; }
+
+    /* ─── Impact Stats ───────────────────────────────────────────────── */
+    .impact {
+      background: var(--espresso-900);
+      padding: 80px 0;
+      position: relative; overflow: hidden;
+    }
+    .impact::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%23d7b765' opacity='.06'/%3E%3C/svg%3E");
+    }
+    .impact__inner { position: relative; }
+    .impact__header { text-align: center; margin-bottom: 56px; }
+    .impact__header .section-label { color: var(--gold-400); }
+    .impact__header .section-title { color: var(--cream-100); }
+
+    .impact__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    }
+    .impact__stat {
+      text-align: center; padding: 40px 24px;
+      border-right: 1px solid rgba(215,183,101,.1);
+    }
+    .impact__stat:last-child { border-right: none; }
+    .impact__number {
+      font-family: var(--font-display); font-weight: 800;
+      font-size: clamp(40px, 5vw, 60px);
+      color: var(--gold-400); line-height: 1; margin-bottom: 8px;
+    }
+    .impact__unit {
+      font-family: var(--font-display); font-size: 14px; font-weight: 500;
+      color: var(--gold-300); margin-bottom: 8px; letter-spacing: .04em;
+    }
+    .impact__label {
+      font-family: var(--font-body); font-size: 14.5px;
+      color: rgba(255,251,240,.55); line-height: 1.5;
+    }
+
+    /* ─── Featured Species ───────────────────────────────────────────── */
+    .species {
+      padding: 100px 0;
+      background: var(--cream-200);
+    }
+    .species__header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 48px; gap: 24px;
+    }
+    .species__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .species__card {
+      border-radius: var(--r-md); overflow: hidden;
+      position: relative; aspect-ratio: 3/4;
+      cursor: pointer;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .species__card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 0 0 2px rgba(215,183,101,.3), 0 12px 28px rgba(0,0,0,.18); z-index: 1; }
+    .species__card-link { position: absolute; inset: 0; z-index: 2; }
+    .species__card-img {
+      width: 100%; height: 100%; object-fit: cover; transform: scale(1.12);
+      transition: transform .5s ease;
+    }
+    .species__card:hover .species__card-img { transform: scale(1.17); }
+    /* CSS placeholder "photo" */
+    .species__card-ph {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 60px; position: relative;
+    }
+    .species__card-ph::after {
+      content: ''; position: absolute; inset: 0;
+      background: inherit; filter: brightness(.7) saturate(.6);
+    }
+    .sp-1 { background: linear-gradient(160deg, #4a3520 0%, #2a1a0a 100%); }
+    .sp-2 { background: linear-gradient(160deg, #5c4020 0%, #3a2510 100%); }
+    .sp-3 { background: linear-gradient(160deg, #3a4a30 0%, #1e2a16 100%); }
+    .sp-4 { background: linear-gradient(160deg, #4a3a20 0%, #2a2010 100%); }
+    .species__emoji { position: relative; z-index: 1; font-size: 56px; }
+    .species__card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(20,10,2,.9) 0%, rgba(20,10,2,.1) 55%, transparent 100%);
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 20px;
+    }
+    .species__card-name {
+      font-family: var(--font-display); font-weight: 700; font-size: 18px;
+      color: var(--cream-100); margin-bottom: 4px;
+    }
+    .species__card-status {
+      font-family: var(--font-display); font-size: 11px; font-weight: 600;
+      letter-spacing: .1em; text-transform: uppercase;
+    }
+    .status-vu { color: #f0c040; }
+    .status-en { color: #f08040; }
+    .status-cr { color: #e84040; }
+    .status-lc { color: #60c060; }
+    .species__card-trend {
+      font-family: var(--font-display); font-size: 11px; font-weight: 600;
+      letter-spacing: .08em; margin-top: 3px;
+    }
+    .trend-decreasing { color: #ff6b45; }
+    .trend-stable { color: #6ddf6d; }
+
+    /* ─── Projects ───────────────────────────────────────────────────── */
+    .projects {
+      padding: 100px 0;
+      background: var(--cream-100);
+    }
+    .projects__header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 48px; gap: 24px;
+    }
+    .projects__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .project-card {
+      border-radius: var(--r-lg); overflow: hidden;
+      background: var(--white);
+      border: 1px solid rgba(215,183,101,.18);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow .25s, transform .25s;
+      display: flex; flex-direction: column; position: relative;
+    }
+    /* whole-card click targets (visible text links stay for affordance) */
+    .mission__card-link, .project-card-link { position: absolute; inset: 0; z-index: 3; }
+    .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px) scale(1.02); }
+    .project-card__img {
+      aspect-ratio: 16/9; height: auto;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 52px; position: relative; overflow: hidden;
+    }
+    .project-card__img img { transform: scale(1.12); transition: transform .5s ease; }
+    .project-card:hover .project-card__img img { transform: scale(1.17); }
+    .pc-1 { background: linear-gradient(135deg, #2a4a3a 0%, #0e2218 100%); }
+    .pc-2 { background: linear-gradient(135deg, #4a3a28 0%, #201808 100%); }
+    .pc-3 { background: linear-gradient(135deg, #3a2a4a 0%, #180e20 100%); }
+    .project-card__img-emoji { position: relative; z-index: 1; }
+    .project-card__img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.3) 100%);
+    }
+    .project-card__tag {
+      position: absolute; top: 16px; left: 16px; z-index: 2;
+      background: rgba(215,183,101,.9); color: var(--espresso-900);
+      font-family: var(--font-display); font-size: 10px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px;
+    }
+    .project-card__body { padding: 28px 28px 24px; flex: 1; display: flex; flex-direction: column; }
+    .project-card__region {
+      font-family: var(--font-display); font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--brown-700);
+      margin-bottom: 8px;
+    }
+    .project-card__title {
+      font-family: var(--font-display); font-weight: 700; font-size: 19px;
+      color: var(--espresso-900); line-height: 1.3; margin-bottom: 12px;
+    }
+    .project-card__desc {
+      font-size: 14.5px; line-height: 1.7; color: var(--brown-800); flex: 1; margin-bottom: 20px;
+    }
+    .project-card__footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 16px; border-top: 1px solid rgba(215,183,101,.2);
+    }
+    .project-card__stat {
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      color: var(--brown-700);
+    }
+    .project-card__link {
+      font-family: var(--font-display); font-size: 13px; font-weight: 600;
+      color: var(--brown-700); display: inline-flex; align-items: center; gap: 5px;
+      transition: gap .2s;
+    }
+    .project-card__link:hover { gap: 8px; }
+
+    /* ─── News ───────────────────────────────────────────────────────── */
+    .news {
+      padding: 100px 0;
+      background: var(--espresso-900);
+    }
+    .news__header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 48px; gap: 24px;
+    }
+    .news__header .section-label { color: var(--gold-400); }
+    .news__header .section-title { color: var(--cream-100); }
+    .news__see-all {
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .06em; color: var(--gold-400);
+      display: inline-flex; align-items: center; gap: 6px;
+      flex-shrink: 0; transition: gap .2s;
+    }
+    .news__see-all:hover { gap: 10px; }
+    .news__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .news-card {
+      background: rgba(255,251,240,.05);
+      border: 1px solid rgba(215,183,101,.12);
+      border-radius: var(--r-md);
+      overflow: hidden; position: relative;
+      transition: border-color .25s, background .25s, transform .3s, box-shadow .3s;
+    }
+    .news-card__link { position: absolute; inset: 0; z-index: 2; }
+    [data-theme="2"] .footer { background: var(--nav-bg); }
+    [data-theme="2"] .cta-panel--donate { background: #4C2901; }
+    [data-theme="2"] .news-card { background: rgba(0,0,0,.18); }
+    [data-theme="2"] .news-card:hover { background: rgba(0,0,0,.28); }
+    .news-card:hover { background: rgba(255,251,240,.08); border-color: rgba(215,183,101,.4); transform: translateY(-4px) scale(1.02); box-shadow: 0 0 0 1px rgba(215,183,101,.3), 0 12px 28px rgba(0,0,0,.18); }
+    .news-card__img {
+      height: 180px; display: flex; align-items: center; justify-content: center; font-size: 40px;
+      overflow: hidden;
+    }
+    img.news-card__img { width: 100%; aspect-ratio: 16/9; height: auto; transform: scale(1.12); display: block; transition: transform .5s ease; margin-bottom: 20px; }
+    .news-card:hover img.news-card__img { transform: scale(1.17); }
+    .nc-1 { background: linear-gradient(135deg, #3a2808 0%, #1e1004 100%); }
+    .nc-2 { background: linear-gradient(135deg, #0e2818 0%, #060e0a 100%); }
+    .nc-3 { background: linear-gradient(135deg, #281a08 0%, #120c04 100%); }
+    .news-card__body { padding: 20px 22px 22px; }
+    .news-card__cat {
+      font-family: var(--font-display); font-size: 10px; font-weight: 700;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--gold-400);
+      margin-bottom: 8px;
+    }
+    .news-card__title {
+      font-family: var(--font-display); font-weight: 600; font-size: 16.5px;
+      color: var(--cream-100); line-height: 1.4; margin-bottom: 10px;
+    }
+    .news-card__excerpt {
+      font-size: 13.5px; line-height: 1.65; color: rgba(255,251,240,.55); margin-bottom: 14px;
+    }
+    .news-card__meta {
+      font-family: var(--font-display); font-size: 11px;
+      color: rgba(255,251,240,.35); letter-spacing: .04em;
+    }
+
+    /* ─── Get Involved CTA ───────────────────────────────────────────── */
+    .cta-split {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .cta-panel {
+      padding: 80px 64px;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 20px;
+    }
+    .cta-panel--volunteer { background: var(--brown-700); }
+    .cta-panel--donate    { background: var(--espresso-700); }
+    .cta-panel__eyebrow {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300);
+    }
+    .cta-panel__title {
+      font-family: var(--font-display); font-weight: 700;
+      font-size: clamp(24px, 2.8vw, 36px);
+      color: var(--cream-100); line-height: 1.2;
+    }
+    .cta-panel__body {
+      font-size: 15.5px; line-height: 1.75; color: rgba(255,251,240,.75);
+      max-width: 38ch;
+    }
+    .cta-panel__options {
+      display: flex; flex-direction: column; gap: 8px; margin: 4px 0;
+    }
+    .cta-panel__option {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-display); font-size: 13.5px;
+      color: rgba(255,251,240,.8);
+    }
+    .cta-panel__option::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--gold-400); flex-shrink: 0;
+    }
+    .cta-panel__actions {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px;
+    }
+
+    /* ─── Newsletter ─────────────────────────────────────────────────── */
+    .donate-badges {
+      display: flex; align-items: center; justify-content: flex-start;
+      flex-wrap: wrap; gap: 16px 24px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,251,240,.12);
+    }
+    .donate-badges a { display: flex; align-items: center; justify-content: center; transition: opacity .2s; }
+    .donate-badges a:hover { opacity: .8; }
+    .donate-badge-img {
+      height: 56px; width: auto; object-fit: contain;
+      opacity: 1; transition: opacity .2s;
+    }
+    .donate-badge-img:hover { opacity: 0.7; }
+    .newsletter {
+      padding: 80px 0;
+      background: var(--gold-100);
+      border-top: 1px solid rgba(215,183,101,.3);
+    }
+    .newsletter__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 48px;
+    }
+    .newsletter__text { flex: 1; max-width: 480px; }
+    .newsletter__text .section-title { font-size: clamp(22px, 2.5vw, 32px); }
+    .newsletter__text .section-body { font-size: 15px; margin-top: 10px; }
+    .newsletter__form { flex: 1; max-width: 440px; }
+    .newsletter__row {
+      display: flex; gap: 10px;
+    }
+    .newsletter__input {
+      flex: 1; padding: 14px 18px;
+      font-family: var(--font-body); font-size: 15px;
+      background: var(--white); color: var(--espresso-900);
+      border: 1.5px solid rgba(129,78,18,.25);
+      border-radius: var(--r-sm); outline: none;
+      transition: border-color .2s;
+    }
+    .newsletter__input::placeholder { color: var(--brown-300); }
+    .newsletter__input:focus { border-color: var(--brown-700); }
+    .newsletter__note {
+      font-family: var(--font-display); font-size: 11px;
+      color: var(--brown-400); margin-top: 10px; line-height: 1.5;
+    }
+    .newsletter__preview-link {
+      color: var(--brown-700); text-decoration: none; white-space: nowrap;
+    }
+    .newsletter__preview-link:hover { text-decoration: underline; }
+
+    /* ─── Footer ─────────────────────────────────────────────────────── */
+    .footer {
+      background: var(--espresso-900);
+      border-top: 1px solid rgba(215,183,101,.12);
+      padding: 64px 0 40px;
+    }
+    .footer__top {
+      display: flex; flex-direction: column; gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer__brand-row {
+      display: grid; grid-template-columns: 280px 1fr; gap: 64px;
+    }
+    .footer__brand-name {
+      font-family: var(--font-display); font-weight: 700; font-size: 18px;
+      color: var(--cream-100); margin-bottom: 4px; margin-top: 12px;
+    }
+    .footer__brand-tagline {
+      font-family: var(--font-body); font-size: 14px;
+      color: rgba(255,251,240,.45); line-height: 1.5; margin-bottom: 20px;
+    }
+    .footer__social { display: flex; gap: 12px; }
+    .footer__social-link {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(215,183,101,.2);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,251,240,.5);
+      transition: border-color .2s, color .2s;
+    }
+    .footer__social-link:hover { border-color: var(--gold-400); color: var(--gold-400); }
+    .footer__social-link svg { width: 16px; height: 16px; }
+
+    .footer__links {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .footer__col-head {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--gold-400);
+      margin-bottom: 16px;
+    }
+    .footer__link {
+      display: block; padding: 4px 0;
+      font-family: var(--font-display); font-size: 13.5px;
+      color: rgba(255,251,240,.55);
+      transition: color .15s;
+    }
+    .footer__link:hover { color: var(--gold-300); }
+
+
+    /* ─── Theme Picker ───────────────────────────────────────────────── */
+    .nav__logo-wrap { position: relative; }
+    .theme-picker {
+      position: absolute; top: calc(100% + 10px); left: 0;
+      background: var(--espresso-800); border: 1px solid rgba(215,183,101,.2);
+      border-radius: var(--r-md); padding: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.4);
+      display: flex; flex-direction: column; gap: 4px;
+      opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity .18s, transform .18s; z-index: 200;
+      min-width: 140px;
+    }
+    .theme-picker.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .theme-option {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: var(--r-sm);
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      letter-spacing: .06em; color: var(--cream-100);
+      cursor: pointer; transition: background .15s; text-align: left;
+    }
+    .theme-option:hover { background: rgba(255,251,240,.08); }
+    .theme-option.active { background: rgba(215,183,101,.12); color: var(--gold-300); }
+    .theme-swatch {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 1.5px solid rgba(255,251,240,.25); flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .donate-badges {
+        display: grid; grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .donate-badge-img {
+        height: auto; width: 100%; max-height: 56px; object-fit: contain;
+      }
+    }
+
+    .footer__bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 24px; border-top: 1px solid rgba(215,183,101,.1);
+      gap: 16px; flex-wrap: wrap;
+    }
+    .footer__copy {
+      font-family: var(--font-display); font-size: 12px;
+      color: rgba(255,251,240,.3);
+    }
+    .footer__legal { display: flex; gap: 20px; }
+    .footer__legal-link {
+      font-family: var(--font-display); font-size: 12px;
+      color: rgba(255,251,240,.3); transition: color .15s;
+    }
+    .footer__legal-link:hover { color: rgba(255,251,240,.7); }
+
+    /* ─── Donate Modal ───────────────────────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(20,10,2,.75); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity .25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal {
+      background: var(--cream-100); border-radius: var(--r-lg);
+      width: 100%; max-width: 500px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,.4);
+      transform: translateY(16px);
+      transition: transform .25s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal__header {
+      background: var(--espresso-900); padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal__header-title {
+      font-family: var(--font-display); font-weight: 700; font-size: 20px;
+      color: var(--cream-100);
+    }
+    .modal__close {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; color: rgba(255,251,240,.6);
+      transition: color .2s, background .2s;
+    }
+    .modal__close:hover { color: var(--cream-100); background: rgba(255,255,255,.1); }
+    .modal__close svg { width: 18px; height: 18px; }
+    .modal__body { padding: 32px; }
+    .modal__subtitle {
+      font-size: 15px; line-height: 1.65; color: var(--brown-800); margin-bottom: 24px;
+    }
+
+    /* Frequency toggle */
+    .donate-freq {
+      display: flex; background: var(--cream-300); border-radius: 8px;
+      padding: 4px; margin-bottom: 24px; gap: 4px;
+    }
+    .donate-freq__btn {
+      flex: 1; padding: 8px; border-radius: 6px;
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      color: var(--brown-400); transition: background .2s, color .2s;
+    }
+    .donate-freq__btn.active {
+      background: var(--brown-700); color: var(--cream-100);
+    }
+
+    /* Amount grid */
+    .donate-amounts {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+    }
+    .donate-amount {
+      padding: 12px 8px; border-radius: var(--r-sm); text-align: center;
+      font-family: var(--font-display); font-weight: 700; font-size: 17px;
+      color: var(--espresso-900);
+      border: 2px solid rgba(129,78,18,.2);
+      background: var(--white); transition: border-color .2s, background .2s;
+    }
+    .donate-amount:hover { border-color: var(--brown-700); }
+    .donate-amount.selected { border-color: var(--brown-700); background: var(--gold-100); }
+    .donate-amount small {
+      display: block; font-family: var(--font-body); font-size: 11px;
+      font-weight: 400; color: var(--brown-400); margin-top: 2px;
+    }
+
+    .donate-custom {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 24px;
+    }
+    .donate-custom__label {
+      font-family: var(--font-display); font-weight: 600; font-size: 20px;
+      color: var(--espresso-900);
+    }
+    .donate-custom__input {
+      flex: 1; padding: 10px 12px;
+      font-family: var(--font-display); font-weight: 600; font-size: 18px;
+      color: var(--espresso-900); background: var(--white);
+      border: 1.5px solid rgba(129,78,18,.25); border-radius: var(--r-sm);
+      outline: none;
+    }
+    .donate-custom__input:focus { border-color: var(--brown-700); }
+    .donate-custom__placeholder { color: var(--brown-300); font-weight: 400; }
+
+    .donate-impact {
+      background: var(--gold-100); border-radius: var(--r-sm);
+      padding: 14px 16px; margin-bottom: 24px;
+      font-family: var(--font-body); font-size: 14px; color: var(--brown-800);
+      line-height: 1.5; font-style: italic;
+      border-left: 3px solid var(--gold-400);
+    }
+
+    .donate-submit {
+      width: 100%; padding: 16px;
+      background: var(--brown-700); color: var(--cream-100);
+      font-family: var(--font-display); font-weight: 700; font-size: 14px;
+      letter-spacing: .1em; text-transform: uppercase;
+      border-radius: var(--r-sm); transition: background .2s;
+    }
+    .donate-submit:hover { background: var(--brown-600); }
+    .donate-note {
+      text-align: center; margin-top: 12px;
+      font-family: var(--font-display); font-size: 11px; color: var(--brown-400);
+    }
+
+    /* ─── Scroll Reveal ──────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .65s ease, transform .65s ease;
+      will-change: transform, opacity;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); will-change: auto; }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ─── Arrow Icon ─────────────────────────────────────────────────── */
+    .arrow-right {
+      width: 14px; height: 14px; stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .nav__badges    { display: none; }  /* header gets tight — badges show on desktop only */
+      .mission__grid  { grid-template-columns: 1fr 1fr; }
+      .impact__grid   { grid-template-columns: repeat(2, 1fr); }
+      .impact__stat   { border-right: none; border-bottom: 1px solid rgba(215,183,101,.1); }
+      .impact__stat:nth-child(2n) { }
+      .species__grid  { grid-template-columns: repeat(2, 1fr); }
+      .projects__grid { grid-template-columns: 1fr 1fr; }
+      .news__grid     { grid-template-columns: repeat(2, 1fr); }
+      .footer__brand-row { grid-template-columns: 1fr; gap: 40px; }
+      .footer__links  { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 72px; }
+      .container { padding: 0 20px; }
+      .nav__links, .nav__right { display: none; }
+      .nav__hamburger { display: flex; }
+      .cta-split { grid-template-columns: 1fr; }
+      .cta-panel { padding: 56px 32px; }
+      .newsletter__inner { flex-direction: column; }
+      .newsletter__form { width: 100%; max-width: 100%; }
+      .newsletter__row { flex-direction: column; }
+      .mission__grid  { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+      .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+      .news__grid     { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+      .species__grid  { grid-template-columns: repeat(2, 1fr); }
+      .impact__grid   { grid-template-columns: repeat(2, 1fr); }
+      .footer__links  { grid-template-columns: repeat(2, 1fr); }
+      .species__header { flex-direction: column; align-items: flex-start; }
+      .projects__header { flex-direction: column; align-items: flex-start; }
+      .hero { height: 100vh; height: 100dvh; }
+      .hero__content { padding-bottom: 28px; }
+      .news-card__excerpt { font-size: 15px; }
+      .project-card__desc { font-size: 15.5px; }
+      .mission__card-body { font-size: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .species__grid  { grid-template-columns: 1fr; }
+      .donate-amounts { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════ NAV ══════════════════════════════ -->
+  <nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+
+      <!-- Logo + theme picker -->
+      <div class="nav__logo-wrap">
+        <a href="#" class="nav__logo" id="logoThemeTrigger" aria-label="Felidae Conservation Fund — home">
+          <img src="https://felidaefund.org/images/logos/logo_felidae_neg-01.png" alt="Felidae Conservation Fund" class="nav__logo-img" />
+        </a>
+        <div class="theme-picker" id="themePicker" role="menu" aria-label="Color theme">
+          <button class="theme-option active" data-theme-id="1" role="menuitem">
+            <span class="theme-swatch" style="background:#1f1204"></span>
+            Dark
+          </button>
+          <button class="theme-option" data-theme-id="2" role="menuitem">
+            <span class="theme-swatch" style="background:#3C2203"></span>
+            Medium
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Links -->
+      <ul class="nav__links" role="list">
+        <!-- Projects -->
+        <li class="nav__item" role="listitem">
+          <a href="#" class="nav__link">
+            Projects
+            <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
+          </a>
+          <div class="nav__dropdown nav__dropdown--mega" role="menu" aria-label="Projects submenu">
+            <div class="nav__col">
+              <div class="nav__col-head">Research Projects</div>
+              <a href="https://www.felidaefund.org/projects/research/bhutan-wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Bhutan Wild Cat Health Project</a>
+              <a href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" role="menuitem">Patagonia Wild Cats Project</a>
+              <a href="https://www.felidaefund.org/projects/research/pumalink" target="_blank" rel="noopener" role="menuitem">Diablo PumaLink Project</a>
+              <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" role="menuitem">Bay Area Bobcat Project</a>
+              <a href="https://www.felidaefund.org/projects/research/tsavo-cheetah-project" target="_blank" rel="noopener" role="menuitem">Tsavo Cheetah Project</a>
+              <a href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" role="menuitem">Bay Area Puma Project</a>
+              <a href="https://www.felidaefund.org/projects/research/wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Wild Cat Health Project</a>
+              <a href="https://www.felidaefund.org/projects/archive" target="_blank" rel="noopener" role="menuitem" style="color: var(--gold-300);">View all projects →</a>
+            </div>
+            <div class="nav__col">
+              <div class="nav__col-head">Community Programs</div>
+              <a href="https://www.felidaefund.org/projects/community/living-with-lions" target="_blank" rel="noopener" role="menuitem">Living with Lions</a>
+              <a href="https://www.felidaefund.org/projects/community/cat-aware" target="_blank" rel="noopener" role="menuitem">CAT Aware</a>
+              <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" role="menuitem">Wilde Pod</a>
+              <a href="https://www.felidaefund.org/projects/community/wilde-backyard" target="_blank" rel="noopener" role="menuitem">Wilde Backyard</a>
+            </div>
+          </div>
+        </li>
+        <!-- Learn -->
+        <li class="nav__item" role="listitem">
+          <a href="#" class="nav__link">
+            Learn
+            <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
+          </a>
+          <div class="nav__dropdown" role="menu" aria-label="Learn submenu">
+            <a href="https://www.felidaefund.org/about/mission" target="_blank" rel="noopener" role="menuitem">Our Mission</a>
+            <a href="https://www.felidaefund.org/science" target="_blank" rel="noopener" role="menuitem">Science &amp; Research</a>
+            <a href="https://www.felidaefund.org/news" target="_blank" rel="noopener" role="menuitem">News</a>
+            <a href="https://www.felidaefund.org/about" target="_blank" rel="noopener" role="menuitem">About Us</a>
+            <a href="https://www.felidaefund.org/learn/cats" target="_blank" rel="noopener" role="menuitem">Wild Cat Species of the World</a>
+            <a href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" role="menuitem">Protecting Healthy Ecosystems</a>
+            <a href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" role="menuitem">Living Alongside Wild Cats</a>
+            <a href="https://www.felidaefund.org/learn/safety-essentials-wild-cats" target="_blank" rel="noopener" role="menuitem">Safety Essentials</a>
+            <a href="https://www.felidaefund.org/learn/media" target="_blank" rel="noopener" role="menuitem">Photos &amp; Videos</a>
+            <a href="https://www.felidaefund.org/kids" target="_blank" rel="noopener" role="menuitem">Kids Area</a>
+          </div>
+        </li>
+        <!-- Get Involved -->
+        <li class="nav__item" role="listitem">
+          <a href="#" class="nav__link">
+            Get Involved
+            <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
+          </a>
+          <div class="nav__dropdown" role="menu" aria-label="Get Involved submenu">
+            <a href="https://www.felidaefund.org/take-action/volunteer" target="_blank" rel="noopener" role="menuitem">Volunteer</a>
+            <a href="https://www.felidaefund.org/take-action/spread-awareness" target="_blank" rel="noopener" role="menuitem">Spread Awareness</a>
+            <a href="https://www.felidaefund.org/take-action/community-science" target="_blank" rel="noopener" role="menuitem">Community Scientist</a>
+            <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" role="menuitem">Trail Cam Data (Wilde Pod)</a>
+            <a href="https://www.felidaefund.org/events" target="_blank" rel="noopener" role="menuitem">Events</a>
+            <a href="https://www.felidaefund.org/take-action/more-ways-to-help" target="_blank" rel="noopener" role="menuitem">Ways to Donate</a>
+            <a href="https://www.felidaefund.org/store" target="_blank" rel="noopener" role="menuitem">Store</a>
+            <a href="https://www.felidaefund.org/take-action" target="_blank" rel="noopener" role="menuitem">Take Action</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Right -->
+      <div class="nav__right">
+        <button class="nav__search" aria-label="Search">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="8.5" cy="8.5" r="5.5"/>
+            <line x1="13" y1="13" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="nav__badges">
+          <a href="https://app.candid.org/profile/7041082/felidae-conservation-fund-20-5089093" target="_blank" rel="noopener">
+            <img src="assets/trust%20badges/Candid.png" alt="Candid Platinum Seal of Transparency 2026" />
+          </a>
+          <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
+            <img src="assets/trust%20badges/2025TRbadge-lg.png" alt="GreatNonprofits 2025 Top-Rated Nonprofit" />
+          </a>
+          <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
+            <img src="assets/trust%20badges/Four-Star%20Rating%20Badge_Transparent_2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+          </a>
+        </div>
+        <a href="#" class="nav__donate" onclick="openDonate(event)">Donate</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav__mobile" id="mobileMenu" aria-hidden="true">
+      <div class="mob-panels" id="mobPanels">
+        <!-- L1: top-level items -->
+        <div class="mob-panel" id="mobL1">
+          <button class="mob-top-item" data-menu="Projects">Projects <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg></button>
+          <button class="mob-top-item" data-menu="Learn">Learn <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg></button>
+          <button class="mob-top-item" data-menu="Get Involved">Get Involved <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg></button>
+          <a href="#" class="mob-donate" onclick="openDonate(event)">Donate Now</a>
+          <div class="mob-badges">
+            <a href="https://app.candid.org/profile/7041082/felidae-conservation-fund-20-5089093" target="_blank" rel="noopener">
+              <img src="assets/trust%20badges/Candid.png" alt="Candid Platinum Seal of Transparency 2026" />
+            </a>
+            <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
+              <img src="assets/trust%20badges/2025TRbadge-lg.png" alt="GreatNonprofits 2025 Top-Rated Nonprofit" />
+            </a>
+            <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
+              <img src="assets/trust%20badges/Four-Star%20Rating%20Badge_Transparent_2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+            </a>
+          </div>
+          <div class="mob-search">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input type="search" class="mob-search__input" placeholder="Search…" aria-label="Search site">
+          </div>
+        </div>
+        <!-- L2: submenu -->
+        <div class="mob-panel" id="mobL2">
+          <button class="mob-back" id="mobBack">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="10,3 5,8 10,13"/></svg>
+            Menu
+          </button>
+          <div class="mob-panel-title" id="mobPanelTitle"></div>
+          <div id="mobSubLinks"></div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════ HERO ══════════════════════════════ -->
+  <section class="hero" id="hero" aria-label="Hero">
+    <!-- Video background — replace src with your wildlife footage -->
+    <div class="hero__video-wrap">
+      <img class="hero__bg-img" src="A1107739b.jpg" alt="Puma on rocky terrain in the Diablo Range" />
+      <!--
+        <video class="hero__video" autoplay muted loop playsinline poster="">
+          <source src="YOUR_VIDEO_URL.mp4" type="video/mp4" />
+        </video>
+      -->
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__texture"></div>
+
+    <div class="hero__content">
+
+      <h1 class="hero__title">
+        The Cat in the Bottleneck
+      </h1>
+      <p class="hero__subtitle">
+        A young male puma must cross the Diablo Range —
+        or his population edges toward local extinction.
+      </p>
+      <div class="hero__actions">
+        <a href="https://www.felidaefund.org/projects/research/pumalink" class="btn-outline" target="_blank" rel="noopener">Read His Story →</a>
+        <a href="#" class="btn-gold" onclick="openDonate(event)">
+          Donate Now
+        </a>
+      </div>
+      <p class="hero__credit">Photo by Sharon Osberg</p>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════ TICKER BAR ════════════════════════════ -->
+  <!-- ═══════════════════════════ MISSION ══════════════════════════════ -->
+  <section class="mission" id="mission" aria-labelledby="mission-title">
+    <div class="container">
+      <div class="mission__header reveal">
+        <div class="section-label">Our Mission</div>
+        <h2 class="section-title" id="mission-title">Innovative Wild Cat Conservation</h2>
+        <p class="section-body">Preserving Local Ecosystems &amp; Protecting The Natural World</p>
+      </div>
+
+      <div class="mission__grid">
+        <!-- Research -->
+        <div class="mission__card reveal reveal-delay-1">
+          <a class="mission__card-link" href="https://www.felidaefund.org/projects/research" target="_blank" rel="noopener" aria-label="Field Research — explore our projects"></a>
+          <img loading="lazy" class="mission__card-img" src="assets/field-research-913.webp" alt="Research team hiking through Patagonian grassland">
+          <div class="mission__card-content">
+            <h3 class="mission__card-title">Field Research</h3>
+            <p class="mission__card-body">Camera traps, GPS collars, and health assessments across five continents give us the data to act precisely where it matters most.</p>
+            <a href="https://www.felidaefund.org/projects/research" target="_blank" rel="noopener" class="mission__link">
+              Explore our projects
+              <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Habitat -->
+        <div class="mission__card reveal reveal-delay-2">
+          <a class="mission__card-link" href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" aria-label="Habitat Protection — learn about ecosystems"></a>
+          <img loading="lazy" class="mission__card-img" src="https://felidaefund.org/images/igallery/resized/101-200/PUC09B-04072020-4-133-1600-1000-90.webp" alt="Puma in its wild habitat">
+          <div class="mission__card-content">
+            <h3 class="mission__card-title">Habitat Protection</h3>
+            <p class="mission__card-body">Working with landowners, policymakers, and indigenous communities to maintain corridors where wild cats can roam safely.</p>
+            <a href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" class="mission__link">
+              Learn about ecosystems
+              <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="mission__card reveal reveal-delay-3">
+          <a class="mission__card-link" href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" aria-label="Education and Coexistence — coexistence resources"></a>
+          <img loading="lazy" class="mission__card-img" src="assets/pu-0107--1--836-1600-1000-90-crop.jpg" alt="Puma in the wild">
+          <div class="mission__card-content">
+            <h3 class="mission__card-title">Education &amp; Coexistence</h3>
+            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats — reducing conflict, building the understanding that fuels long-term protection.</p>
+            <a href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" class="mission__link">
+              Coexistence resources
+              <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ IMPACT ═══════════════════════════════ -->
+  <section class="impact" aria-labelledby="impact-title">
+    <div class="container impact__inner">
+      <div class="impact__header reveal">
+        <div class="section-label">Impact by the Numbers</div>
+        <h2 class="section-title" id="impact-title">Decades of work. Measurable results.</h2>
+      </div>
+      <div class="impact__grid">
+        <div class="impact__stat reveal reveal-delay-1">
+          <div class="impact__number" data-target="1200000" data-format="M">0</div>
+          <div class="impact__unit">Data Points</div>
+          <div class="impact__label">Collected via camera traps, fecal samples, and user-submitted research</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-2">
+          <div class="impact__number" data-target="68000">0</div>
+          <div class="impact__unit">+ People Reached</div>
+          <div class="impact__label">Through in-person events, virtual workshops, and classroom programs since 2022</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-3">
+          <div class="impact__number" data-target="460">0</div>
+          <div class="impact__unit">+ Volunteers</div>
+          <div class="impact__label">Contributing 7,954+ hours to field work, citizen science, and community programs</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-4">
+          <div class="impact__number" data-target="9">0</div>
+          <div class="impact__unit">Active Studies</div>
+          <div class="impact__label">Spanning 4 continents and 9 distinct ecosystems worldwide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ SPECIES ══════════════════════════════ -->
+  <section class="species" aria-labelledby="species-title">
+    <div class="container">
+      <div class="species__header">
+        <div class="reveal">
+          <div class="section-label">Wild Cats of the World</div>
+          <h2 class="section-title" id="species-title">40 species. Each worth protecting.</h2>
+        </div>
+        <a href="https://www.felidaefund.org/learn/cats" target="_blank" rel="noopener" class="mission__link reveal" style="flex-shrink:0">
+          Explore all species
+          <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <div class="species__grid">
+        <article class="species__card reveal reveal-delay-1">
+          <img loading="lazy" class="species__card-img" src="assets/snow-leopard-268-crop.jpg" alt="Snow Leopard" />
+          <a class="species__card-link" href="https://www.felidaefund.org/learn/cats/snow-leopard" target="_blank" rel="noopener" aria-label="Snow Leopard"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Snow Leopard</div>
+            <div class="species__card-status status-vu">Vulnerable</div>
+            <div class="species__card-trend trend-decreasing">↓ Decreasing</div>
+          </div>
+        </article>
+        <article class="species__card reveal reveal-delay-2">
+          <img loading="lazy" class="species__card-img" src="https://www.felidaefund.org/media/cache/autosized/images/igallery/original/501-600/puma-inaturalist-1-589-384.webp" alt="Puma" />
+          <a class="species__card-link" href="https://www.felidaefund.org/learn/cats/mountain-lion" target="_blank" rel="noopener" aria-label="Puma"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Puma</div>
+            <div class="species__card-status status-lc">Least Concern</div>
+            <div class="species__card-trend trend-decreasing">↓ Decreasing</div>
+          </div>
+        </article>
+        <article class="species__card reveal reveal-delay-3">
+          <img loading="lazy" class="species__card-img" src="assets/ocelot-1-244-960.webp" alt="Ocelot" />
+          <a class="species__card-link" href="https://www.felidaefund.org/learn/cats/ocelot" target="_blank" rel="noopener" aria-label="Ocelot"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Ocelot</div>
+            <div class="species__card-status status-lc">Least Concern</div>
+            <div class="species__card-trend trend-decreasing">↓ Decreasing</div>
+          </div>
+        </article>
+        <article class="species__card reveal reveal-delay-4">
+          <img loading="lazy" class="species__card-img" src="https://www.felidaefund.org/media/cache/autosized/images/igallery/original/801-900/trishcarney-fullbodybobcat4-872-384.webp" alt="Bobcat" />
+          <a class="species__card-link" href="https://www.felidaefund.org/learn/cats/bobcat" target="_blank" rel="noopener" aria-label="Bobcat"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Bobcat</div>
+            <div class="species__card-status status-lc">Least Concern</div>
+            <div class="species__card-trend trend-stable">→ Stable</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ PROJECTS ═════════════════════════════ -->
+  <section class="projects" aria-labelledby="projects-title">
+    <div class="container">
+      <div class="projects__header">
+        <div class="reveal">
+          <div class="section-label">Current Research</div>
+          <h2 class="section-title" id="projects-title">In the field, right now.</h2>
+        </div>
+        <a href="https://www.felidaefund.org/projects/research" target="_blank" rel="noopener" class="mission__link reveal" style="flex-shrink:0">
+          All projects
+          <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <div class="projects__grid">
+        <!-- Bay Area Puma -->
+        <article class="project-card reveal reveal-delay-1">
+          <a class="project-card-link" href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" aria-label="Bay Area Puma Project — learn more"></a>
+          <div class="project-card__img pc-1">
+            <img src="https://felidaefund.org/images/igallery/resized/1-100/COE01A-puma10272020-2-47-1600-1000-90.webp" alt="Puma in the Bay Area" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <span class="project-card__tag">Active</span>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__region">North America · California</div>
+            <h3 class="project-card__title">Bay Area Puma Project</h3>
+            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area — building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
+            <div class="project-card__footer">
+              <span class="project-card__stat">14 individuals tracked</span>
+              <a href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Patagonia -->
+        <article class="project-card reveal reveal-delay-2">
+          <a class="project-card-link" href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" aria-label="Patagonia Wild Cats Project — learn more"></a>
+          <div class="project-card__img pc-2">
+            <img src="https://www.felidaefund.org/images/patagonia_field_f2907.png" alt="Patagonia field team" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <span class="project-card__tag">Active</span>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__region">South America · Argentina &amp; Chile</div>
+            <h3 class="project-card__title">Patagonia Wild Cats Project</h3>
+            <p class="project-card__desc">Studying puma movement and Andean cat behavior across Patagonia's steppe. GPS collar data is reshaping conservation boundaries for protected areas across the region.</p>
+            <div class="project-card__footer">
+              <span class="project-card__stat">18-month study</span>
+              <a href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bay Area Bobcat -->
+        <article class="project-card reveal reveal-delay-3">
+          <a class="project-card-link" href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" aria-label="Bay Area Bobcat Project — learn more"></a>
+          <div class="project-card__img pc-3">
+            <img src="https://felidaefund.org/images/igallery/resized/401-500/MWD202103A-bobcat-04230132-432-1600-1000-90.webp" alt="Bay Area bobcat" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <span class="project-card__tag">Active</span>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__region">California · Bay Area</div>
+            <h3 class="project-card__title">Bay Area Bobcat Project</h3>
+            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface — building the case for wildlife corridor protections across the East Bay hills.</p>
+            <div class="project-card__footer">
+              <span class="project-card__stat">12 camera traps</span>
+              <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ NEWS ═════════════════════════════════ -->
+  <section class="news" aria-labelledby="news-title">
+    <div class="container">
+      <div class="news__header reveal">
+        <div>
+          <div class="section-label">News</div>
+          <h2 class="section-title" id="news-title">Stories, updates & spotlights.</h2>
+        </div>
+        <a href="https://www.felidaefund.org/news" target="_blank" rel="noopener" class="news__see-all">
+          All news
+          <svg class="arrow-right" viewBox="0 0 14 14" style="stroke:currentColor"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+      <div class="news__grid">
+        <article class="news-card reveal reveal-delay-1">
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/media/cache/autosized/images/joey_2_5002b-384.webp" alt="Local wildlife science community" style="object-fit:cover;object-position:top;" />
+          <a class="news-card__link" href="https://www.felidaefund.org/news/general/the-unexpected-social-ripple-of-local-wildlife-science" target="_blank" rel="noopener" aria-label="Read: The unexpected social ripple of local wildlife science"></a>
+          <div class="news-card__body">
+            <div class="news-card__cat">Community Science</div>
+            <h3 class="news-card__title">The unexpected social ripple of local wildlife science</h3>
+            <p class="news-card__excerpt">Community volunteers in wildlife research undergo a personal transformation that extends far beyond fieldwork — catalyzing neighborhood-wide shifts toward valuing and protecting local wild cats.</p>
+            <div class="news-card__meta">July 21, 2026 · 5 min read</div>
+          </div>
+        </article>
+
+        <article class="news-card reveal reveal-delay-2">
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/media/cache/autosized/images/wcs_0730b-384.webp" alt="Wildlife crossing reconnecting habitat across a highway" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://www.felidaefund.org/news/how-america-is-redesigning-its-roads-for-wildlife" target="_blank" rel="noopener" aria-label="Read: How America is Redesigning Its Roads for Wildlife"></a>
+          <div class="news-card__body">
+            <div class="news-card__cat">Conservation</div>
+            <h3 class="news-card__title">How America is Redesigning Its Roads for Wildlife</h3>
+            <p class="news-card__excerpt">Wildlife crossings and smarter road design are reconnecting habitat fragmented by highways — giving pumas, bobcats, and other wild cats safe passage across the landscapes we share.</p>
+            <div class="news-card__meta">July 20, 2026 · Charlotte Stevenson</div>
+          </div>
+        </article>
+
+        <article class="news-card reveal reveal-delay-3">
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/media/cache/autosized/images/staff/E1067F0F-2BBB-48F9-91ED-D27F12D1D1BA-384.webp" alt="Ella Murphy on a trail in the golden California hills" style="object-fit:cover;object-position:center 68%;" />
+          <a class="news-card__link" href="https://www.felidaefund.org/news/volunteer-spotlights/ellas-internship-with-felidae" target="_blank" rel="noopener" aria-label="Read: Ella's internship with Felidae"></a>
+          <div class="news-card__body">
+            <div class="news-card__cat">Volunteer Spotlight</div>
+            <h3 class="news-card__title">Ella's internship with Felidae</h3>
+            <p class="news-card__excerpt">Ella Murphy shares what it's like working alongside puma researchers in the field — from checking camera traps on cattle ranches to building the case for habitat corridors across the Bay Area.</p>
+            <div class="news-card__meta">May 13, 2024 · Volunteer Spotlight</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ GET INVOLVED CTA ══════════════════════ -->
+  <div class="cta-split" aria-label="Get involved">
+    <!-- Volunteer -->
+    <div class="cta-panel cta-panel--volunteer">
+      <div class="cta-panel__eyebrow">Get Involved</div>
+      <h2 class="cta-panel__title">Your time creates lasting change.</h2>
+      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer — there's a role for you in wild cat conservation.</p>
+      <div class="cta-panel__options">
+        <div class="cta-panel__option">Volunteer in the field</div>
+        <div class="cta-panel__option">Become a community scientist</div>
+        <div class="cta-panel__option">Submit trail cam data via Wilde Pod</div>
+        <div class="cta-panel__option">Host a local event</div>
+      </div>
+      <a href="#" class="btn-gold" style="margin-top:8px">Get Started</a>
+    </div>
+
+    <!-- Donate -->
+    <div class="cta-panel cta-panel--donate">
+      <div class="cta-panel__eyebrow">Support our Work</div>
+      <h2 class="cta-panel__title">Make a difference today.</h2>
+      <p class="cta-panel__body">Every dollar funds real science — camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
+      <div class="cta-panel__options">
+        <div class="cta-panel__option">Monthly giving sustains long-term projects</div>
+        <div class="cta-panel__option">One-time gifts fund equipment and travel</div>
+        <div class="cta-panel__option">Legacy giving protects wild cats for generations</div>
+      </div>
+      <div class="cta-panel__actions">
+        <a href="#" class="btn-gold" onclick="openDonate(event)">Donate Now</a>
+        <a href="https://www.felidaefund.org/take-action/more-ways-to-help" target="_blank" rel="noopener" class="btn-outline">Ways to Donate</a>
+      </div>
+      <div class="donate-badges" aria-label="Partner and accreditation logos">
+        <a href="https://app.candid.org/profile/7041082/felidae-conservation-fund-20-5089093" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="https://widgets.guidestar.org/TransparencySeal/7041082" alt="Candid Platinum Seal of Transparency" />
+        </a>
+        <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="https://felidaefund.org/images/partnerships/2025TRbadge-lg.png" alt="Top-Rated Award — Great Nonprofits 2025" />
+        </a>
+        <a href="https://directories.onepercentfortheplanet.org/profile/felidae-conservation-fund" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="https://felidaefund.org/images/partnerships/1ftp_EnvironmentalPartner_Vertical_FullColor.png" alt="1% for the Planet — Nonprofit Partner" />
+        </a>
+        <a href="https://animalcharitiesofamerica.org" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="https://felidaefund.org/images/partnerships/acalogo_web.jpg" alt="Animal Charities of America" />
+        </a>
+        <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="https://felidaefund.org/images/partnerships/Four-Star%20Rating%20Badge_Transparent_2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+        </a>
+        <img loading="lazy" class="donate-badge-img" src="https://felidaefund.org/images/partnerships/charity-state-registration-verified.png" alt="Charity State Registration Verified" />
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ NEWSLETTER ════════════════════════════ -->
+  <section class="newsletter" aria-labelledby="newsletter-title">
+    <div class="container">
+      <div class="newsletter__inner">
+        <div class="newsletter__text reveal">
+          <div class="section-label">Stay Close to the Science</div>
+          <h2 class="section-title" id="newsletter-title">Updates from the field, in your inbox.</h2>
+          <p class="section-body">Camera trap images, project milestones, and new research — direct from our teams. No fluff. <a href="https://felidaefund.org/newsletter" class="newsletter__preview-link">Read the latest issue →</a></p>
+        </div>
+        <div class="newsletter__form reveal reveal-delay-2">
+          <form onsubmit="handleSubscribe(event)">
+            <div class="newsletter__row">
+              <label for="nl-email" class="sr-only">Email address</label>
+              <input
+                id="nl-email" type="email" name="email"
+                class="newsletter__input"
+                placeholder="you@example.com"
+                autocomplete="email"
+                required
+              />
+              <button type="submit" class="btn-primary">Subscribe</button>
+            </div>
+            <p class="newsletter__note">We send 1–2 emails per month. Unsubscribe anytime. No spam, ever.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════ FOOTER ════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__top">
+        <!-- Brand row -->
+        <div class="footer__brand-row">
+          <div>
+            <img loading="lazy" src="https://felidaefund.org/images/logos/logo_felidae_neg-01.png" alt="Felidae Conservation Fund" class="footer__logo-img" />
+            <div class="footer__brand-name">Felidae Conservation Fund</div>
+            <p class="footer__brand-tagline">Protecting wild cats and their habitats through scientific research, education, and human-wildlife conflict reduction since 2006.</p>
+            <div class="footer__social">
+              <!-- Facebook -->
+              <a href="https://www.facebook.com/felidaefund" target="_blank" rel="noopener" class="footer__social-link" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              </a>
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/felidaefund/" target="_blank" rel="noopener" class="footer__social-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <!-- TikTok -->
+              <a href="https://www.tiktok.com/@felidaefund" target="_blank" rel="noopener" class="footer__social-link" aria-label="TikTok">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M16 3c.3 2.1 1.6 3.6 3.7 3.8v2.4c-1.3.1-2.5-.3-3.7-1v5.9a5.4 5.4 0 11-5.4-5.4c.3 0 .6 0 .9.1v2.5a2.9 2.9 0 102 2.8V3H16z"/></svg>
+              </a>
+              <!-- YouTube -->
+              <a href="https://www.youtube.com/felidaefund" target="_blank" rel="noopener" class="footer__social-link" aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="5" width="20" height="14" rx="3"/><polygon points="10,9 16,12 10,15" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/company/felidae-conservation-fund/" target="_blank" rel="noopener" class="footer__social-link" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 014 0v4M11 10v7"/></svg>
+              </a>
+              <!-- X (Twitter) -->
+              <a href="https://twitter.com/felidaefund" target="_blank" rel="noopener" class="footer__social-link" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24"><path fill="currentColor" d="M18.9 3H21l-6.6 7.5L22 21h-6l-4.3-5.6L6.4 21H4.3l7-8L2 3h6.1l3.9 5.2L18.9 3zm-1 16h1.1L8.1 4.2H6.9L17.9 19z"/></svg>
+              </a>
+            </div>
+          </div>
+          <div></div>
+        </div>
+
+        <!-- Link columns -->
+        <nav class="footer__links" aria-label="Footer navigation">
+          <div>
+            <div class="footer__col-head">Projects</div>
+            <a href="https://www.felidaefund.org/projects/research/bhutan-wild-cat-health-project" target="_blank" rel="noopener" class="footer__link">Bhutan Wild Cat Health Project</a>
+            <a href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" class="footer__link">Patagonia Wild Cats Project</a>
+            <a href="https://www.felidaefund.org/projects/research/pumalink" target="_blank" rel="noopener" class="footer__link">Diablo PumaLink Project</a>
+            <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" class="footer__link">Bay Area Bobcat Project</a>
+            <a href="https://www.felidaefund.org/projects/research/tsavo-cheetah-project" target="_blank" rel="noopener" class="footer__link">Tsavo Cheetah Project</a>
+            <a href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" class="footer__link">Bay Area Puma Project</a>
+            <a href="https://www.felidaefund.org/projects/research/wild-cat-health-project" target="_blank" rel="noopener" class="footer__link">Wild Cat Health Project</a>
+          </div>
+          <div>
+            <div class="footer__col-head">Learn</div>
+            <a href="https://www.felidaefund.org/about/mission" target="_blank" rel="noopener" class="footer__link">Our Mission</a>
+            <a href="https://www.felidaefund.org/news" target="_blank" rel="noopener" class="footer__link">News</a>
+            <a href="https://www.felidaefund.org/about" target="_blank" rel="noopener" class="footer__link">About Us</a>
+            <a href="https://www.felidaefund.org/learn/cats" target="_blank" rel="noopener" class="footer__link">Wild Cat Species</a>
+            <a href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" class="footer__link">Healthy Ecosystems</a>
+            <a href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" class="footer__link">Living Alongside Wild Cats</a>
+            <a href="https://www.felidaefund.org/learn/safety-essentials-wild-cats" target="_blank" rel="noopener" class="footer__link">Safety Essentials</a>
+          </div>
+          <div>
+            <div class="footer__col-head">Get Involved</div>
+            <a href="https://www.felidaefund.org/take-action/volunteer" target="_blank" rel="noopener" class="footer__link">Volunteer</a>
+            <a href="https://www.felidaefund.org/take-action/volunteer-and-career-opportunities" target="_blank" rel="noopener" class="footer__link">Volunteer and Career Opportunities</a>
+            <a href="https://www.felidaefund.org/take-action/community-science" target="_blank" rel="noopener" class="footer__link">Community Scientist</a>
+            <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" class="footer__link">Wilde Pod (Trail Cam)</a>
+            <a href="https://www.felidaefund.org/events" target="_blank" rel="noopener" class="footer__link">Events</a>
+            <a href="https://www.felidaefund.org/take-action/more-ways-to-help" target="_blank" rel="noopener" class="footer__link">Ways to Donate</a>
+            <a href="https://www.felidaefund.org/take-action" target="_blank" rel="noopener" class="footer__link">Take Action</a>
+          </div>
+          <div>
+            <div class="footer__col-head">Contact</div>
+            <a href="mailto:info@felidaefund.org" class="footer__link">info@felidaefund.org</a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2026 Felidae Conservation Fund. A 501(c)(3) nonprofit organization. Tax ID: [XX-XXXXXXX]</p>
+        <nav class="footer__legal" aria-label="Legal links">
+          <a href="#" class="footer__legal-link">Privacy Policy</a>
+          <a href="#" class="footer__legal-link">Terms of Use</a>
+          <a href="#" class="footer__legal-link">Accessibility</a>
+          <a href="#" class="footer__legal-link">Annual Report</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════ DONATE MODAL ══════════════════════════ -->
+  <div class="modal-overlay" id="donateModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal" role="document">
+      <div class="modal__header">
+        <h2 class="modal__header-title" id="modal-title">Support Wild Cats</h2>
+        <button class="modal__close" onclick="closeDonate()" aria-label="Close donation dialog">
+          <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="2" y1="2" x2="16" y2="16"/><line x1="16" y1="2" x2="2" y2="16"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <p class="modal__subtitle">Your gift funds field research, community science, and habitat protection — where wild cats need it most.</p>
+
+        <!-- Frequency -->
+        <div class="donate-freq" role="group" aria-label="Donation frequency">
+          <button class="donate-freq__btn active" onclick="setFreq(this, 'monthly')">Monthly</button>
+          <button class="donate-freq__btn" onclick="setFreq(this, 'once')">One-time</button>
+        </div>
+
+        <!-- Amounts -->
+        <div class="donate-amounts" role="group" aria-label="Donation amount">
+          <button class="donate-amount selected" onclick="selectAmount(this, 25)">
+            $25
+            <small>Camera trap</small>
+          </button>
+          <button class="donate-amount" onclick="selectAmount(this, 50)">
+            $50
+            <small>GPS tag battery</small>
+          </button>
+          <button class="donate-amount" onclick="selectAmount(this, 100)">
+            $100
+            <small>Field day</small>
+          </button>
+          <button class="donate-amount" onclick="selectAmount(this, 250)">
+            $250
+            <small>Collar deployment</small>
+          </button>
+          <button class="donate-amount" onclick="selectAmount(this, 500)">
+            $500
+            <small>1 week in the field</small>
+          </button>
+          <button class="donate-amount" onclick="selectAmount(this, null)">
+            Other
+            <small>Your amount</small>
+          </button>
+        </div>
+
+        <!-- Custom amount -->
+        <div class="donate-custom" id="customAmount" style="display:none">
+          <span class="donate-custom__label">$</span>
+          <input type="number" class="donate-custom__input" id="customInput" placeholder="Enter amount" min="1" aria-label="Custom donation amount" />
+        </div>
+
+        <!-- Impact message -->
+        <div class="donate-impact" id="donateImpact">
+          "$25/month keeps a camera trap running for a full year — capturing the data we need to protect wild cats."
+        </div>
+
+        <button class="donate-submit" id="donateBtn">Give $25 / month</button>
+        <p class="donate-note">🔒 Secure processing via Stripe. Felidae Conservation Fund is a 501(c)(3) nonprofit — your gift is tax-deductible.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ SCRIPTS ══════════════════════════════ -->
+  <script>
+    // ── Nav scroll state ──────────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Mobile hamburger ──────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobPanels = document.getElementById('mobPanels');
+    const mobPanelTitle = document.getElementById('mobPanelTitle');
+    const mobSubLinks = document.getElementById('mobSubLinks');
+    const mobBack = document.getElementById('mobBack');
+
+    const menuData = {
+      'Projects': [
+        'Bhutan Wild Cat Health Project','Patagonia Wild Cats Project',
+        'Diablo PumaLink Project','Bay Area Bobcat Project',
+        'Tsavo Cheetah Project','Bay Area Puma Project','Wild Cat Health Project',
+        '## Community Programs',
+        'Living with Lions','CAT Aware','Wilde Pod','Wilde Backyard'
+      ],
+      'Learn': [
+        'Our Mission','Science & Research','News','About Us',
+        'Wild Cat Species of the World','Protecting Healthy Ecosystems',
+        'Living Alongside Wild Cats','Safety Essentials',
+        'Photos & Videos','Kids Area'
+      ],
+      'Get Involved': [
+        'Volunteer','Spread Awareness','Community Scientist','Trail Cam Data (Wilde Pod)','Events',
+        'Ways to Donate','Store','Take Action'
+      ]
+    };
+
+    // Interim mapping of menu items to existing felidaefund.org pages (clear 1:1 matches only).
+    // Items not listed here remain '#' placeholders pending the full site rework.
+    const FF = 'https://www.felidaefund.org';
+    const navLinks = {
+      'Bhutan Wild Cat Health Project': FF + '/projects/research/bhutan-wild-cat-health-project',
+      'Patagonia Wild Cats Project':    FF + '/projects/research/patagonia-cats-project',
+      'Diablo PumaLink Project':        FF + '/projects/research/pumalink',
+      'Bay Area Bobcat Project':        FF + '/projects/research/bay-area-bobcat-project',
+      'Tsavo Cheetah Project':          FF + '/projects/research/tsavo-cheetah-project',
+      'Bay Area Puma Project':          FF + '/projects/research/bay-area-puma-project',
+      'Wild Cat Health Project':        FF + '/projects/research/wild-cat-health-project',
+      'Our Mission':                    FF + '/about/mission',
+      'About Us':                       FF + '/about',
+      'Science & Research':             FF + '/science',
+      'Wild Cat Species of the World':  FF + '/learn/cats',
+      'Protecting Healthy Ecosystems':  FF + '/learn/protecting-healthy-ecosystems',
+      'Living Alongside Wild Cats':     FF + '/learn/living-alongside-wild-cats',
+      'Living with Lions':              FF + '/projects/community/living-with-lions',
+      'CAT Aware':                      FF + '/projects/community/cat-aware',
+      'Wilde Pod':                      FF + '/projects/community/wilde-pod',
+      'Wilde Backyard':                 FF + '/projects/community/wilde-backyard',
+      'Safety Essentials':              FF + '/learn/safety-essentials-wild-cats',
+      'Photos & Videos':               FF + '/learn/media',
+      'Kids Area':                      FF + '/kids',
+      'News':                           FF + '/news',
+      'Volunteer':                      FF + '/take-action/volunteer',
+      'Spread Awareness':               FF + '/take-action/spread-awareness',
+      'Community Scientist':            FF + '/take-action/community-science',
+      'Trail Cam Data (Wilde Pod)':     FF + '/projects/community/wilde-pod',
+      'Events':                         FF + '/events',
+      'Ways to Donate':                 FF + '/take-action/more-ways-to-help',
+      'Store':                          FF + '/store',
+      'Take Action':                    FF + '/take-action'
+    };
+
+    function openMobileMenu(isOpen) {
+      hamburger.classList.toggle('open', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      if (!isOpen) mobPanels.classList.remove('show-sub');
+    }
+
+    hamburger.addEventListener('click', () => {
+      openMobileMenu(!hamburger.classList.contains('open'));
+    });
+
+    document.querySelectorAll('.mob-top-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.menu;
+        mobPanelTitle.textContent = key;
+        mobSubLinks.innerHTML = menuData[key].map(item => {
+          if (item === '---') return '<div class="mob-sub-divider"></div>';
+          if (item.startsWith('## ')) return `<div class="mob-sub-heading">${item.slice(3)}</div>`;
+          const url = navLinks[item];
+          return url
+            ? `<a href="${url}" target="_blank" rel="noopener" class="mob-sub-link">${item}</a>`
+            : `<a href="#" class="mob-sub-link">${item}</a>`;
+        }).join('');
+        mobPanels.classList.add('show-sub');
+        document.getElementById('mobL2').scrollTop = 0;
+      });
+    });
+
+    mobBack.addEventListener('click', () => {
+      mobPanels.classList.remove('show-sub');
+    });
+
+    // ── Scroll reveal ─────────────────────────────────────────────────
+    const revealObserver = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } }),
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Animated counters ─────────────────────────────────────────────
+    function animateCounter(el, target, duration = 1800) {
+      const fmt = el.dataset.format;
+      const start = performance.now();
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const val = eased * target;
+        if (fmt === 'M') {
+          el.textContent = (val / 1000000).toFixed(1) + 'M';
+        } else {
+          el.textContent = Math.floor(val).toLocaleString();
+        }
+        if (progress < 1) requestAnimationFrame(step);
+        else el.textContent = fmt === 'M' ? (target / 1000000).toFixed(1) + 'M' : target.toLocaleString();
+      };
+      requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const target = parseInt(e.target.dataset.target, 10);
+          animateCounter(e.target, target);
+          counterObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+    // ── Donate modal ──────────────────────────────────────────────────
+    const donateModal = document.getElementById('donateModal');
+    let currentAmount = 25;
+    let currentFreq = 'monthly';
+
+    function openDonate(e) {
+      if (e) e.preventDefault();
+      donateModal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDonate() {
+      donateModal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    donateModal.addEventListener('click', (e) => {
+      if (e.target === donateModal) closeDonate();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && donateModal.classList.contains('open')) closeDonate();
+    });
+
+    const impactMessages = {
+      25:  '"$25/month keeps a camera trap running for a full year — capturing the data we need to protect wild cats."',
+      50:  '"$50 powers GPS collar batteries that tell us exactly where wild cats roam and what corridors they need."',
+      100: '"$100 funds a full field day — two researchers, travel, and data collection in the habitat."',
+      250: '"$250 deploys a GPS collar on a wild cat, giving us months of movement data we\'d never get otherwise."',
+      500: '"$500 sends a field team into the wild for a full week of monitoring, health assessments, and camera checks."',
+    };
+
+    function updateDonateBtn() {
+      const btn = document.getElementById('donateBtn');
+      const impact = document.getElementById('donateImpact');
+      const label = currentFreq === 'monthly' ? '/ month' : '';
+      btn.textContent = currentAmount ? `Give $${currentAmount.toLocaleString()} ${label}`.trim() : `Give ${label}`.trim();
+      impact.textContent = impactMessages[currentAmount] || '"Every dollar funds real science — from camera traps to GPS collars to field teams in the most remote habitats."';
+    }
+
+    function setFreq(btn, freq) {
+      currentFreq = freq;
+      document.querySelectorAll('.donate-freq__btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateDonateBtn();
+    }
+
+    function selectAmount(btn, amount) {
+      document.querySelectorAll('.donate-amount').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const customDiv = document.getElementById('customAmount');
+      if (amount === null) {
+        currentAmount = null;
+        customDiv.style.display = 'flex';
+        document.getElementById('customInput').focus();
+      } else {
+        currentAmount = amount;
+        customDiv.style.display = 'none';
+      }
+      updateDonateBtn();
+    }
+
+    document.getElementById('customInput').addEventListener('input', (e) => {
+      currentAmount = parseInt(e.target.value, 10) || null;
+      updateDonateBtn();
+    });
+
+    // ── Theme picker ──────────────────────────────────────────────────
+    const themeTrigger = document.getElementById('logoThemeTrigger');
+    const themePicker  = document.getElementById('themePicker');
+    const themeButtons = themePicker.querySelectorAll('.theme-option');
+
+    function applyTheme(id) {
+      if (id === '1') document.documentElement.removeAttribute('data-theme');
+      else document.documentElement.setAttribute('data-theme', id);
+      themeButtons.forEach(b => b.classList.toggle('active', b.dataset.themeId === id));
+      localStorage.setItem('felidae-theme', id);
+    }
+
+    themeTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      themePicker.classList.toggle('open');
+    });
+    themeButtons.forEach(btn => btn.addEventListener('click', () => {
+      applyTheme(btn.dataset.themeId);
+      themePicker.classList.remove('open');
+    }));
+    document.addEventListener('click', (e) => {
+      if (!themeTrigger.contains(e.target) && !themePicker.contains(e.target))
+        themePicker.classList.remove('open');
+    });
+
+    // Restore saved theme on load
+    const saved = localStorage.getItem('felidae-theme');
+    if (saved && saved !== '1') applyTheme(saved);
+
+    // ── Newsletter form ───────────────────────────────────────────────
+    function handleSubscribe(e) {
+      e.preventDefault();
+      const input = document.getElementById('nl-email');
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.textContent = '✓ Subscribed!';
+      btn.style.background = 'var(--gold-500)';
+      input.value = '';
+      input.disabled = true;
+      setTimeout(() => {
+        btn.textContent = 'Subscribe';
+        btn.style.background = '';
+        input.disabled = false;
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
