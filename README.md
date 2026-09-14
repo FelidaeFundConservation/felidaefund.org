@@ -5,12 +5,13 @@ The live site runs on Joomla and is not affected by anything in here.
 
 ## What's in here
 
-- `index.html` is the homepage prototype, copied exactly from felidae-redesign.vercel.app on 12 Sept 2026
+- `prototype/` is the homepage prototype, shown at felidae-redesign.vercel.app
 - `wordpress-poc/` is for the WordPress proof of concept
 
 ## Current status
 
-- Not connected to Vercel yet. The live prototype may be newer than this copy.
+- `prototype/index.html` is a copy of the deployed page from 12 Sept 2026. Images are not included yet. Daniel is adding his latest local version with images.
+- Not connected to Vercel yet. When it is, set the Vercel root directory to `prototype`.
 - WordPress POC files not added yet.
 
 ## Please don't commit
