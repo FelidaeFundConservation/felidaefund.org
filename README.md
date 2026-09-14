@@ -12,7 +12,7 @@ The live site runs on Joomla and is not affected by anything in here.
 
 - `prototype/index.html` matches the deployed page from 12 Sept 2026. All images are stored locally in `prototype/assets/`; the page no longer loads images from the live felidaefund.org site (its links still point there).
 - Not connected to Vercel yet. When it is, set the Vercel root directory to `prototype`.
-- WordPress POC files not added yet.
+- `wordpress-poc/` holds the `felidae-child` block theme (see `wordpress-poc/README.md`). WordPress core, the database, and `wp-config.php` are not in the repo.
 
 ## Please don't commit
 

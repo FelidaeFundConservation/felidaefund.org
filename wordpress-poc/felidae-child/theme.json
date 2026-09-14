@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "settings": {
+    "color": {
+      "palette": [
+        { "slug": "espresso-900", "color": "#1f1204", "name": "Espresso 900" },
+        { "slug": "espresso-800", "color": "#2d1a06", "name": "Espresso 800" },
+        { "slug": "espresso-700", "color": "#3d2408", "name": "Espresso 700" },
+        { "slug": "gold-500",     "color": "#c9a84c", "name": "Gold 500" },
+        { "slug": "gold-400",     "color": "#d7b765", "name": "Gold 400" },
+        { "slug": "gold-300",     "color": "#e8ce8a", "name": "Gold 300" },
+        { "slug": "cream-100",    "color": "#fffbf0", "name": "Cream 100" },
+        { "slug": "stone-200",    "color": "#f5f0e8", "name": "Stone 200" },
+        { "slug": "text-primary", "color": "#2a1a08", "name": "Text Primary" }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "Raleway, sans-serif",
+          "slug": "raleway",
+          "name": "Raleway"
+        },
+        {
+          "fontFamily": "Literata, Georgia, serif",
+          "slug": "literata",
+          "name": "Literata"
+        }
+      ]
+    },
+    "spacing": {
+      "units": ["px", "em", "rem", "%", "vw", "vh"]
+    },
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1400px"
+    }
+  }
+}
