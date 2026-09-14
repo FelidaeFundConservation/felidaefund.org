@@ -10,7 +10,7 @@ The live site runs on Joomla and is not affected by anything in here.
 
 ## Current status
 
-- `prototype/index.html` is a copy of the deployed page from 12 Sept 2026. Images are not included yet. Daniel is adding his latest local version with images.
+- `prototype/index.html` matches the deployed page from 12 Sept 2026. All images are stored locally in `prototype/assets/`; the page no longer loads images from the live felidaefund.org site (its links still point there).
 - Not connected to Vercel yet. When it is, set the Vercel root directory to `prototype`.
 - WordPress POC files not added yet.
 
