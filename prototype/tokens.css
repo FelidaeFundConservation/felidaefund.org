@@ -1,0 +1,63 @@
+/* Felidae design system tokens
+   Source of truth for the website redesign. */
+
+:root {
+  /* Golds */
+  --gold-500: #c4963a;
+  --gold-400: #d7b765;  /* primary: buttons, eyebrows, stats */
+  --gold-300: #e4ca8a;
+  --gold-200: #efddb0;  /* unused */
+  --gold-100: #f8f0d6;  /* tinted panels */
+
+  /* Browns: actions and links */
+  --brown-800: #5a3e1e;
+  --brown-700: #814e12;  /* buttons, links, focus borders */
+  --brown-600: #9a5e1a;  /* button hover */
+  --brown-500: #b87333;  /* unused */
+  --brown-400: #8a6240;
+  --brown-300: #b8906a;
+
+  /* Darks: backgrounds and body text */
+  --nav-bg:       #211102;
+  --espresso-900: #1f1204;
+  --espresso-800: #2e1a06;
+  --espresso-700: #3d2209;
+
+  /* Lights */
+  --cream-100: #fffbf0;  /* page background */
+  --cream-200: #fff8e6;  /* section panels */
+  --cream-300: #fdf4dd;
+  --white:     #ffffff;
+
+  /* Project accents, from the 2021 brand book. Unused until project pages. */
+  --project-bapp:      #7292a1;
+  --project-tsavo:     #b14a57;
+  --project-patagonia: #61568a;
+  --project-lwl:       #007d00;
+  --project-babp:      #8d8513;
+  --project-cat-aware: #fcf6b3;
+  --project-argentina: #c88712;
+
+  /* Type */
+  --font-display: 'Raleway', system-ui, sans-serif;
+  --font-body:    'Literata', Georgia, 'Times New Roman', serif;
+
+  /* Layout */
+  --nav-h: 86px;
+  --max-w: 1280px;
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+
+  --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
+  --shadow-md: 0 4px 16px rgba(31,18,4,.14);
+  --shadow-lg: 0 12px 40px rgba(31,18,4,.12);
+}
+
+/* Alternate theme, toggled by tapping the logo */
+[data-theme="2"] {
+  --nav-bg:       #2d1b06;
+  --espresso-900: #3c2203;
+  --espresso-800: #7a4a12;
+  --espresso-700: #914f14;
+}
