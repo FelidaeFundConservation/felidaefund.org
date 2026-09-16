@@ -17,3 +17,5 @@ The live site runs on Joomla and is not affected by anything in here.
 ## Please don't commit
 
 - `wp-config.php` or anything with passwords, keys, or database credentials
+
+<!-- deploy check: 2026-09-16T04:31Z -->
