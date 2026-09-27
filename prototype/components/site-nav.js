@@ -38,9 +38,9 @@ class SiteNav extends HTMLElement {
               <a href="https://www.felidaefund.org/projects/research/pumalink" target="_blank" rel="noopener" role="menuitem">Diablo PumaLink Project</a>
               <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" role="menuitem">Bay Area Bobcat Project</a>
               <a href="https://www.felidaefund.org/projects/research/tsavo-cheetah-project" target="_blank" rel="noopener" role="menuitem">Tsavo Cheetah Project</a>
-              <a href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" role="menuitem">Bay Area Puma Project</a>
+              <a href="project.html" target="_blank" rel="noopener" role="menuitem">Bay Area Puma Project</a>
               <a href="https://www.felidaefund.org/projects/research/wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Wild Cat Health Project</a>
-              <a href="https://www.felidaefund.org/projects/archive" target="_blank" rel="noopener" role="menuitem" style="color: var(--gold-300);">View all projects →</a>
+              <a href="projects.html" target="_blank" rel="noopener" role="menuitem" style="color: var(--gold-300);">View all projects →</a>
             </div>
             <div class="nav__col">
               <div class="nav__col-head">Community Programs</div>

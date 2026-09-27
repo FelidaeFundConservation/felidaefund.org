@@ -38,6 +38,13 @@
   --project-cat-aware: #fcf6b3;
   --project-argentina: #c88712;
 
+  /* Provisional accents — these projects have no brand-book colour yet.
+     Picked to sit inside the existing palette; confirm with Zara / Ben. */
+  --project-pumalink:  #6b7f52;
+  --project-bhutan:    #9a6f9b;
+  --project-health:    #4f8a84;
+  --project-wilde:     #a3782f;
+
   /* Type */
   --font-display: 'Raleway', system-ui, sans-serif;
   --font-body:    'Literata', Georgia, 'Times New Roman', serif;
