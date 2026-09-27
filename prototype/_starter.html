@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+  Page starter. Copy this file, rename it, fill in the <main>.
+  Everything else (nav, footer, donate modal, tokens, base styles,
+  interior-page patterns) comes from the shared files below — change
+  them once and every page changes.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page title — Felidae Conservation Fund</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="tokens.css?v=3" />
+  <link rel="stylesheet" href="base.css?v=3" />
+  <link rel="stylesheet" href="components.css?v=3" />
+  <link rel="stylesheet" href="page.css?v=3" />
+
+  <script src="components/site-nav.js?v=3"></script>
+  <script src="components/site-footer.js?v=3"></script>
+  <script src="components/site-donate.js?v=3"></script>
+  <script src="components/page.js?v=3" defer></script>
+</head>
+
+<!-- Set --page-accent from tokens.css: --project-bapp, --project-tsavo, etc. -->
+<body style="--page-accent: var(--gold-400)">
+
+  <site-nav></site-nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Page title</span>
+        </nav>
+        <p class="page-eyebrow">Section</p>
+        <h1 class="page-title">Page title</h1>
+        <p class="page-lede">One or two sentences on what this page is for.</p>
+      </div>
+    </header>
+
+    <section class="page-body">
+      <div class="container">
+        <p class="prose">Page content goes here.</p>
+      </div>
+    </section>
+  </main>
+
+  <site-footer></site-footer>
+  <site-donate></site-donate>
+</body>
+</html>
