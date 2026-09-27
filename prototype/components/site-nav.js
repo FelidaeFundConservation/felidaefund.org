@@ -260,6 +260,35 @@ function initNav() {
     mobBack.addEventListener('click', () => {
       mobPanels.classList.remove('show-sub');
     });
+
+  // ── Theme picker ──────────────────────────────────────────────────
+  const themeTrigger = document.getElementById('logoThemeTrigger');
+  const themePicker  = document.getElementById('themePicker');
+  const themeButtons = themePicker.querySelectorAll('.theme-option');
+
+  function applyTheme(id) {
+    if (id === '1') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', id);
+    themeButtons.forEach(b => b.classList.toggle('active', b.dataset.themeId === id));
+    localStorage.setItem('felidae-theme', id);
+  }
+
+  themeTrigger.addEventListener('click', (e) => {
+    e.preventDefault();
+    themePicker.classList.toggle('open');
+  });
+  themeButtons.forEach(btn => btn.addEventListener('click', () => {
+    applyTheme(btn.dataset.themeId);
+    themePicker.classList.remove('open');
+  }));
+  document.addEventListener('click', (e) => {
+    if (!themeTrigger.contains(e.target) && !themePicker.contains(e.target))
+      themePicker.classList.remove('open');
+  });
+
+  // Restore saved theme on load
+  const saved = localStorage.getItem('felidae-theme');
+  if (saved && saved !== '1') applyTheme(saved);
 }
 
 customElements.define('site-nav', SiteNav);
