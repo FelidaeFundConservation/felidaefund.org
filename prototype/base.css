@@ -1,0 +1,105 @@
+/* Base styles shared by every prototype page: reset, typography,
+   container, buttons, section labels, reveal animation.
+   Page-specific sections stay in each page's own <style>. */
+/* ─── Reset ────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--espresso-900); overflow-x: hidden; }@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; }
+}
+    body {
+      font-family: var(--font-body);
+      touch-action: pan-y;
+      overflow-x: hidden;
+      background: var(--cream-100);
+      color: var(--espresso-900);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font: inherit; }
+
+    /* ─── Utilities ─────────────────────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--brown-700); color: var(--cream-100);
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 12px 24px; border-radius: var(--r-sm);
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--brown-600); transform: translateY(-1px); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 2px solid currentColor; color: var(--cream-100);
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 10px 22px; border-radius: var(--r-sm);
+      transition: background .2s, color .2s;
+    }
+    .btn-outline:hover { background: rgba(var(--white-rgb),.12); }
+
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold-400); color: var(--espresso-900);
+      font-family: var(--font-display); font-weight: 700; font-size: 13px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 12px 28px; border-radius: var(--r-sm);
+      transition: background .2s, transform .15s;
+    }
+    .btn-gold:hover { background: var(--gold-300); transform: translateY(-1px); }
+
+    .section-label {
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--brown-700);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.15; color: var(--espresso-900);
+    }
+    .section-body {
+      font-family: var(--font-body); font-size: 17px; line-height: 1.75;
+      color: var(--brown-800); max-width: 52ch;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── Scroll Reveal ──────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .65s ease, transform .65s ease;
+      will-change: transform, opacity;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); will-change: auto; }
+    .reveal-delay-1 { transition-delay: .1s; }
+    .reveal-delay-2 { transition-delay: .2s; }
+    .reveal-delay-3 { transition-delay: .3s; }
+    .reveal-delay-4 { transition-delay: .4s; }
+
+    /* ─── Arrow Icon ─────────────────────────────────────────────────── */
+    .arrow-right {
+      width: 14px; height: 14px; stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .nav__badges    { display: none; }  /* header gets tight — badges show on desktop only */
+      .mission__grid  { grid-template-columns: 1fr 1fr; }
+      .impact__grid   { grid-template-columns: repeat(2, 1fr); }
+      .impact__stat   { border-right: none; border-bottom: 1px solid rgba(var(--gold-rgb),.1); }
+      .impact__stat:nth-child(2n) { }
+      .species__grid  { grid-template-columns: repeat(2, 1fr); }
+      .projects__grid { grid-template-columns: 1fr 1fr; }
+      .news__grid     { grid-template-columns: repeat(2, 1fr); }
+      .footer__brand-row { grid-template-columns: 1fr; gap: 40px; }
+      .footer__links  { grid-template-columns: repeat(2, 1fr); }
+    }@media (max-width: 768px) {
+      :root { --nav-h: 72px; }
+      .container { padding: 0 20px; }
+}
