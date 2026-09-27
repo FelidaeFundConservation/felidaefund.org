@@ -300,3 +300,104 @@
       .nav__hamburger { display: flex; }
       .footer__links  { grid-template-columns: repeat(2, 1fr); }
 }
+
+    /* ─── Donate modal (<site-donate>) ───────────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2000;
+      background: rgba(var(--ink-rgb),.75); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; pointer-events: none;
+      transition: opacity .25s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: auto; }
+    .modal {
+      background: var(--cream-100); border-radius: var(--r-lg);
+      width: 100%; max-width: 500px; overflow: hidden;
+      box-shadow: 0 24px 80px rgba(var(--black-rgb),.4);
+      transform: translateY(16px);
+      transition: transform .25s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal__header {
+      background: var(--espresso-900); padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal__header-title {
+      font-family: var(--font-display); font-weight: 700; font-size: 20px;
+      color: var(--cream-100);
+    }
+    .modal__close {
+      width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+      border-radius: 50%; color: rgba(var(--cream-rgb),.6);
+      transition: color .2s, background .2s;
+    }
+    .modal__close:hover { color: var(--cream-100); background: rgba(var(--white-rgb),.1); }
+    .modal__close svg { width: 18px; height: 18px; }
+    .modal__body { padding: 32px; }
+    .modal__subtitle {
+      font-size: 15px; line-height: 1.65; color: var(--brown-800); margin-bottom: 24px;
+    }
+    .donate-freq {
+      display: flex; background: var(--cream-300); border-radius: 8px;
+      padding: 4px; margin-bottom: 24px; gap: 4px;
+    }
+    .donate-amounts {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px;
+    }
+    .donate-amount {
+      padding: 12px 8px; border-radius: var(--r-sm); text-align: center;
+      font-family: var(--font-display); font-weight: 700; font-size: 17px;
+      color: var(--espresso-900);
+      border: 2px solid rgba(var(--brown-rgb),.2);
+      background: var(--white); transition: border-color .2s, background .2s;
+    }
+    .donate-amount:hover { border-color: var(--brown-700); }
+    .donate-amount.selected { border-color: var(--brown-700); background: var(--gold-100); }
+    .donate-amount small {
+      display: block; font-family: var(--font-body); font-size: 11px;
+      font-weight: 400; color: var(--brown-400); margin-top: 2px;
+    }
+    .donate-custom {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 24px;
+    }
+    .donate-impact {
+      background: var(--gold-100); border-radius: var(--r-sm);
+      padding: 14px 16px; margin-bottom: 24px;
+      font-family: var(--font-body); font-size: 14px; color: var(--brown-800);
+      line-height: 1.5; font-style: italic;
+      border-left: 3px solid var(--gold-400);
+    }
+    .donate-submit {
+      width: 100%; padding: 16px;
+      background: var(--brown-700); color: var(--cream-100);
+      font-family: var(--font-display); font-weight: 700; font-size: 14px;
+      letter-spacing: .1em; text-transform: uppercase;
+      border-radius: var(--r-sm); transition: background .2s;
+    }
+    .donate-submit:hover { background: var(--brown-600); }
+    .donate-note {
+      text-align: center; margin-top: 12px;
+      font-family: var(--font-display); font-size: 11px; color: var(--brown-400);
+    }
+    .donate-freq__btn {
+      flex: 1; padding: 8px; border-radius: 6px;
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      color: var(--brown-400); transition: background .2s, color .2s;
+    }
+    .donate-freq__btn.active {
+      background: var(--brown-700); color: var(--cream-100);
+    }
+    .donate-custom__label {
+      font-family: var(--font-display); font-weight: 600; font-size: 20px;
+      color: var(--espresso-900);
+    }
+    .donate-custom__input {
+      flex: 1; padding: 10px 12px;
+      font-family: var(--font-display); font-weight: 600; font-size: 18px;
+      color: var(--espresso-900); background: var(--white);
+      border: 1.5px solid rgba(var(--brown-rgb),.25); border-radius: var(--r-sm);
+      outline: none;
+    }
+    .donate-custom__input:focus { border-color: var(--brown-700); }
+    .donate-custom__placeholder { color: var(--brown-300); font-weight: 400; }
