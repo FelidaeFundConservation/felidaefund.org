@@ -52,11 +52,32 @@
   --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
   --shadow-md: 0 4px 16px rgba(31,18,4,.14);
   --shadow-lg: 0 12px 40px rgba(31,18,4,.12);
+
+  /* Channels for translucent tints. Keep in sync with the hex values above. */
+  --gold-rgb:  215,183,101;   /* --gold-400 */
+  --cream-rgb: 255,251,240;   /* --cream-100 */
+  --brown-rgb: 129,78,18;     /* --brown-700 */
+  --ink-rgb:   20,10,2;       /* deep shade, darker than espresso-900 */
+  --white-rgb: 255,255,255;
+  --black-rgb: 0,0,0;
+
+  /* Conservation status, IUCN categories */
+  --status-lc: #60c060;  /* least concern */
+  --status-vu: #f0c040;  /* vulnerable */
+  --status-en: #f08040;  /* endangered */
+  --status-cr: #e84040;  /* critically endangered */
+  --trend-stable: #6ddf6d;
+  --trend-down:   #ff6b45;
+
+  /* Component surfaces */
+  --cta-donate-bg: var(--espresso-700);
+
 }
 
 /* Alternate theme, toggled by tapping the logo */
 [data-theme="2"] {
   --nav-bg:       #2d1b06;
+  --cta-donate-bg: #4c2901;
   --espresso-900: #3c2203;
   --espresso-800: #7a4a12;
   --espresso-700: #914f14;
