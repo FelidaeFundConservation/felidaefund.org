@@ -1,0 +1,265 @@
+// <site-nav> — the shared navigation and mobile menu.
+// Markup and behaviour travel together; styles live in components.css.
+class SiteNav extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav__inner">
+
+      <!-- Logo + theme picker -->
+      <div class="nav__logo-wrap">
+        <a href="#" class="nav__logo" id="logoThemeTrigger" aria-label="Felidae Conservation Fund — home">
+          <img src="assets/logo/logo_felidae_neg-01.png" alt="Felidae Conservation Fund" class="nav__logo-img" />
+        </a>
+        <div class="theme-picker" id="themePicker" role="menu" aria-label="Color theme">
+          <button class="theme-option active" data-theme-id="1" role="menuitem">
+            <span class="theme-swatch" style="background:#1f1204"></span>
+            Dark
+          </button>
+          <button class="theme-option" data-theme-id="2" role="menuitem">
+            <span class="theme-swatch" style="background:#3C2203"></span>
+            Medium
+          </button>
+        </div>
+      </div>
+
+      <!-- Desktop Links -->
+      <ul class="nav__links" role="list">
+        <!-- Projects -->
+        <li class="nav__item" role="listitem">
+          <a href="#" class="nav__link">
+            Projects
+            <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
+          </a>
+          <div class="nav__dropdown nav__dropdown--mega" role="menu" aria-label="Projects submenu">
+            <div class="nav__col">
+              <div class="nav__col-head">Research Projects</div>
+              <a href="https://www.felidaefund.org/projects/research/bhutan-wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Bhutan Wild Cat Health Project</a>
+              <a href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" role="menuitem">Patagonia Wild Cats Project</a>
+              <a href="https://www.felidaefund.org/projects/research/pumalink" target="_blank" rel="noopener" role="menuitem">Diablo PumaLink Project</a>
+              <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" role="menuitem">Bay Area Bobcat Project</a>
+              <a href="https://www.felidaefund.org/projects/research/tsavo-cheetah-project" target="_blank" rel="noopener" role="menuitem">Tsavo Cheetah Project</a>
+              <a href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" role="menuitem">Bay Area Puma Project</a>
+              <a href="https://www.felidaefund.org/projects/research/wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Wild Cat Health Project</a>
+              <a href="https://www.felidaefund.org/projects/archive" target="_blank" rel="noopener" role="menuitem" style="color: var(--gold-300);">View all projects →</a>
+            </div>
+            <div class="nav__col">
+              <div class="nav__col-head">Community Programs</div>
+              <a href="https://www.felidaefund.org/projects/community/living-with-lions" target="_blank" rel="noopener" role="menuitem">Living with Lions</a>
+              <a href="https://www.felidaefund.org/projects/community/cat-aware" target="_blank" rel="noopener" role="menuitem">CAT Aware</a>
+              <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" role="menuitem">Wilde Pod</a>
+              <a href="https://www.felidaefund.org/projects/community/wilde-backyard" target="_blank" rel="noopener" role="menuitem">Wilde Backyard</a>
+            </div>
+          </div>
+        </li>
+        <!-- Learn -->
+        <li class="nav__item" role="listitem">
+          <a href="#" class="nav__link">
+            Learn
+            <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
+          </a>
+          <div class="nav__dropdown" role="menu" aria-label="Learn submenu">
+            <a href="https://www.felidaefund.org/about/mission" target="_blank" rel="noopener" role="menuitem">Our Mission</a>
+            <a href="https://www.felidaefund.org/science" target="_blank" rel="noopener" role="menuitem">Science &amp; Research</a>
+            <a href="https://www.felidaefund.org/news" target="_blank" rel="noopener" role="menuitem">News</a>
+            <a href="https://www.felidaefund.org/about" target="_blank" rel="noopener" role="menuitem">About Us</a>
+            <a href="https://www.felidaefund.org/learn/cats" target="_blank" rel="noopener" role="menuitem">Wild Cat Species of the World</a>
+            <a href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" role="menuitem">Protecting Healthy Ecosystems</a>
+            <a href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" role="menuitem">Living Alongside Wild Cats</a>
+            <a href="https://www.felidaefund.org/learn/safety-essentials-wild-cats" target="_blank" rel="noopener" role="menuitem">Safety Essentials</a>
+            <a href="https://www.felidaefund.org/learn/media" target="_blank" rel="noopener" role="menuitem">Photos &amp; Videos</a>
+            <a href="https://www.felidaefund.org/kids" target="_blank" rel="noopener" role="menuitem">Kids Area</a>
+          </div>
+        </li>
+        <!-- Get Involved -->
+        <li class="nav__item" role="listitem">
+          <a href="#" class="nav__link">
+            Get Involved
+            <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
+          </a>
+          <div class="nav__dropdown" role="menu" aria-label="Get Involved submenu">
+            <a href="https://www.felidaefund.org/take-action/volunteer" target="_blank" rel="noopener" role="menuitem">Volunteer</a>
+            <a href="https://www.felidaefund.org/take-action/spread-awareness" target="_blank" rel="noopener" role="menuitem">Spread Awareness</a>
+            <a href="https://www.felidaefund.org/take-action/community-science" target="_blank" rel="noopener" role="menuitem">Community Scientist</a>
+            <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" role="menuitem">Trail Cam Data (Wilde Pod)</a>
+            <a href="https://www.felidaefund.org/events" target="_blank" rel="noopener" role="menuitem">Events</a>
+            <a href="https://www.felidaefund.org/take-action/more-ways-to-help" target="_blank" rel="noopener" role="menuitem">Ways to Donate</a>
+            <a href="https://www.felidaefund.org/store" target="_blank" rel="noopener" role="menuitem">Store</a>
+            <a href="https://www.felidaefund.org/take-action" target="_blank" rel="noopener" role="menuitem">Take Action</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Right -->
+      <div class="nav__right">
+        <button class="nav__search" aria-label="Search">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <circle cx="8.5" cy="8.5" r="5.5"/>
+            <line x1="13" y1="13" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="nav__badges">
+          <a href="https://app.candid.org/profile/7041082/felidae-conservation-fund-20-5089093" target="_blank" rel="noopener">
+            <img src="assets/badges/candid-platinum-2026.png" alt="Candid Platinum Seal of Transparency 2026" />
+          </a>
+          <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
+            <img src="assets/badges/greatnonprofits-top-rated-2025.png" alt="GreatNonprofits 2025 Top-Rated Nonprofit" />
+          </a>
+          <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
+            <img src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+          </a>
+        </div>
+        <a href="#" class="nav__donate" onclick="openDonate(event)">Donate</a>
+      </div>
+
+      <!-- Mobile hamburger -->
+      <button class="nav__hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="nav__mobile" id="mobileMenu" aria-hidden="true">
+      <div class="mob-panels" id="mobPanels">
+        <!-- L1: top-level items -->
+        <div class="mob-panel" id="mobL1">
+          <button class="mob-top-item" data-menu="Projects">Projects <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg></button>
+          <button class="mob-top-item" data-menu="Learn">Learn <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg></button>
+          <button class="mob-top-item" data-menu="Get Involved">Get Involved <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="6,3 11,8 6,13"/></svg></button>
+          <a href="#" class="mob-donate" onclick="openDonate(event)">Donate Now</a>
+          <div class="mob-badges">
+            <a href="https://app.candid.org/profile/7041082/felidae-conservation-fund-20-5089093" target="_blank" rel="noopener">
+              <img src="assets/badges/candid-platinum-2026.png" alt="Candid Platinum Seal of Transparency 2026" />
+            </a>
+            <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
+              <img src="assets/badges/greatnonprofits-top-rated-2025.png" alt="GreatNonprofits 2025 Top-Rated Nonprofit" />
+            </a>
+            <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
+              <img src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+            </a>
+          </div>
+          <div class="mob-search">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.8" fill="none"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <input type="search" class="mob-search__input" placeholder="Search…" aria-label="Search site">
+          </div>
+        </div>
+        <!-- L2: submenu -->
+        <div class="mob-panel" id="mobL2">
+          <button class="mob-back" id="mobBack">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><polyline points="10,3 5,8 10,13"/></svg>
+            Menu
+          </button>
+          <div class="mob-panel-title" id="mobPanelTitle"></div>
+          <div id="mobSubLinks"></div>
+        </div>
+      </div>
+    </div>
+  </nav>`;
+    initNav();
+  }
+}
+
+function initNav() {
+    // ── Nav scroll state ──────────────────────────────────────────────
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // ── Mobile hamburger ──────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobPanels = document.getElementById('mobPanels');
+    const mobPanelTitle = document.getElementById('mobPanelTitle');
+    const mobSubLinks = document.getElementById('mobSubLinks');
+    const mobBack = document.getElementById('mobBack');
+
+    const menuData = {
+      'Projects': [
+        'Bhutan Wild Cat Health Project','Patagonia Wild Cats Project',
+        'Diablo PumaLink Project','Bay Area Bobcat Project',
+        'Tsavo Cheetah Project','Bay Area Puma Project','Wild Cat Health Project',
+        '## Community Programs',
+        'Living with Lions','CAT Aware','Wilde Pod','Wilde Backyard'
+      ],
+      'Learn': [
+        'Our Mission','Science & Research','News','About Us',
+        'Wild Cat Species of the World','Protecting Healthy Ecosystems',
+        'Living Alongside Wild Cats','Safety Essentials',
+        'Photos & Videos','Kids Area'
+      ],
+      'Get Involved': [
+        'Volunteer','Spread Awareness','Community Scientist','Trail Cam Data (Wilde Pod)','Events',
+        'Ways to Donate','Store','Take Action'
+      ]
+    };
+
+    // Interim mapping of menu items to existing felidaefund.org pages (clear 1:1 matches only).
+    // Items not listed here remain '#' placeholders pending the full site rework.
+    const FF = 'https://www.felidaefund.org';
+    const navLinks = {
+      'Bhutan Wild Cat Health Project': FF + '/projects/research/bhutan-wild-cat-health-project',
+      'Patagonia Wild Cats Project':    FF + '/projects/research/patagonia-cats-project',
+      'Diablo PumaLink Project':        FF + '/projects/research/pumalink',
+      'Bay Area Bobcat Project':        FF + '/projects/research/bay-area-bobcat-project',
+      'Tsavo Cheetah Project':          FF + '/projects/research/tsavo-cheetah-project',
+      'Bay Area Puma Project':          FF + '/projects/research/bay-area-puma-project',
+      'Wild Cat Health Project':        FF + '/projects/research/wild-cat-health-project',
+      'Our Mission':                    FF + '/about/mission',
+      'About Us':                       FF + '/about',
+      'Science & Research':             FF + '/science',
+      'Wild Cat Species of the World':  FF + '/learn/cats',
+      'Protecting Healthy Ecosystems':  FF + '/learn/protecting-healthy-ecosystems',
+      'Living Alongside Wild Cats':     FF + '/learn/living-alongside-wild-cats',
+      'Living with Lions':              FF + '/projects/community/living-with-lions',
+      'CAT Aware':                      FF + '/projects/community/cat-aware',
+      'Wilde Pod':                      FF + '/projects/community/wilde-pod',
+      'Wilde Backyard':                 FF + '/projects/community/wilde-backyard',
+      'Safety Essentials':              FF + '/learn/safety-essentials-wild-cats',
+      'Photos & Videos':               FF + '/learn/media',
+      'Kids Area':                      FF + '/kids',
+      'News':                           FF + '/news',
+      'Volunteer':                      FF + '/take-action/volunteer',
+      'Spread Awareness':               FF + '/take-action/spread-awareness',
+      'Community Scientist':            FF + '/take-action/community-science',
+      'Trail Cam Data (Wilde Pod)':     FF + '/projects/community/wilde-pod',
+      'Events':                         FF + '/events',
+      'Ways to Donate':                 FF + '/take-action/more-ways-to-help',
+      'Store':                          FF + '/store',
+      'Take Action':                    FF + '/take-action'
+    };
+
+    function openMobileMenu(isOpen) {
+      hamburger.classList.toggle('open', isOpen);
+      mobileMenu.classList.toggle('open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+      mobileMenu.setAttribute('aria-hidden', String(!isOpen));
+      if (!isOpen) mobPanels.classList.remove('show-sub');
+    }
+
+    hamburger.addEventListener('click', () => {
+      openMobileMenu(!hamburger.classList.contains('open'));
+    });
+
+    document.querySelectorAll('.mob-top-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.menu;
+        mobPanelTitle.textContent = key;
+        mobSubLinks.innerHTML = menuData[key].map(item => {
+          if (item === '---') return '<div class="mob-sub-divider"></div>';
+          if (item.startsWith('## ')) return `<div class="mob-sub-heading">${item.slice(3)}</div>`;
+          const url = navLinks[item];
+          return url
+            ? `<a href="${url}" target="_blank" rel="noopener" class="mob-sub-link">${item}</a>`
+            : `<a href="#" class="mob-sub-link">${item}</a>`;
+        }).join('');
+        mobPanels.classList.add('show-sub');
+        document.getElementById('mobL2').scrollTop = 0;
+      });
+    });
+
+    mobBack.addEventListener('click', () => {
+      mobPanels.classList.remove('show-sub');
+    });
+}
+
+customElements.define('site-nav', SiteNav);
