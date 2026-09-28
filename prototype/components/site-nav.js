@@ -10,21 +10,10 @@ class SiteNav extends HTMLElement {
         <a href="index.html" class="nav__logo" aria-label="Felidae Conservation Fund — home">
           <img src="assets/logo/logo_felidae_neg-01.png" alt="Felidae Conservation Fund" class="nav__logo-img" />
         </a>
-        <button class="theme-trigger" id="logoThemeTrigger" aria-haspopup="menu" aria-expanded="false"
-                aria-label="Change the prototype's colour theme" title="Colour theme">
-          <span class="theme-trigger__dot"></span>
-        </button>
-        <div class="theme-picker" id="themePicker" role="menu" aria-label="Color theme">
-          <button class="theme-option active" data-theme-id="1" role="menuitem">
-            <span class="theme-swatch" style="background:var(--theme-1-swatch)"></span>
-            Dark
-          </button>
-          <button class="theme-option" data-theme-id="2" role="menuitem">
-            <span class="theme-swatch" style="background:var(--theme-2-swatch)"></span>
-            Medium
-          </button>
-        </div>
-      </div>
+        <!-- Theme picker parked at Irene's request. The two themes and
+             their tokens still exist; put the trigger and the picker back
+             to switch between them. -->
+
 
       <!-- Desktop Links -->
       <ul class="nav__links" role="list">
@@ -264,10 +253,13 @@ function initNav() {
       mobPanels.classList.remove('show-sub');
     });
 
-  // ── Theme picker ──────────────────────────────────────────────────
+  // ── Theme picker (parked) ─────────────────────────────────────────
+  // The trigger and the picker are out of the markup for now. The two
+  // themes and their tokens are untouched, and a theme saved earlier is
+  // still honoured, so putting the control back is a markup change only.
   const themeTrigger = document.getElementById('logoThemeTrigger');
   const themePicker  = document.getElementById('themePicker');
-  const themeButtons = themePicker.querySelectorAll('.theme-option');
+  const themeButtons = themePicker ? themePicker.querySelectorAll('.theme-option') : [];
 
   function applyTheme(id) {
     if (id === '1') document.documentElement.removeAttribute('data-theme');
@@ -276,18 +268,20 @@ function initNav() {
     localStorage.setItem('felidae-theme', id);
   }
 
-  themeTrigger.addEventListener('click', (e) => {
-    e.preventDefault();
-    themePicker.classList.toggle('open');
-  });
-  themeButtons.forEach(btn => btn.addEventListener('click', () => {
-    applyTheme(btn.dataset.themeId);
-    themePicker.classList.remove('open');
-  }));
-  document.addEventListener('click', (e) => {
-    if (!themeTrigger.contains(e.target) && !themePicker.contains(e.target))
+  if (themeTrigger && themePicker) {
+    themeTrigger.addEventListener('click', (e) => {
+      e.preventDefault();
+      themePicker.classList.toggle('open');
+    });
+    themeButtons.forEach(btn => btn.addEventListener('click', () => {
+      applyTheme(btn.dataset.themeId);
       themePicker.classList.remove('open');
-  });
+    }));
+    document.addEventListener('click', (e) => {
+      if (!themeTrigger.contains(e.target) && !themePicker.contains(e.target))
+        themePicker.classList.remove('open');
+    });
+  }
 
   // Restore saved theme on load
   const saved = localStorage.getItem('felidae-theme');
