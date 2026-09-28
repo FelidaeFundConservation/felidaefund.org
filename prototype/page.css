@@ -323,3 +323,25 @@
   font-family: var(--font-body); font-style: italic; font-size: 13px;
   line-height: 1.4; color: var(--brown-400);
 }
+
+/* ─── Links inside body copy ───────────────────────────────────────── */
+.prose a, .prose-list a {
+  color: var(--brown-700);
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--brown-rgb), .35);
+  text-underline-offset: 3px;
+  transition: color .15s, text-decoration-color .15s;
+}
+.prose a:hover, .prose-list a:hover {
+  color: var(--brown-600);
+  text-decoration-color: currentColor;
+}
+/* Tell people when a link leaves the page as a file */
+.prose a[href$=".pdf"]::after, .prose-list a[href$=".pdf"]::after {
+  content: 'PDF';
+  font-family: var(--font-display); font-size: 9px; font-weight: 700;
+  letter-spacing: .08em; vertical-align: 2px; margin-left: 5px;
+  padding: 2px 5px; border-radius: 3px;
+  background: rgba(var(--brown-rgb), .10); color: var(--brown-700);
+  text-decoration: none;
+}

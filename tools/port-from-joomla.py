@@ -1,19 +1,7 @@
-"""Port page content out of the live Joomla site into the prototype.
-
-Run once to generate the interior pages. It reads HTML snapshots of the
-live pages from a sibling `live/` directory (one file per page, named by
-its URL path with / replaced by __) and writes prototype pages that use
-the shared components: tokens.css, base.css, components.css, page.css,
-<site-nav>, <site-footer>, <site-donate>.
-
-The generated pages are committed, so this only needs re-running if the
-source content changes. Copy is lifted verbatim from the live site and
-still needs an editorial pass — see the note in the PR.
-"""
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
 OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=5'
+V    = '?v=9'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
@@ -33,22 +21,103 @@ def main_block(s):
 NOISE = re.compile(r'^(show photo caption|home$|learn$|about us$|projects$|take action$)', re.I)
 CREDIT = re.compile(r'(photo courtesy|copyright ©|used with permission|all rights reserved)', re.I)
 
-def blocks(seg, cap=40):
+# ── Inline links inside body copy ────────────────────────────────────
+# The live pages carry ~380 links inside paragraphs and lists: PDF
+# downloads, cross-references, outbound sources. Stripping tags to get
+# clean text threw all of them away, so body copy said "Download the
+# flyer here" with nothing to click. Keep them, and repoint the ones
+# that have a prototype page.
+LINKMAP = {
+ "/projects/research/bay-area-puma-project":"project-bapp.html",
+ "/projects/research/bay-area-bobcat-project":"project-bobcat.html",
+ "/projects/research/pumalink":"project-pumalink.html",
+ "/projects/research/wild-cat-health-project":"project-wildcat-health.html",
+ "/projects/research/patagonia-cats-project":"project-patagonia.html",
+ "/projects/research/tsavo-cheetah-project":"project-tsavo.html",
+ "/projects/research/bhutan-wild-cat-health-project":"project-bhutan.html",
+ "/projects/community/living-with-lions":"project-living-with-lions.html",
+ "/projects/community/cat-aware":"project-cat-aware.html",
+ "/projects/community/wilde-pod":"project-wilde-pod.html",
+ "/projects/community/wilde-backyard":"project-wilde-backyard.html",
+ "/projects/archive":"projects.html", "/projects/research":"projects.html",
+ "/projects/community":"projects.html", "/projects":"projects.html",
+ "/about/mission":"mission.html", "/about":"about.html", "/science":"science.html",
+ "/news":"news.html", "/events":"events.html", "/kids":"kids.html", "/store":"store.html",
+ "/learn/cats":"learn-cats.html",
+ "/learn/protecting-healthy-ecosystems":"learn-ecosystems.html",
+ "/learn/living-alongside-wild-cats":"learn-living-alongside.html",
+ "/learn/safety-essentials-wild-cats":"learn-safety.html",
+ "/learn/media":"learn-media.html",
+ "/take-action/volunteer":"volunteer.html",
+ "/take-action/spread-awareness":"spread-awareness.html",
+ "/take-action/community-science":"community-science.html",
+ "/take-action/more-ways-to-help":"ways-to-donate.html",
+ "/take-action":"take-action.html",
+}
+SPECIES_SLUGS = set()   # filled in once species.json is loaded
+
+def rewrite_href(h):
+    """(href, is_external). Internal pages go local; assets stay on the
+    live domain, same as the images."""
+    h = html.unescape(h).strip().replace(' ', '%20')
+    if h.startswith(('mailto:', 'tel:', '#')): return h, False
+    for host in ('https://www.felidaefund.org', 'https://felidaefund.org', 'http://www.felidaefund.org'):
+        if h.startswith(host): h = h[len(host):] or '/'
+    if h.startswith('/'):
+        path = h.split('?')[0].split('#')[0].rstrip('/') or '/'
+        if path.startswith('/learn/cats/'):
+            slug = path.rsplit('/', 1)[1]
+            if slug in SPECIES_SLUGS: return f"species-{slug}.html", False
+        if path in LINKMAP: return LINKMAP[path], False
+        # assets (pdf, images, media) and anything without a prototype page
+        return 'https://felidaefund.org' + h, True
+    return h, True
+
+KEEP = {'a', 'strong', 'em', 'b', 'i'}
+
+def inline_html(frag):
+    """Escaped text with the whitelisted inline tags preserved."""
+    out, pos = [], 0
+    for m in re.finditer(r'<[^>]+>', frag):
+        out.append(esc(html.unescape(frag[pos:m.start()])))
+        tag = m.group(0); pos = m.end()
+        name = re.match(r'</?\s*([a-zA-Z0-9]+)', tag)
+        if not name or name.group(1).lower() not in KEEP: continue
+        name = name.group(1).lower()
+        if tag.startswith('</'):
+            out.append(f'</{name}>')
+        elif name == 'a':
+            href = re.search(r'href="([^"]*)"', tag)
+            if not href: continue
+            url, ext = rewrite_href(href.group(1))
+            out.append(f'<a href="{url}"' + (' target="_blank" rel="noopener"' if ext else '') + '>')
+        else:
+            out.append(f'<{name}>')
+    out.append(esc(html.unescape(frag[pos:])))
+    s = re.sub(r'\s+', ' ', ''.join(out)).strip()
+    # drop links left empty or unbalanced by the tag filtering
+    s = re.sub(r'<a [^>]*>\s*</a>', '', s)
+    return s
+
+
+def blocks(seg, cap=80):
     """Ordered (kind, payload) content blocks from the Joomla main region."""
     out = []
     for m in re.finditer(r'<(h2|h3|p|ul|ol)\b[^>]*>(.*?)</\1>', seg, re.S):
         kind, inner = m.group(1), m.group(2)
         if kind in ('ul','ol'):
-            items = [txt(li) for li in re.findall(r'<li[^>]*>(.*?)</li>', inner, re.S)]
-            items = [i for i in items if 3 < len(i) < 220 and not NOISE.match(i)]
+            raw = re.findall(r'<li[^>]*>(.*?)</li>', inner, re.S)
+            items = [(txt(li), inline_html(li)) for li in raw]
+            items = [h for t, h in items if 3 < len(t) < 220 and not NOISE.match(t)]
             if 1 < len(items) <= 12: out.append(('ul', items))
         else:
             t = txt(inner)
             if not t or NOISE.match(t): continue
-            if kind == 'p' and (len(t) < 25 or len(t) > 900): continue
+            has_link = '<a ' in inner
+            if kind == 'p' and ((len(t) < 25 and not has_link) or len(t) > 900): continue
             if CREDIT.search(t): continue
             if kind in ('h2','h3') and (len(t) < 3 or len(t) > 90): continue
-            out.append((kind, t))
+            out.append((kind, inline_html(inner)))
         if len(out) >= cap: break
     # collapse duplicate consecutive headings
     ded, seen = [], set()
@@ -142,12 +211,12 @@ def prose_html(bs, indent='          '):
     for k, v in bs:
         if k == 'ul':
             out.append(indent + '<ul class="prose-list">')
-            out += [indent + f'  <li>{esc(i)}</li>' for i in v]
+            out += [indent + f'  <li>{i}</li>' for i in v]
             out.append(indent + '</ul>')
         elif k in ('h2','h3'):
-            out.append(indent + f'<{k}>{esc(v)}</{k}>')
+            out.append(indent + f'<{k}>{v}</{k}>')
         else:
-            out.append(indent + f'<p>{esc(v)}</p>')
+            out.append(indent + f'<p>{v}</p>')
     return '\n'.join(out)
 
 # ── Page register ────────────────────────────────────────────────────
@@ -186,7 +255,7 @@ def build_content(src, outfile, title, section, parent, accent):
     # first long paragraph becomes the lede
     lede, rest = '', bs
     for i,(k,v) in enumerate(bs):
-        if k == 'p' and len(v) > 60:
+        if k == 'p' and len(txt(v)) > 60:
             lede = v; rest = bs[:i] + bs[i+1:]; break
     img, alt = hero_img(seg)
     hero = ''
@@ -205,7 +274,7 @@ def build_content(src, outfile, title, section, parent, accent):
         </nav>
         <p class="page-eyebrow">{esc(section)}</p>
         <h1 class="page-title">{esc(title)}</h1>
-        <p class="page-lede">{esc(lede)}</p>
+        <p class="page-lede">{lede}</p>
       </div>
     </header>
 {hero}
@@ -259,16 +328,16 @@ def objectives(bs):
 def build_project(src, outfile, title, accent, kind):
     s = open(os.path.join(LIVE, src.replace('/','__') + '.html'), encoding='utf-8', errors='replace').read()
     seg = main_block(s)
-    meta, bs = project_meta(seg), blocks(seg, cap=50)
+    meta, bs = project_meta(seg), blocks(seg, cap=90)
     cards = objectives(bs)
     used = {c[0] for c in cards}
     paras = [(k,v) for k,v in bs if k == 'p' or (k in ('h2','h3') and v not in used)]
     lede, rest = '', paras
     for i,(k,v) in enumerate(paras):
-        if k == 'p' and len(v) > 60:
+        if k == 'p' and len(txt(v)) > 60:
             lede = re.sub(r'^(Research|Community Program)\s+', '', v)
             rest = paras[:i] + paras[i+1:]; break
-    rest = [b for b in rest if b[0] != 'p' or len(b[1]) > 40][:14]
+    rest = [b for b in rest if b[0] != 'p' or len(txt(b[1])) > 40 or '<a ' in b[1]][:24]
     img, alt = hero_img(seg)
 
     fact_rows = []
@@ -292,7 +361,7 @@ def build_project(src, outfile, title, accent, kind):
     if cards:
         cols = []
         for n,(h,items) in enumerate(cards):
-            lis = '\n'.join(f'              <li>{esc(i)}</li>' for i in items)
+            lis = '\n'.join(f'              <li>{i}</li>' for i in items)
             d = f' reveal-delay-{n}' if n else ''
             cols.append(f'''          <article class="obj-card reveal{d}">
             <h3>{esc(h)}</h3>
@@ -329,7 +398,7 @@ def build_project(src, outfile, title, accent, kind):
         </nav>
         <p class="page-eyebrow">{esc(kind)}</p>
         <h1 class="page-title">{esc(title)}</h1>
-        <p class="page-lede">{esc(lede)}</p>
+        <p class="page-lede">{lede}</p>
       </div>
     </header>
 {hero}
@@ -376,6 +445,7 @@ EXTRA = [
 # ── Species: 40 detail pages + the gallery index ─────────────────────
 import json
 SPECIES = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'species.json')))
+SPECIES_SLUGS.update(SPECIES)
 ACCENTS = ["bapp","tsavo","patagonia","lwl","babp","argentina","pumalink","bhutan","health","wilde"]
 # The live gallery ships a different max size per species; use what exists.
 THUMBS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'thumbs.json')))
