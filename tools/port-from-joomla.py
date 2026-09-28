@@ -1,7 +1,7 @@
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
 OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=10'
+V    = '?v=11'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
@@ -241,6 +241,32 @@ CONTENT = [
  ("store",            "store.html",            "Store",                       "Get Involved", None,           "argentina"),
 ]
 
+# ── Form call-to-actions ─────────────────────────────────────────────
+# Daniel's IA puts a form on two pages: "Apply as a Volunteer" and the
+# "Event Inquiry Form". A static page cannot receive a submission, so
+# these link out to a Google Form instead.
+#
+# TO ENABLE: paste the Google Form URL next to the page. A page with an
+# empty URL renders no button, so nothing ever ships pointing at a dead
+# link. The live Joomla forms ask for first name, last name and email.
+FORMS = {
+  "volunteer.html":     ("Apply as a volunteer", ""),
+  "host-an-event.html": ("Send an event inquiry", ""),
+}
+
+def form_cta(outfile):
+    label, url = FORMS.get(outfile, (None, None))
+    if not url: return ''
+    return f"""
+    <section class="form-cta">
+      <div class="container">
+        <a href="{url}" class="btn-primary" target="_blank" rel="noopener">{esc(label)}</a>
+        <p>Opens a form in a new tab.</p>
+      </div>
+    </section>
+"""
+
+
 def crumbs(parent, current):
     rows = ['          <a href="index.html">Home</a>', '          <span aria-hidden="true">/</span>']
     if parent:
@@ -285,7 +311,7 @@ def build_content(src, outfile, title, section, parent, accent):
         </div>
       </div>
     </section>
-''' + support("Support the work behind this page",
+''' + form_cta(outfile) + support("Support the work behind this page",
               "Felidae is a 501(c)(3) nonprofit. Gifts fund field research, community science and habitat protection.") + TAIL
     open(os.path.join(OUT, outfile), 'w').write(html_out)
     return outfile, len(bs), bool(img)

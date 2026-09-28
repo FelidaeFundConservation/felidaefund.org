@@ -345,3 +345,10 @@
   background: rgba(var(--brown-rgb), .10); color: var(--brown-700);
   text-decoration: none;
 }
+
+/* ─── Form call-to-action ──────────────────────────────────────────── */
+.form-cta { padding: 8px 0 56px; }
+.form-cta p {
+  font-family: var(--font-display); font-size: 12px; color: var(--brown-400);
+  margin-top: 10px;
+}
