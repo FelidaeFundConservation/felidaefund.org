@@ -10,10 +10,9 @@ class SiteNav extends HTMLElement {
         <a href="index.html" class="nav__logo" aria-label="Felidae Conservation Fund — home">
           <img src="assets/logo/logo_felidae_neg-01.png" alt="Felidae Conservation Fund" class="nav__logo-img" />
         </a>
-        <!-- Theme picker parked at Irene's request. The two themes and
-             their tokens still exist; put the trigger and the picker back
-             to switch between them. -->
-
+        <!-- Theme picker parked. Both themes and their tokens still
+             exist; restoring the trigger and the menu brings it back. -->
+      </div>
 
       <!-- Desktop Links -->
       <ul class="nav__links" role="list">
