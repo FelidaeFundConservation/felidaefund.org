@@ -498,6 +498,8 @@ def head(title, accent, extra_css=True):
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{esc(title)} — Felidae Conservation Fund</title>
+  <link rel="icon" type="image/svg+xml" href="https://felidaefund.org/templates/genesis4/images/favicon.svg" />
+  <link rel="alternate icon" href="https://felidaefund.org/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
@@ -862,13 +864,6 @@ def build_project(src, outfile, title, accent, kind):
     </section>
 {obj}
 {gallery_html(gallery_items(raw_main(s)))}
-    <section class="related">
-      <div class="container">
-        <p class="section-label reveal">More projects</p>
-        <h2 class="section-title reveal">Other places we work</h2>
-        <p style="margin-top:24px"><a href="projects.html" class="btn-outline">See all eleven projects</a></p>
-      </div>
-    </section>
 ''' + support("Fund this project",
               "Camera traps, collar batteries and lab work are what turn field hours into protection.") + TAIL
     open(os.path.join(OUT, outfile), 'w').write(out)
