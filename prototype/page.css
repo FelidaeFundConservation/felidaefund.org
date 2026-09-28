@@ -106,33 +106,6 @@
 }
 
 /* ─── Objective cards ──────────────────────────────────────────────── */
-.objectives { padding: 40px 0 72px; }
-.obj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
-.obj-card {
-  background: var(--cream-200); border: 1px solid rgba(var(--gold-rgb), .30);
-  border-radius: var(--r-md); padding: 28px 26px;
-  transition: border-color .25s, transform .25s, box-shadow .25s;
-}
-.obj-card:hover {
-  border-color: rgba(var(--gold-rgb), .70); transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(var(--gold-rgb), .14);
-}
-.obj-card h3 {
-  font-family: var(--font-display); font-weight: 700; font-size: 18px;
-  color: var(--espresso-900); margin-bottom: 16px;
-  padding-bottom: 14px; border-bottom: 1px solid rgba(var(--gold-rgb), .35);
-}
-.obj-card ul { list-style: none; display: grid; gap: 12px; }
-.obj-card li {
-  position: relative; padding-left: 22px;
-  font-family: var(--font-body); font-size: 15px; line-height: 1.6;
-  color: var(--brown-800);
-}
-.obj-card li::before {
-  content: ''; position: absolute; left: 0; top: 9px;
-  width: 9px; height: 2px; border-radius: 2px; background: var(--page-accent);
-}
-
 /* ─── Support band ─────────────────────────────────────────────────── */
 .support {
   background: var(--espresso-900);
@@ -182,12 +155,12 @@
 @media (max-width: 1024px) {
   .page-grid { grid-template-columns: 1fr; gap: 40px; }
   .factbox { position: static; }
-  .obj-grid, .rel-grid { grid-template-columns: 1fr 1fr; }
+  .rel-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 700px) {
   .page-head { padding: calc(var(--nav-h) + 32px) 0 32px; }
   .page-body { padding: 44px 0 16px; }
-  .obj-grid, .rel-grid { grid-template-columns: 1fr; }
+  .rel-grid { grid-template-columns: 1fr; }
   .support__inner { flex-direction: column; align-items: flex-start; }
   .related { padding: 48px 0 64px; }
 }

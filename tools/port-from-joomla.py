@@ -775,8 +775,12 @@ def build_project(src, outfile, title, accent, kind):
     s = open(os.path.join(LIVE, src.replace('/','__') + '.html'), encoding='utf-8', errors='replace').read()
     seg = main_block(s)
     meta, bs = project_meta(seg), blocks(seg, cap=90)
-    cards, span = objectives(bs)
-    if span: bs = bs[:span[0]] + bs[span[1]:]   # the section now lives in the cards
+    # Objective cards dropped at Irene's call. Only the Bay Area Puma
+    # page groups its objectives under sub-headings, so the treatment
+    # landed on one page of eleven and made the other ten look thin.
+    # Objectives now stay in the body copy on every project page.
+    # objectives() is kept: restoring the cards is two lines.
+    cards, span = [], None
     paras = [(k, v) for k, v in bs if k in ('p', 'h2', 'h3', 'list', 'figure')]
     lede, rest = '', paras
     for i,(k,v) in enumerate(paras):
