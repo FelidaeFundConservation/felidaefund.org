@@ -156,19 +156,83 @@ def list_html(markup, depth=0):
     return f'<{tag}{cls}>' + ''.join(rows) + f'</{tag}>'
 
 
+def best_src(tag):
+    """Largest variant offered by an <img>, from srcset or src."""
+    cands = []
+    ss = re.search(r'srcset="([^"]+)"', tag)
+    if ss:
+        for part in ss.group(1).split(','):
+            bits = part.strip().split()
+            if not bits: continue
+            w = int(bits[1][:-1]) if len(bits) > 1 and bits[1].endswith('w') else 0
+            cands.append((w, bits[0]))
+    sr = re.search(r'src="([^"]+)"', tag)
+    if sr:
+        w = re.search(r'-(\d{2,4})\.(?:webp|jpg|jpeg|png)$', sr.group(1))
+        cands.append((int(w.group(1)) if w else 1, sr.group(1)))
+    cands = [(w, u) for w, u in cands if 'logo' not in u.lower() and not u.endswith('.svg')]
+    if not cands: return None
+    w, url = max(cands)
+    if w <= 1:
+        # no size in the filename or srcset: trust the tag, and only treat
+        # it as an icon if it actually declares small dimensions
+        attr = re.search(r'\bwidth="(\d+)"', tag)
+        w = int(attr.group(1)) if attr else 1000
+    if url.startswith('/'): url = 'https://felidaefund.org' + url.replace(' ', '%20')
+    alt = re.search(r'alt="([^"]*)"', tag)
+    return (url, html.unescape(alt.group(1)) if alt else '', w)
+
+def photo_key(url):
+    f = url.split('/')[-1]
+    return re.sub(r'-\d{2,4}(?:-\d+-\d+)?(?:-c)?\.(?:webp|jpg|jpeg|png)$', '', f, flags=re.I)
+
+def figure_html(url, alt, caption='', width=0):
+    """A picture in the body flow.
+
+    Small source images are held to their own size instead of being
+    blown up across the column, and a YouTube still is turned back into
+    a link to the video rather than posing as a photograph.
+    """
+    yt = re.search(r'img\.youtube\.com/vi/([A-Za-z0-9_-]{6,})/', url)
+    cls = 'prose-figure'
+    if width and width < 400: cls += ' prose-figure--small'
+    if yt: cls += ' prose-figure--video'
+    if yt and not caption: caption = 'Watch on YouTube'
+    cap = f'<figcaption>{esc(caption)}</figcaption>' if caption else ''
+    img = f'<img src="{url}" alt="{esc(alt)}" loading="lazy" />'
+    if yt:
+        img = (f'<a href="https://www.youtube.com/watch?v={yt.group(1)}" '
+               f'target="_blank" rel="noopener">{img}</a>')
+    return f'<figure class="{cls}">{img}{cap}</figure>' 
+
+
 def blocks(seg, cap=80):
     """Ordered content blocks. Lists are scanned with balanced matching so
     a nested <ol> stays inside its parent instead of being re-read as a
     separate block."""
     out, i = [], 0
-    opener = re.compile(r'<(h2|h3|p|ul|ol)\b[^>]*>', re.I)
+    opener = re.compile(r'<(h2|h3|p|ul|ol|figure|img)\b[^>]*>', re.I)
     while len(out) < cap:
         m = opener.search(seg, i)
         if not m: break
         kind = m.group(1).lower()
+        if kind == 'img':
+            i = m.end()
+            got = best_src(m.group(0))
+            if got and got[2] >= 200:
+                out.append(('figure', figure_html(got[0], got[1], '', got[2])))
+            continue
         stop = balanced(seg, m.start(), kind)
         whole = seg[m.start():stop]
         i = stop
+        if kind == 'figure':
+            im = re.search(r'<img[^>]+>', whole)
+            got = best_src(im.group(0)) if im else None
+            capm = re.search(r'<figcaption[^>]*>(.*?)</figcaption>', whole, re.S)
+            caption = txt(capm.group(1)) if capm else ''
+            if got and got[2] >= 200 and not CREDIT.search(caption):
+                out.append(('figure', figure_html(got[0], got[1], caption, got[2])))
+            continue
         if kind in ('ul', 'ol'):
             flat = [txt(li) for li in re.findall(r'<li[^>]*>(.*?)</li>', whole, re.S)]
             flat = [t for t in flat if t and not NOISE.match(t)]
@@ -177,6 +241,12 @@ def blocks(seg, cap=80):
             if rendered: out.append(('list', {'html': rendered, 'items': flat}))
             continue
         inner = whole[whole.index('>') + 1: whole.rindex('</')] if '</' in whole else ''
+        if kind == 'p' and '<img' in inner:
+            for im in re.findall(r'<img[^>]+>', inner):
+                got = best_src(im)
+                if got and got[2] >= 200:
+                    out.append(('figure', figure_html(got[0], got[1], '', got[2])))
+            inner = re.sub(r'<img[^>]+>', ' ', inner)
         t = txt(inner)
         if not t or NOISE.match(t): continue
         has_link = '<a ' in inner
@@ -190,6 +260,19 @@ def blocks(seg, cap=80):
         if key in seen: continue
         seen.add(key); ded.append((k, v))
     return ded
+
+def drop_hero_dupe(bs, hero_url):
+    """The hero already shows that picture at the top of the page."""
+    if not hero_url: return bs
+    key = photo_key(hero_url)
+    out = []
+    for k, v in bs:
+        if k == 'figure':
+            m = re.search(r'src="([^"]+)"', v)
+            if m and photo_key(m.group(1)) == key: continue
+        out.append((k, v))
+    return out
+
 
 def drop_orphan_headings(bs):
     """A heading with nothing under it. Happens when the content beneath
@@ -460,8 +543,8 @@ def support(title, body):
 def prose_html(bs, indent='          '):
     out = []
     for k, v in bs:
-        if k == 'list':
-            out.append(indent + v['html'])
+        if k in ('list', 'figure'):
+            out.append(indent + (v['html'] if k == 'list' else v))
         elif k in ('h2','h3'):
             out.append(indent + f'<{k}>{v}</{k}>')
         else:
@@ -592,7 +675,7 @@ def build_content(src, outfile, title, section, parent, accent):
       <img src="{img}" alt="{esc(alt) or esc(title)}" />
     </figure>
 '''
-    body = prose_html(drop_orphan_headings(rest))
+    body = prose_html(drop_orphan_headings(drop_hero_dupe(rest, img)))
     html_out = head(title, accent) + f'''
     <header class="page-head">
       <div class="container">
@@ -691,7 +774,7 @@ def build_project(src, outfile, title, accent, kind):
     meta, bs = project_meta(seg), blocks(seg, cap=90)
     cards, span = objectives(bs)
     if span: bs = bs[:span[0]] + bs[span[1]:]   # the section now lives in the cards
-    paras = [(k, v) for k, v in bs if k in ('p', 'h2', 'h3', 'list')]
+    paras = [(k, v) for k, v in bs if k in ('p', 'h2', 'h3', 'list', 'figure')]
     lede, rest = '', paras
     for i,(k,v) in enumerate(paras):
         if k == 'p' and len(txt(v)) > 60:
@@ -766,7 +849,7 @@ def build_project(src, outfile, title, accent, kind):
     <section class="page-body">
       <div class="container page-grid">
         <div class="prose reveal">
-{prose_html(drop_orphan_headings(rest))}
+{prose_html(drop_orphan_headings(drop_hero_dupe(rest, img)))}
         </div>
         <aside class="factbox reveal reveal-delay-1" aria-label="Project details">{project_logo(outfile, title)}
           <h2>Project details</h2>

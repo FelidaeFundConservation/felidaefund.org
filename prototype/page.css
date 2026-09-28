@@ -424,3 +424,26 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   content: ''; position: absolute; left: 0; top: 10px;
   width: 7px; height: 2px; border-radius: 2px; background: var(--page-accent);
 }
+
+/* Pictures that sit inside the body copy */
+.prose-figure { margin: 28px 0; }
+.prose-figure img {
+  width: 100%; height: auto; display: block;
+  border-radius: var(--r-md); border: 1px solid rgba(var(--gold-rgb), .22);
+}
+.prose-figure figcaption {
+  font-family: var(--font-display); font-size: 12px; line-height: 1.6;
+  color: var(--brown-400); padding-top: 10px;
+}
+.prose-figure--small img { max-width: 320px; }
+.prose-figure--video { position: relative; max-width: 480px; }
+.prose-figure--video a { display: block; position: relative; }
+.prose-figure--video a::after {
+  content: '▶'; position: absolute; inset: 0; margin: auto;
+  width: 54px; height: 54px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: rgba(var(--ink-rgb), .68); color: var(--cream-100);
+  font-size: 19px; padding-left: 3px;
+  transition: background .2s, transform .2s;
+}
+.prose-figure--video a:hover::after { background: var(--brown-700); transform: scale(1.06); }
