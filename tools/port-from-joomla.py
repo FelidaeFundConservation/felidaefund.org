@@ -23,6 +23,10 @@ def main_block(s):
     # the gallery-of-galleries widget: its card titles were leaking in as
     # headings followed by a "View Gallery" paragraph
     seg = re.sub(r'<div[^>]*\big-menu-grid\b.*?(?=<div class="after-content|\Z)', ' ', seg, flags=re.S)
+    # the article listing is rendered as cards instead
+    if 'blog-item' in seg:
+        m2 = re.search(r'<div[^>]*\bcom-content-category-blog\b', seg)
+        if m2: seg = seg[:m2.start()]
     # Joomla chrome that isn't body copy: hidden captions, scripts, nav, forms
     for pat in (r'<aside\b[^>]*>.*?</aside>',
                 r'<div[^>]*\bigui-scope\b.*?<!--\s*/igallery\s*-->',
@@ -143,6 +147,27 @@ def blocks(seg, cap=80):
         seen.add(key); ded.append((k, v))
     return ded
 
+def drop_orphan_headings(bs):
+    """A heading with nothing under it. Happens when the content beneath
+    it was a widget we render elsewhere (the Objectives list becomes the
+    objective cards) or something the porter does not carry over."""
+    rank = {'h2': 2, 'h3': 3, 'h4': 4}
+    # removing one orphan can orphan the heading above it, so repeat
+    # until nothing changes
+    while True:
+        out = []
+        for i, (kind, val) in enumerate(bs):
+            if kind in rank:
+                has_body = False
+                for k2, _ in bs[i+1:]:
+                    if k2 in rank and rank[k2] <= rank[kind]: break
+                    has_body = True; break
+                if not has_body: continue
+            out.append((kind, val))
+        if len(out) == len(bs): return out
+        bs = out
+
+
 def hero_img(seg):
     """Biggest available variant of the first real photo in the region.
 
@@ -257,6 +282,60 @@ def gallery_menu_html(items, heading="Photo galleries"):
     <section class="gallery-section">
       <div class="container">
         <p class="section-label reveal">Galleries</p>
+        <h2 class="section-title reveal">{esc(heading)}</h2>
+        <div class="rel-grid">
+{chr(10).join(cells)}
+        </div>
+      </div>
+    </section>
+"""
+
+
+# ── Article listings ─────────────────────────────────────────────────
+# The News page is a Joomla category blog: each item is a card with a
+# title, date, image, standfirst and a Read More button. Read as prose
+# it produced a run of headings followed by the word "Read More".
+def article_items(seg):
+    marks = [m.start() for m in re.finditer(r'class="[^"]*blog-item[^"]*"', seg)]
+    if not marks: return []
+    blocks = [seg[a:b] for a, b in zip(marks, marks[1:] + [len(seg)])]
+    out = []
+    for blk in blocks:
+        t = re.search(r'<h2[^>]*>(.*?)</h2>', blk, re.S)
+        if not t: continue
+        href = re.search(r'<a[^>]+href="([^"]+)"', t.group(1)) or re.search(r'readmore.*?href="([^"]+)"', blk, re.S)
+        date = re.search(r'publication-date"[^>]*>(.*?)</span>', blk, re.S)
+        img  = re.search(r'newsflash-image.*?<img[^>]+src="([^"]+)"', blk, re.S)
+        prev = re.search(r'preview-text"[^>]*>\s*<p>(.*?)</p>', blk, re.S)
+        url, _ = rewrite_href(href.group(1)) if href else ('', False)
+        cover = img.group(1) if img else ''
+        if cover.startswith('/'): cover = 'https://felidaefund.org' + cover.replace(' ', '%20')
+        out.append((url, txt(t.group(1)), txt(date.group(1)) if date else '',
+                    txt(prev.group(1)) if prev else '', cover))
+    return out
+
+def article_list_html(items, heading="Latest stories"):
+    if len(items) < 2: return ''
+    cells = []
+    for n, (url, title, date, standfirst, cover) in enumerate(items):
+        d = f' reveal-delay-{n % 3}' if n % 3 else ''
+        ext = ' target="_blank" rel="noopener"' if url.startswith('http') else ''
+        media = (f'<div class="rel-card__media"><img src="{cover}" alt="" loading="lazy" /></div>'
+                 if cover else '')
+        meta = f'<p class="rel-card__label">{esc(date)}</p>' if date else ''
+        body = f'<p>{esc(standfirst)}</p>' if standfirst else ''
+        cells.append(f"""          <a class="rel-card reveal{d}" href="{url or '#'}"{ext}>
+            {media}
+            <div class="rel-card__body">
+              {meta}
+              <h3>{esc(title)}</h3>
+              {body}
+            </div>
+          </a>""")
+    return f"""
+    <section class="gallery-section">
+      <div class="container">
+        <p class="section-label reveal">Newsroom</p>
         <h2 class="section-title reveal">{esc(heading)}</h2>
         <div class="rel-grid">
 {chr(10).join(cells)}
@@ -452,7 +531,7 @@ def build_content(src, outfile, title, section, parent, accent):
       <img src="{img}" alt="{esc(alt) or esc(title)}" />
     </figure>
 '''
-    body = prose_html(rest)
+    body = prose_html(drop_orphan_headings(rest))
     html_out = head(title, accent) + f'''
     <header class="page-head">
       <div class="container">
@@ -472,7 +551,7 @@ def build_content(src, outfile, title, section, parent, accent):
         </div>
       </div>
     </section>
-''' + gallery_html(gallery_items(raw_main(s))) + gallery_menu_html(gallery_menu(raw_main(s))) + form_cta(outfile) + support("Support the work behind this page",
+''' + gallery_html(gallery_items(raw_main(s))) + gallery_menu_html(gallery_menu(raw_main(s))) + article_list_html(article_items(raw_main(s))) + form_cta(outfile) + support("Support the work behind this page",
               "Felidae is a 501(c)(3) nonprofit. Gifts fund field research, community science and habitat protection.") + TAIL
     open(os.path.join(OUT, outfile), 'w').write(html_out)
     return outfile, len(bs), bool(img)
@@ -615,7 +694,7 @@ def build_project(src, outfile, title, accent, kind):
     <section class="page-body">
       <div class="container page-grid">
         <div class="prose reveal">
-{prose_html(rest)}
+{prose_html(drop_orphan_headings(rest))}
         </div>
         <aside class="factbox reveal reveal-delay-1" aria-label="Project details">{project_logo(outfile, title)}
           <h2>Project details</h2>
