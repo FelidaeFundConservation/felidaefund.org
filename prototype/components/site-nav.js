@@ -195,37 +195,36 @@ function initNav() {
 
     // Interim mapping of menu items to existing felidaefund.org pages (clear 1:1 matches only).
     // Items not listed here remain '#' placeholders pending the full site rework.
-    const FF = 'https://www.felidaefund.org';
     const navLinks = {
-      'Bhutan Wild Cat Health Project': FF + '/projects/research/bhutan-wild-cat-health-project',
-      'Patagonia Wild Cats Project':    FF + '/projects/research/patagonia-cats-project',
-      'Diablo PumaLink Project':        FF + '/projects/research/pumalink',
-      'Bay Area Bobcat Project':        FF + '/projects/research/bay-area-bobcat-project',
-      'Tsavo Cheetah Project':          FF + '/projects/research/tsavo-cheetah-project',
-      'Bay Area Puma Project':          FF + '/projects/research/bay-area-puma-project',
-      'Wild Cat Health Project':        FF + '/projects/research/wild-cat-health-project',
-      'Our Mission':                    FF + '/about/mission',
-      'About Us':                       FF + '/about',
-      'Science & Research':             FF + '/science',
-      'Wild Cat Species of the World':  FF + '/learn/cats',
-      'Protecting Healthy Ecosystems':  FF + '/learn/protecting-healthy-ecosystems',
-      'Living Alongside Wild Cats':     FF + '/learn/living-alongside-wild-cats',
-      'Living with Lions':              FF + '/projects/community/living-with-lions',
-      'CAT Aware':                      FF + '/projects/community/cat-aware',
-      'Wilde Pod':                      FF + '/projects/community/wilde-pod',
-      'Wilde Backyard':                 FF + '/projects/community/wilde-backyard',
-      'Safety Essentials':              FF + '/learn/safety-essentials-wild-cats',
-      'Photos & Videos':               FF + '/learn/media',
-      'Kids Area':                      FF + '/kids',
-      'News':                           FF + '/news',
-      'Volunteer':                      FF + '/take-action/volunteer',
-      'Spread Awareness':               FF + '/take-action/spread-awareness',
-      'Community Scientist':            FF + '/take-action/community-science',
-      'Trail Cam Data (Wilde Pod)':     FF + '/projects/community/wilde-pod',
-      'Events':                         FF + '/events',
-      'Ways to Donate':                 FF + '/take-action/more-ways-to-help',
-      'Store':                          FF + '/store',
-      'Take Action':                    FF + '/take-action'
+      'Bhutan Wild Cat Health Project': 'project-bhutan.html',
+      'Patagonia Wild Cats Project':    'project-patagonia.html',
+      'Diablo PumaLink Project':        'project-pumalink.html',
+      'Bay Area Bobcat Project':        'project-bobcat.html',
+      'Tsavo Cheetah Project':          'project-tsavo.html',
+      'Bay Area Puma Project':          'project-bapp.html',
+      'Wild Cat Health Project':        'project-wildcat-health.html',
+      'Our Mission':                    'mission.html',
+      'About Us':                       'about.html',
+      'Science & Research':             'science.html',
+      'Wild Cat Species of the World':  'learn-cats.html',
+      'Protecting Healthy Ecosystems':  'learn-ecosystems.html',
+      'Living Alongside Wild Cats':     'learn-living-alongside.html',
+      'Living with Lions':              'project-living-with-lions.html',
+      'CAT Aware':                      'project-cat-aware.html',
+      'Wilde Pod':                      'project-wilde-pod.html',
+      'Wilde Backyard':                 'project-wilde-backyard.html',
+      'Safety Essentials':              'learn-safety.html',
+      'Photos & Videos':               'learn-media.html',
+      'Kids Area':                      'kids.html',
+      'News':                           'news.html',
+      'Volunteer':                      'volunteer.html',
+      'Spread Awareness':               'spread-awareness.html',
+      'Community Scientist':            'community-science.html',
+      'Trail Cam Data (Wilde Pod)':     'project-wilde-pod.html',
+      'Events':                         'events.html',
+      'Ways to Donate':                 'ways-to-donate.html',
+      'Store':                          'store.html',
+      'Take Action':                    'take-action.html'
     };
 
     function openMobileMenu(isOpen) {
@@ -249,7 +248,7 @@ function initNav() {
           if (item.startsWith('## ')) return `<div class="mob-sub-heading">${item.slice(3)}</div>`;
           const url = navLinks[item];
           return url
-            ? `<a href="${url}" target="_blank" rel="noopener" class="mob-sub-link">${item}</a>`
+            ? `<a href="${url}" class="mob-sub-link">${item}</a>`
             : `<a href="#" class="mob-sub-link">${item}</a>`;
         }).join('');
         mobPanels.classList.add('show-sub');
