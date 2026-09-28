@@ -1,7 +1,7 @@
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
 OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=9'
+V    = '?v=10'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
@@ -500,6 +500,48 @@ def build_species_index():
               "Felidae funds the field research and community work that keeps that habitat intact.") + TAIL
     open(os.path.join(OUT, "learn-cats.html"), 'w').write(out)
     return len(cards)
+
+# Pages that exist on the live site but nothing in the main nav points at,
+# so the first pass missed them. Reachable from the footer, from links in
+# body copy, or by URL.
+CONTENT += [
+ ("projects/archive", "past-projects.html", "Past Projects", "Our Work",
+    ("Projects","projects.html"), "bapp"),
+ ("science/innovative-wild-cat-conservation", "innovative-approach.html",
+    "Our Innovative Approach", "Science", ("Science & Research","science.html"), "health"),
+ ("take-action/host-an-event", "host-an-event.html", "Host an Event", "Get Involved",
+    ("Take Action","take-action.html"), "wilde"),
+ ("careers", "careers.html", "Career Opportunities", "Get Involved",
+    ("Take Action","take-action.html"), "pumalink"),
+ ("about/who-we-are", "who-we-are.html", "Who We Are", "About",
+    ("About Us","about.html"), "bapp"),
+ ("about/partners-supporters", "partners-supporters.html", "Partners & Supporters", "About",
+    ("About Us","about.html"), "argentina"),
+ ("kids/fun-facts", "kids-fun-facts.html", "Fun Facts", "Learn",
+    ("Kids Area","kids.html"), "cat-aware"),
+ ("kids/ask-a-wild-cat", "kids-ask-a-wild-cat.html", "Ask a Wild Cat", "Learn",
+    ("Kids Area","kids.html"), "cat-aware"),
+ ("kids/how-to-help", "kids-how-to-help.html", "How Can Kids Help?", "Learn",
+    ("Kids Area","kids.html"), "lwl"),
+ ("contact-us", "contact-us.html", "Contact Us", "Get in Touch", None, "bapp"),
+ ("privacy", "privacy.html", "Privacy Policy", "Legal", None, "health"),
+ ("site-map", "site-map.html", "Site Map", "Navigate", None, "tsavo"),
+]
+
+LINKMAP.update({
+ "/projects/archive":"past-projects.html",
+ "/science/innovative-wild-cat-conservation":"innovative-approach.html",
+ "/take-action/host-an-event":"host-an-event.html",
+ "/careers":"careers.html",
+ "/about/who-we-are":"who-we-are.html",
+ "/about/partners-supporters":"partners-supporters.html",
+ "/kids/fun-facts":"kids-fun-facts.html",
+ "/kids/ask-a-wild-cat":"kids-ask-a-wild-cat.html",
+ "/kids/how-to-help":"kids-how-to-help.html",
+ "/contact-us":"contact-us.html",
+ "/privacy":"privacy.html",
+ "/site-map":"site-map.html",
+})
 
 if __name__ == '__main__':
     for row in CONTENT:

@@ -82,10 +82,9 @@ class SiteFooter extends HTMLElement {
       <div class="footer__bottom">
         <p class="footer__copy">© 2026 Felidae Conservation Fund. A 501(c)(3) nonprofit organization. Tax ID: [XX-XXXXXXX]</p>
         <nav class="footer__legal" aria-label="Legal links">
-          <a href="#" class="footer__legal-link">Privacy Policy</a>
-          <a href="#" class="footer__legal-link">Terms of Use</a>
-          <a href="#" class="footer__legal-link">Accessibility</a>
-          <a href="#" class="footer__legal-link">Annual Report</a>
+          <a href="contact-us.html" class="footer__legal-link">Contact Us</a>
+          <a href="privacy.html" class="footer__legal-link">Privacy Policy</a>
+          <a href="site-map.html" class="footer__legal-link">Site Map</a>
         </nav>
       </div>
     </div>
