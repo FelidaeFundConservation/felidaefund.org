@@ -1,7 +1,7 @@
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
 OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=12'
+V    = '?v=13'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
@@ -370,6 +370,29 @@ def build_content(src, outfile, title, section, parent, accent):
 
 
 
+# ── Project logos ────────────────────────────────────────────────────
+# Each project has its own identity lockup. The porter skipped them
+# because hero_img() filters out anything with "logo" in the filename.
+# Seven of the eleven projects have one; the other four have no logo on
+# the live site, and the fact box simply omits it.
+FF_IMG = "https://felidaefund.org/images/logos/projects/"
+PROJECT_LOGOS = {
+  "project-bapp.html":               FF_IMG + "bapp/logo_bapp-01.png",
+  "project-bobcat.html":             FF_IMG + "bay-bobcats/logo_babp-01.png",
+  "project-tsavo.html":              FF_IMG + "tsavo/logo_tsavo-03.png",
+  "project-cat-aware.html":          FF_IMG + "cat-aware/logo_ca-01.png",
+  "project-living-with-lions.html":  FF_IMG + "living-with-lions/logo_lwl-03.png",
+  "project-wilde-pod.html":          FF_IMG + "wilde-pod/wilde-pod.png",
+  "project-wilde-backyard.html":     FF_IMG + "wilde-backyard/wilde-backyard.png",
+}
+
+def project_logo(outfile, title):
+    url = PROJECT_LOGOS.get(outfile)
+    if not url: return ''
+    return (f'\n          <img class="factbox__logo" src="{url}" '
+            f'alt="{esc(title)} logo" loading="lazy" />')
+
+
 # ── Project pages ────────────────────────────────────────────────────
 PROJECTS = [
  ("projects/research/bay-area-bobcat-project","project-bobcat.html","Bay Area Bobcat Project","babp","Field research"),
@@ -485,7 +508,7 @@ def build_project(src, outfile, title, accent, kind):
         <div class="prose reveal">
 {prose_html(rest)}
         </div>
-        <aside class="factbox reveal reveal-delay-1" aria-label="Project details">
+        <aside class="factbox reveal reveal-delay-1" aria-label="Project details">{project_logo(outfile, title)}
           <h2>Project details</h2>
           <dl>
 {facts}

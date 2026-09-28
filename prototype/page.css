@@ -354,3 +354,10 @@
 }
 /* A section crumb with no landing page of its own */
 .crumbs .crumb-section { color: var(--brown-400); }
+
+/* Project identity lockup, at the head of the fact box */
+.factbox__logo {
+  display: block; width: 100%; max-width: 230px; height: auto;
+  margin: 0 auto 20px; padding-bottom: 18px;
+  border-bottom: 1px solid rgba(var(--gold-rgb), .30);
+}
