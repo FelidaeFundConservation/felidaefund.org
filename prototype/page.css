@@ -352,3 +352,5 @@
   font-family: var(--font-display); font-size: 12px; color: var(--brown-400);
   margin-top: 10px;
 }
+/* A section crumb with no landing page of its own */
+.crumbs .crumb-section { color: var(--brown-400); }

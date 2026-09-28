@@ -1,7 +1,7 @@
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
 OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=11'
+V    = '?v=12'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
@@ -224,9 +224,9 @@ def prose_html(bs, indent='          '):
 CONTENT = [
  ("about",            "about.html",            "About Us",                    "About",       None,            "bapp"),
  ("about/mission",    "mission.html",          "Our Mission",                 "About",       ("About Us","about.html"), "bapp"),
- ("science",          "science.html",          "Science & Research",          "Our Work",    None,            "health"),
+ ("science",          "science.html",          "Science & Research",          "Science",     None,            "health"),
  ("news",             "news.html",             "News",                        "Newsroom",    None,            "argentina"),
- ("events",           "events.html",           "Events",                      "Newsroom",    None,            "argentina"),
+ ("events",           "events.html",           "Events",                      "Get Involved",    None,            "argentina"),
  ("learn/cats",       "learn-cats.html",       "Wild Cats Around the World",  "Learn",       None,            "tsavo"),
  ("learn/protecting-healthy-ecosystems", "learn-ecosystems.html", "Protecting Healthy Ecosystems", "Learn", None, "lwl"),
  ("learn/living-alongside-wild-cats",    "learn-living-alongside.html", "Living Alongside Wild Cats", "Learn", None, "lwl"),
@@ -267,10 +267,62 @@ def form_cta(outfile):
 """
 
 
-def crumbs(parent, current):
-    rows = ['          <a href="index.html">Home</a>', '          <span aria-hidden="true">/</span>']
-    if parent:
-        rows += [f'          <a href="{parent[1]}">{esc(parent[0])}</a>', '          <span aria-hidden="true">/</span>']
+# ── Breadcrumbs ──────────────────────────────────────────────────────
+# The live site builds its trail from the URL path, so /science reads
+# "Home > Science & Research" even though the menu files it under Learn.
+# People navigate the menu, so the menu section is the middle crumb.
+# Learn has no landing page, so that crumb is text rather than a link.
+SECTIONS = {
+  "Projects":     "projects.html",
+  "Learn":        None,
+  "Get Involved": "take-action.html",
+}
+SECTION_OF = {
+  # Learn
+  "mission.html":"Learn", "about.html":"Learn", "who-we-are.html":"Learn",
+  "partners-supporters.html":"Learn", "science.html":"Learn",
+  "innovative-approach.html":"Learn", "news.html":"Learn",
+  "learn-cats.html":"Learn", "learn-ecosystems.html":"Learn",
+  "learn-living-alongside.html":"Learn", "learn-safety.html":"Learn",
+  "learn-media.html":"Learn", "kids.html":"Learn",
+  # Get Involved
+  "take-action.html":"Get Involved", "volunteer.html":"Get Involved",
+  "spread-awareness.html":"Get Involved", "community-science.html":"Get Involved",
+  "events.html":"Get Involved", "ways-to-donate.html":"Get Involved",
+  "store.html":"Get Involved", "careers.html":"Get Involved",
+  "host-an-event.html":"Get Involved",
+  # Projects
+  "projects.html":"Projects", "past-projects.html":"Projects",
+  # contact-us, privacy and site-map sit in the footer, under no section
+}
+
+def section_of(outfile):
+    if outfile.startswith(("project-",)): return "Projects"
+    if outfile.startswith(("species-","kids-","news-")): return "Learn"
+    return SECTION_OF.get(outfile)
+
+def crumb_chain(outfile, parent):
+    """[(label, href or None), ...] for everything above the current page."""
+    chain = []
+    sec = section_of(outfile)
+    if sec:
+        href = SECTIONS[sec]
+        if href == outfile: return []          # the section landing page itself
+        chain.append((sec, href))
+    # "Get Involved" already points at take-action.html, so a Take Action
+    # parent would repeat the same destination twice in one trail
+    if parent and parent[1] != outfile and parent[1] != SECTIONS.get(sec):
+        chain.append(parent)
+    return chain
+
+
+def crumbs(chain, current):
+    rows = ['          <a href="index.html">Home</a>']
+    for label, href in chain:
+        rows.append('          <span aria-hidden="true">/</span>')
+        rows.append(f'          <a href="{href}">{esc(label)}</a>' if href
+                    else f'          <span class="crumb-section">{esc(label)}</span>')
+    rows.append('          <span aria-hidden="true">/</span>')
     rows.append(f'          <span>{esc(current)}</span>')
     return '\n'.join(rows)
 
@@ -296,7 +348,7 @@ def build_content(src, outfile, title, section, parent, accent):
     <header class="page-head">
       <div class="container">
         <nav class="crumbs" aria-label="Breadcrumb">
-{crumbs(parent, title)}
+{crumbs(crumb_chain(outfile, parent), title)}
         </nav>
         <p class="page-eyebrow">{esc(section)}</p>
         <h1 class="page-title">{esc(title)}</h1>
@@ -502,9 +554,7 @@ def build_species_index():
     <header class="page-head">
       <div class="container">
         <nav class="crumbs" aria-label="Breadcrumb">
-          <a href="index.html">Home</a>
-          <span aria-hidden="true">/</span>
-          <span>Wild Cats</span>
+{crumbs(crumb_chain('learn-cats.html', None), 'Wild Cats')}
         </nav>
         <p class="page-eyebrow">Learn</p>
         <h1 class="page-title">Wild cats around the world</h1>
