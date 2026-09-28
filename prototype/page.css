@@ -447,3 +447,14 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   transition: background .2s, transform .2s;
 }
 .prose-figure--video a:hover::after { background: var(--brown-700); transform: scale(1.06); }
+
+/* Links inside picture captions (the live galleries credit the study) */
+.shot figcaption a, .prose-figure figcaption a {
+  color: var(--brown-700);
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--brown-rgb), .35);
+  text-underline-offset: 2px;
+}
+.shot figcaption a:hover, .prose-figure figcaption a:hover {
+  color: var(--brown-600); text-decoration-color: currentColor;
+}

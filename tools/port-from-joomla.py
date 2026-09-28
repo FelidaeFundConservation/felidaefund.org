@@ -198,7 +198,7 @@ def figure_html(url, alt, caption='', width=0):
     if width and width < 400: cls += ' prose-figure--small'
     if yt: cls += ' prose-figure--video'
     if yt and not caption: caption = 'Watch on YouTube'
-    cap = f'<figcaption>{esc(caption)}</figcaption>' if caption else ''
+    cap = f'<figcaption>{caption}</figcaption>' if caption else ''
     img = f'<img src="{url}" alt="{esc(alt)}" loading="lazy" />'
     if yt:
         img = (f'<a href="https://www.youtube.com/watch?v={yt.group(1)}" '
@@ -229,8 +229,8 @@ def blocks(seg, cap=80):
             im = re.search(r'<img[^>]+>', whole)
             got = best_src(im.group(0)) if im else None
             capm = re.search(r'<figcaption[^>]*>(.*?)</figcaption>', whole, re.S)
-            caption = txt(capm.group(1)) if capm else ''
-            if got and got[2] >= 200 and not CREDIT.search(caption):
+            caption = inline_html(capm.group(1)) if capm else ''
+            if got and got[2] >= 200 and not CREDIT.search(txt(caption)):
                 out.append(('figure', figure_html(got[0], got[1], caption, got[2])))
             continue
         if kind in ('ul', 'ol'):
@@ -353,7 +353,7 @@ def gallery_items(seg):
         if not m: continue
         url = m.group(1)
         d = re.search(r'ig-lightbox-description-content"[^>]*>(.*?)</div>', li, re.S)
-        cap = txt(d.group(1)) if d else ''
+        cap = inline_html(d.group(1)) if d else ''
         alt = re.search(r'alt="([^"]*)"', li)
         alt = html.unescape(alt.group(1)) if alt else ''
         key, width = name_and_width(url)
@@ -371,9 +371,9 @@ def gallery_html(items, heading="Photos & videos"):
     cells = []
     for n, (url, cap, alt) in enumerate(items[:18]):
         d = f' reveal-delay-{n % 4}' if n % 4 else ''
-        caption = f'\n            <figcaption>{esc(cap)}</figcaption>' if cap else ''
+        caption = f'\n            <figcaption>{cap}</figcaption>' if cap else ''
         cells.append(f"""          <figure class="shot reveal{d}">
-            <img src="{url}" alt="{esc(alt or cap or heading)}" loading="lazy" />{caption}
+            <img src="{url}" alt="{esc(alt or txt(cap) or heading)}" loading="lazy" />{caption}
           </figure>""")
     return f"""
     <section class="gallery-section">
@@ -729,6 +729,7 @@ def project_logo(outfile, title):
 
 # ── Project pages ────────────────────────────────────────────────────
 PROJECTS = [
+ ("projects/research/bay-area-puma-project","project-bapp.html","Bay Area Puma Project","bapp","Field research"),
  ("projects/research/bay-area-bobcat-project","project-bobcat.html","Bay Area Bobcat Project","babp","Field research"),
  ("projects/research/pumalink","project-pumalink.html","Diablo PumaLink Project","pumalink","Field research"),
  ("projects/research/wild-cat-health-project","project-wildcat-health.html","Wild Cat Health Project","health","Field research"),
@@ -783,7 +784,7 @@ def build_project(src, outfile, title, accent, kind):
             lede = re.sub(r'^(Research|Community Program)\s+', '', v)
             rest = paras[:i] + paras[i+1:]; break
     rest = [b for b in rest
-            if b[0] != 'p' or len(txt(b[1])) > 40 or '<a ' in b[1]][:24]
+            if b[0] != 'p' or len(txt(b[1])) > 40 or '<a ' in b[1]][:44]
     img, alt = hero_img(seg)
 
     fact_rows = []
