@@ -250,19 +250,38 @@ def hero_img(seg):
 # Pull the pictures out as a real gallery and keep the widget out of the
 # body copy.
 def gallery_items(seg):
-    out, seen = [], set()
+    """Pictures from an iGallery block.
+
+    The widget ships each photo twice, at lightbox size and as a 130px
+    thumbnail, so deduplicating on the URL alone put every picture in
+    the grid twice: one sharp, one a thumbnail stretched to card width.
+    Group by the photo's own name and keep the widest variant.
+    """
+    def name_and_width(url):
+        f = url.split('/')[-1]
+        m = re.search(r'^(.*?)-(\d+)-(\d+)-\d+(?:-c)?\.(?:webp|jpg|jpeg|png)$', f, re.I)
+        if m: return m.group(1), int(m.group(2))
+        return re.sub(r'\.(?:webp|jpg|jpeg|png)$', '', f, flags=re.I), 0
+
+    best = {}
     for li in re.findall(r'<li[^>]*>(.*?)</li>', seg, re.S):
         if 'igallery' not in li: continue
-        m = re.search(r'src="(/images/igallery/resized/[^"]+)"', li)
+        m = re.search(r'src="(/images/igallery/[^"]+)"', li)
         if not m: continue
         url = m.group(1)
-        if url in seen: continue
-        seen.add(url)
         d = re.search(r'ig-lightbox-description-content"[^>]*>(.*?)</div>', li, re.S)
         cap = txt(d.group(1)) if d else ''
         alt = re.search(r'alt="([^"]*)"', li)
-        out.append(('https://felidaefund.org' + url, cap, html.unescape(alt.group(1)) if alt else ''))
-    return out
+        alt = html.unescape(alt.group(1)) if alt else ''
+        key, width = name_and_width(url)
+        prev = best.get(key)
+        if prev and prev[0] >= width: 
+            # keep the wider file, but take a caption if this copy has one
+            if cap and not prev[2]: best[key] = (prev[0], prev[1], cap, prev[3])
+            continue
+        best[key] = (width, 'https://felidaefund.org' + url, cap or (prev[2] if prev else ''),
+                     alt or (prev[3] if prev else ''))
+    return [(u, cap, alt) for _, (w, u, cap, alt) in best.items()]
 
 def gallery_html(items, heading="Photos & videos"):
     if len(items) < 3: return ''
