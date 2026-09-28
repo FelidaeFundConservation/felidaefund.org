@@ -65,7 +65,11 @@
 .prose h2:first-child { margin-top: 0; }
 .prose p { font-size: 17px; line-height: 1.8; margin-bottom: 20px; max-width: 64ch; }
 .prose p:last-child { margin-bottom: 0; }
-.prose strong { color: var(--espresso-900); font-weight: 500; }
+/* Emphasis should read as weight, not as a colour change. Literata is
+   loaded at 600 so this is a real semibold rather than 500 plus a
+   darker ink, which made bold runs look like a different typeface. */
+.prose strong, .prose b { color: inherit; font-weight: 600; }
+.prose em strong, .prose strong em { font-weight: 600; }
 
 .factbox {
   position: sticky; top: calc(var(--nav-h) + 24px);
