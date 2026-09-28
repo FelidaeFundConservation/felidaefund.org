@@ -94,7 +94,7 @@ class SiteFooter extends HTMLElement {
           <div>
             <div class="footer__col-head">Get Involved</div>
             <a href="volunteer.html" class="footer__link">Volunteer</a>
-            <a href="volunteer.html" class="footer__link">Volunteer and Career Opportunities</a>
+            <a href="careers.html" class="footer__link">Volunteer and Career Opportunities</a>
             <a href="community-science.html" class="footer__link">Community Scientist</a>
             <a href="project-wilde-pod.html" class="footer__link">Wilde Pod (Trail Cam)</a>
             <a href="events.html" class="footer__link">Events</a>
