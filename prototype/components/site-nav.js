@@ -5,11 +5,15 @@ class SiteNav extends HTMLElement {
     this.innerHTML = `<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
     <div class="nav__inner">
 
-      <!-- Logo + theme picker -->
+      <!-- Logo, and a separate control for the prototype's theme picker -->
       <div class="nav__logo-wrap">
-        <a href="#" class="nav__logo" id="logoThemeTrigger" aria-label="Felidae Conservation Fund — home">
+        <a href="index.html" class="nav__logo" aria-label="Felidae Conservation Fund — home">
           <img src="assets/logo/logo_felidae_neg-01.png" alt="Felidae Conservation Fund" class="nav__logo-img" />
         </a>
+        <button class="theme-trigger" id="logoThemeTrigger" aria-haspopup="menu" aria-expanded="false"
+                aria-label="Change the prototype's colour theme" title="Colour theme">
+          <span class="theme-trigger__dot"></span>
+        </button>
         <div class="theme-picker" id="themePicker" role="menu" aria-label="Color theme">
           <button class="theme-option active" data-theme-id="1" role="menuitem">
             <span class="theme-swatch" style="background:var(--theme-1-swatch)"></span>

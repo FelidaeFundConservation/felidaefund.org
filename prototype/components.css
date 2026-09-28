@@ -401,3 +401,18 @@
     }
     .donate-custom__input:focus { border-color: var(--brown-700); }
     .donate-custom__placeholder { color: var(--brown-300); font-weight: 400; }
+
+    /* The prototype's theme switch. It used to hang off the logo, which
+       meant the logo did not go home. */
+    .theme-trigger {
+      display: inline-grid; place-items: center;
+      width: 22px; height: 22px; margin-left: 10px; flex: none;
+      background: transparent; border: 0; cursor: pointer; border-radius: 50%;
+      opacity: .45; transition: opacity .2s;
+    }
+    .theme-trigger:hover, .theme-trigger[aria-expanded="true"] { opacity: 1; }
+    .theme-trigger__dot {
+      width: 11px; height: 11px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--theme-1-swatch) 50%, var(--theme-2-swatch) 50%);
+      box-shadow: 0 0 0 1.5px rgba(var(--cream-rgb), .55);
+    }
