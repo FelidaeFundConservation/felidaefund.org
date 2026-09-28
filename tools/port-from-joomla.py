@@ -1,17 +1,33 @@
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
 OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=13'
+V    = '?v=14'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
+
+def raw_main(s):
+    i = s.find('<main id="main_content"')
+    return '' if i < 0 else s[i:s.find('</main>', i)]
 
 def main_block(s):
     i = s.find('<main id="main_content"')
     if i < 0: return ''
     seg = s[i:s.find('</main>', i)]
+    # Joomla puts site-wide modules after the article but still inside
+    # <main>: a volunteer promo, a newsletter block. They were being read
+    # as body copy, so the same 1,000 characters landed at the bottom of
+    # 80 pages, and on Photos & Videos the promo became the page lede.
+    m = re.search(r'<(?:section|div)[^>]*\bafter-content\b', seg)
+    if m: seg = seg[:m.start()]
+    # the gallery-of-galleries widget: its card titles were leaking in as
+    # headings followed by a "View Gallery" paragraph
+    seg = re.sub(r'<div[^>]*\big-menu-grid\b.*?(?=<div class="after-content|\Z)', ' ', seg, flags=re.S)
     # Joomla chrome that isn't body copy: hidden captions, scripts, nav, forms
-    for pat in (r'<figcaption\b.*?</figcaption>', r'<script\b.*?</script>',
+    for pat in (r'<aside\b[^>]*>.*?</aside>',
+                r'<div[^>]*\bigui-scope\b.*?<!--\s*/igallery\s*-->',
+                r'<div[^>]*\big-gallery-wrapper\b.*?</ul>\s*</div>',
+                r'<figcaption\b.*?</figcaption>', r'<script\b.*?</script>',
                 r'<style\b.*?</style>', r'<nav\b.*?</nav>',
                 r'<form\b.*?</form>', r'<button\b.*?</button>',
                 r'<span class="visually-hidden">.*?</span>'):
@@ -109,7 +125,7 @@ def blocks(seg, cap=80):
             raw = re.findall(r'<li[^>]*>(.*?)</li>', inner, re.S)
             items = [(txt(li), inline_html(li)) for li in raw]
             items = [h for t, h in items if 3 < len(t) < 220 and not NOISE.match(t)]
-            if 1 < len(items) <= 12: out.append(('ul', items))
+            if 1 < len(items) <= 45: out.append(('ul', items))
         else:
             t = txt(inner)
             if not t or NOISE.match(t): continue
@@ -156,6 +172,99 @@ def hero_img(seg):
         alt = re.search(r'alt="([^"]*)"', tag)
         return src, (alt.group(1) if alt else '')
     return None, ''
+
+# ── Image galleries ──────────────────────────────────────────────────
+# Joomla renders galleries with the iGallery plugin: a widget div whose
+# list items each hold a thumbnail, a link and a hidden caption. Read as
+# prose that turns into a bullet list of alt text ("img 1584"), which is
+# how the Bay Area Bobcat page ended up with a card full of filenames.
+# Pull the pictures out as a real gallery and keep the widget out of the
+# body copy.
+def gallery_items(seg):
+    out, seen = [], set()
+    for li in re.findall(r'<li[^>]*>(.*?)</li>', seg, re.S):
+        if 'igallery' not in li: continue
+        m = re.search(r'src="(/images/igallery/resized/[^"]+)"', li)
+        if not m: continue
+        url = m.group(1)
+        if url in seen: continue
+        seen.add(url)
+        d = re.search(r'ig-lightbox-description-content"[^>]*>(.*?)</div>', li, re.S)
+        cap = txt(d.group(1)) if d else ''
+        alt = re.search(r'alt="([^"]*)"', li)
+        out.append(('https://felidaefund.org' + url, cap, html.unescape(alt.group(1)) if alt else ''))
+    return out
+
+def gallery_html(items, heading="Photos & videos"):
+    if len(items) < 3: return ''
+    cells = []
+    for n, (url, cap, alt) in enumerate(items[:18]):
+        d = f' reveal-delay-{n % 4}' if n % 4 else ''
+        caption = f'\n            <figcaption>{esc(cap)}</figcaption>' if cap else ''
+        cells.append(f"""          <figure class="shot reveal{d}">
+            <img src="{url}" alt="{esc(alt or cap or heading)}" loading="lazy" />{caption}
+          </figure>""")
+    return f"""
+    <section class="gallery-section">
+      <div class="container">
+        <p class="section-label reveal">Gallery</p>
+        <h2 class="section-title reveal">{esc(heading)}</h2>
+        <div class="shot-grid">
+{chr(10).join(cells)}
+        </div>
+      </div>
+    </section>
+"""
+
+
+def gallery_menu(seg):
+    """The other iGallery shape: cards linking to sub-galleries, each with
+    a cover image, a title and an item count. Photos & Videos and Science
+    use this; the sub-galleries themselves are not ported, so the cards
+    link to the live site."""
+    out = []
+    # the markup wraps attributes across lines, so slice between each
+    # card marker rather than matching a fixed tag shape
+    marks = [m.start() for m in re.finditer(r'ig-menu-grid-link', seg)]
+    blocks = [seg[a:b] for a, b in zip(marks, marks[1:] + [min(len(seg), marks[-1] + 1600)])] if marks else []
+    for blk in blocks:
+        img = re.search(r'src="([^"]+)"', blk)
+        title = re.search(r'class="h4 title">(.*?)</h2>', blk, re.S)
+        count = re.search(r'class="details h5">(.*?)</div>', blk, re.S)
+        href = re.search(r'<a href="([^"]+)"', blk)
+        if not (img and title): continue
+        url = img.group(1)
+        if url.startswith('/'): url = 'https://felidaefund.org' + url
+        link = href.group(1) if href else ''
+        if link.startswith('/'): link = 'https://felidaefund.org' + link
+        out.append((url, txt(title.group(1)), txt(count.group(1)) if count else '', link))
+    return out
+
+def gallery_menu_html(items, heading="Photo galleries"):
+    if not items: return ''
+    cells = []
+    for n, (url, title, count, link) in enumerate(items):
+        d = f' reveal-delay-{n % 4}' if n % 4 else ''
+        meta = f'<p class="rel-card__label">{esc(count)}</p>' if count else ''
+        cells.append(f"""          <a class="rel-card reveal{d}" href="{link}" target="_blank" rel="noopener">
+            <div class="rel-card__media"><img src="{url}" alt="{esc(title)}" loading="lazy" /></div>
+            <div class="rel-card__body">
+              {meta}
+              <h3>{esc(title)}</h3>
+            </div>
+          </a>""")
+    return f"""
+    <section class="gallery-section">
+      <div class="container">
+        <p class="section-label reveal">Galleries</p>
+        <h2 class="section-title reveal">{esc(heading)}</h2>
+        <div class="rel-grid">
+{chr(10).join(cells)}
+        </div>
+      </div>
+    </section>
+"""
+
 
 def head(title, accent, extra_css=True):
     return f'''<!DOCTYPE html>
@@ -352,7 +461,7 @@ def build_content(src, outfile, title, section, parent, accent):
         </nav>
         <p class="page-eyebrow">{esc(section)}</p>
         <h1 class="page-title">{esc(title)}</h1>
-        <p class="page-lede">{lede}</p>
+        {f'<p class="page-lede">{lede}</p>' if lede else ''}
       </div>
     </header>
 {hero}
@@ -363,7 +472,7 @@ def build_content(src, outfile, title, section, parent, accent):
         </div>
       </div>
     </section>
-''' + form_cta(outfile) + support("Support the work behind this page",
+''' + gallery_html(gallery_items(raw_main(s))) + gallery_menu_html(gallery_menu(raw_main(s))) + form_cta(outfile) + support("Support the work behind this page",
               "Felidae is a 501(c)(3) nonprofit. Gifts fund field research, community science and habitat protection.") + TAIL
     open(os.path.join(OUT, outfile), 'w').write(html_out)
     return outfile, len(bs), bool(img)
@@ -465,7 +574,7 @@ def build_project(src, outfile, title, accent, kind):
             lis = '\n'.join(f'              <li>{i}</li>' for i in items)
             d = f' reveal-delay-{n}' if n else ''
             cols.append(f'''          <article class="obj-card reveal{d}">
-            <h3>{esc(h)}</h3>
+            <h3>{h}</h3>
             <ul>
 {lis}
             </ul>
@@ -499,7 +608,7 @@ def build_project(src, outfile, title, accent, kind):
         </nav>
         <p class="page-eyebrow">{esc(kind)}</p>
         <h1 class="page-title">{esc(title)}</h1>
-        <p class="page-lede">{lede}</p>
+        {f'<p class="page-lede">{lede}</p>' if lede else ''}
       </div>
     </header>
 {hero}
@@ -518,6 +627,7 @@ def build_project(src, outfile, title, accent, kind):
       </div>
     </section>
 {obj}
+{gallery_html(gallery_items(raw_main(s)))}
     <section class="related">
       <div class="container">
         <p class="section-label reveal">More projects</p>
