@@ -395,3 +395,28 @@
 .prose h3 + p, .prose h4 + p { margin-top: 0; }
 .prose h2 + h3 { margin-top: 18px; }
 .prose em { color: var(--brown-800); }
+
+/* Numbered lists, and the sub-points nested inside them */
+ol.prose-list, ol.prose-sublist { counter-reset: step; }
+ol.prose-list > li, ol.prose-sublist > li { counter-increment: step; }
+ol.prose-list > li::before, ol.prose-sublist > li::before {
+  content: counter(step) ".";
+  position: absolute; left: 0; top: 0;
+  width: auto; height: auto; background: none; border-radius: 0;
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  color: var(--gold-500);
+}
+.prose-sublist {
+  list-style: none; display: grid; gap: 8px;
+  margin: 10px 0 4px 6px; padding-left: 14px;
+  border-left: 2px solid rgba(var(--gold-rgb), .35);
+}
+.prose-sublist li {
+  position: relative; padding-left: 22px;
+  font-family: var(--font-body); font-size: 16px; line-height: 1.65;
+  color: var(--brown-800);
+}
+.prose-sublist li::before {
+  content: ''; position: absolute; left: 0; top: 10px;
+  width: 7px; height: 2px; border-radius: 2px; background: var(--page-accent);
+}

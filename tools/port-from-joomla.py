@@ -120,29 +120,73 @@ def inline_html(frag):
     return s
 
 
+def balanced(seg, start, tag):
+    """End index of the tag opened at `start`, counting nested opens."""
+    depth, i = 0, start
+    pat = re.compile(rf'</?{tag}\b[^>]*>', re.I)
+    while True:
+        m = pat.search(seg, i)
+        if not m: return len(seg)
+        depth += -1 if m.group(0).startswith('</') else 1
+        i = m.end()
+        if depth == 0: return i
+
+def list_html(markup, depth=0):
+    """Render a ul/ol, keeping nested lists nested. The live pages use
+    numbered lists with sub-points; flattening them lost the structure."""
+    tag = 'ol' if re.match(r'\s*<ol', markup, re.I) else 'ul'
+    inner = markup[markup.index('>') + 1: markup.rindex('</')]
+    cls = ' class="prose-list"' if depth == 0 else ' class="prose-sublist"'
+    rows, i = [], 0
+    while True:
+        m = re.compile(r'<li\b[^>]*>', re.I).search(inner, i)
+        if not m: break
+        end = balanced(inner, m.start(), 'li')
+        li = inner[m.end(): inner.rindex('</li>', 0, end) if '</li>' in inner[:end] else end]
+        nested = ''
+        nm = re.compile(r'<(ul|ol)\b[^>]*>', re.I).search(li)
+        if nm:
+            ne = balanced(li, nm.start(), nm.group(1))
+            nested = list_html(li[nm.start():ne], depth + 1)
+            li = li[:nm.start()] + li[ne:]
+        body = inline_html(li)
+        if body or nested: rows.append(f'<li>{body}{nested}</li>')
+        i = end
+    if not rows: return ''
+    return f'<{tag}{cls}>' + ''.join(rows) + f'</{tag}>'
+
+
 def blocks(seg, cap=80):
-    """Ordered (kind, payload) content blocks from the Joomla main region."""
-    out = []
-    for m in re.finditer(r'<(h2|h3|p|ul|ol)\b[^>]*>(.*?)</\1>', seg, re.S):
-        kind, inner = m.group(1), m.group(2)
-        if kind in ('ul','ol'):
-            raw = re.findall(r'<li[^>]*>(.*?)</li>', inner, re.S)
-            items = [(txt(li), inline_html(li)) for li in raw]
-            items = [h for t, h in items if 3 < len(t) < 220 and not NOISE.match(t)]
-            if 1 < len(items) <= 45: out.append(('ul', items))
-        else:
-            t = txt(inner)
-            if not t or NOISE.match(t): continue
-            has_link = '<a ' in inner
-            if kind == 'p' and ((len(t) < 25 and not has_link) or len(t) > 900): continue
-            if CREDIT.search(t): continue
-            if kind in ('h2','h3') and (len(t) < 3 or len(t) > 90): continue
-            out.append((kind, inline_html(inner)))
-        if len(out) >= cap: break
-    # collapse duplicate consecutive headings
+    """Ordered content blocks. Lists are scanned with balanced matching so
+    a nested <ol> stays inside its parent instead of being re-read as a
+    separate block."""
+    out, i = [], 0
+    opener = re.compile(r'<(h2|h3|p|ul|ol)\b[^>]*>', re.I)
+    while len(out) < cap:
+        m = opener.search(seg, i)
+        if not m: break
+        kind = m.group(1).lower()
+        stop = balanced(seg, m.start(), kind)
+        whole = seg[m.start():stop]
+        i = stop
+        if kind in ('ul', 'ol'):
+            flat = [txt(li) for li in re.findall(r'<li[^>]*>(.*?)</li>', whole, re.S)]
+            flat = [t for t in flat if t and not NOISE.match(t)]
+            if not (1 < len(flat) <= 45): continue
+            rendered = list_html(whole)
+            if rendered: out.append(('list', {'html': rendered, 'items': flat}))
+            continue
+        inner = whole[whole.index('>') + 1: whole.rindex('</')] if '</' in whole else ''
+        t = txt(inner)
+        if not t or NOISE.match(t): continue
+        has_link = '<a ' in inner
+        if kind == 'p' and ((len(t) < 25 and not has_link) or len(t) > 900): continue
+        if CREDIT.search(t): continue
+        if kind in ('h2', 'h3') and (len(t) < 3 or len(t) > 90): continue
+        out.append((kind, inline_html(inner)))
     ded, seen = [], set()
     for k, v in out:
-        key = (k, v if isinstance(v, str) else tuple(v))
+        key = (k, v['html'] if k == 'list' else v)
         if key in seen: continue
         seen.add(key); ded.append((k, v))
     return ded
@@ -397,10 +441,8 @@ def support(title, body):
 def prose_html(bs, indent='          '):
     out = []
     for k, v in bs:
-        if k == 'ul':
-            out.append(indent + '<ul class="prose-list">')
-            out += [indent + f'  <li>{i}</li>' for i in v]
-            out.append(indent + '</ul>')
+        if k == 'list':
+            out.append(indent + v['html'])
         elif k in ('h2','h3'):
             out.append(indent + f'<{k}>{v}</{k}>')
         else:
@@ -606,27 +648,38 @@ def project_meta(seg):
     return meta
 
 def objectives(bs):
-    """h3 followed by a list -> an objective card."""
-    cards, i = [], 0
-    while i < len(bs):
-        if bs[i][0] == 'h3' and i+1 < len(bs) and bs[i+1][0] == 'ul':
-            cards.append((bs[i][1], bs[i+1][1])); i += 2
-        else: i += 1
-    return cards[:3]
+    """Objective cards, but only from the section under an "Objectives"
+    heading. Pairing any h3 with any list pulled "Conservation goals"
+    out of Outcomes on the Bay Area Bobcat page and stranded it in a
+    card of its own."""
+    start = None
+    for i, (k, v) in enumerate(bs):
+        if k == 'h2' and re.match(r'objectives?\b', txt(v), re.I):
+            start = i + 1; break
+    if start is None: return [], None
+    end = len(bs)
+    for j in range(start, len(bs)):
+        if bs[j][0] == 'h2': end = j; break
+    section, cards = bs[start:end], []
+    for i in range(len(section) - 1):
+        if section[i][0] == 'h3' and section[i+1][0] == 'list':
+            cards.append((section[i][1], section[i+1][1]['items']))
+    return (cards, (start - 1, end)) if cards else ([], None)
 
 def build_project(src, outfile, title, accent, kind):
     s = open(os.path.join(LIVE, src.replace('/','__') + '.html'), encoding='utf-8', errors='replace').read()
     seg = main_block(s)
     meta, bs = project_meta(seg), blocks(seg, cap=90)
-    cards = objectives(bs)
-    used = {c[0] for c in cards}
-    paras = [(k,v) for k,v in bs if k == 'p' or (k in ('h2','h3') and v not in used)]
+    cards, span = objectives(bs)
+    if span: bs = bs[:span[0]] + bs[span[1]:]   # the section now lives in the cards
+    paras = [(k, v) for k, v in bs if k in ('p', 'h2', 'h3', 'list')]
     lede, rest = '', paras
     for i,(k,v) in enumerate(paras):
         if k == 'p' and len(txt(v)) > 60:
             lede = re.sub(r'^(Research|Community Program)\s+', '', v)
             rest = paras[:i] + paras[i+1:]; break
-    rest = [b for b in rest if b[0] != 'p' or len(txt(b[1])) > 40 or '<a ' in b[1]][:24]
+    rest = [b for b in rest
+            if b[0] != 'p' or len(txt(b[1])) > 40 or '<a ' in b[1]][:24]
     img, alt = hero_img(seg)
 
     fact_rows = []
