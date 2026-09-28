@@ -1,7 +1,36 @@
 // <site-footer> — the shared footer. Styles live in components.css.
 class SiteFooter extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = `<footer class="footer" role="contentinfo">
+    this.innerHTML = `
+<!-- ═══════════════════════════ NEWSLETTER ════════════════════════════ -->
+<section class="newsletter" aria-labelledby="newsletter-title">
+  <div class="container">
+    <div class="newsletter__inner">
+      <div class="newsletter__text reveal">
+        <div class="section-label">Stay Close to the Science</div>
+        <h2 class="section-title" id="newsletter-title">Updates from the field, in your inbox.</h2>
+        <p class="section-body">Camera trap images, project milestones, and new research — direct from our teams. No fluff. <a href="https://felidaefund.org/newsletter" class="newsletter__preview-link">Read the latest issue →</a></p>
+      </div>
+      <div class="newsletter__form reveal reveal-delay-2">
+        <form onsubmit="handleSubscribe(event)">
+          <div class="newsletter__row">
+            <label for="nl-email" class="sr-only">Email address</label>
+            <input
+              id="nl-email" type="email" name="email"
+              class="newsletter__input"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+            <button type="submit" class="btn-primary">Subscribe</button>
+          </div>
+          <p class="newsletter__note">We send 1–2 emails per month. Unsubscribe anytime. No spam, ever.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__top">
         <!-- Brand row -->
@@ -91,5 +120,22 @@ class SiteFooter extends HTMLElement {
   </footer>`;
   }
 }
+
+  // ── Newsletter form ───────────────────────────────────────────────
+  function handleSubscribe(e) {
+    e.preventDefault();
+    const input = document.getElementById('nl-email');
+    const btn = e.target.querySelector('button[type=submit]');
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = 'var(--gold-500)';
+    input.value = '';
+    input.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Subscribe';
+      btn.style.background = '';
+      input.disabled = false;
+    }, 3500);
+  }
+window.handleSubscribe = handleSubscribe;
 
 customElements.define('site-footer', SiteFooter);
