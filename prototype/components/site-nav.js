@@ -12,11 +12,11 @@ class SiteNav extends HTMLElement {
         </a>
         <div class="theme-picker" id="themePicker" role="menu" aria-label="Color theme">
           <button class="theme-option active" data-theme-id="1" role="menuitem">
-            <span class="theme-swatch" style="background:#1f1204"></span>
+            <span class="theme-swatch" style="background:var(--theme-1-swatch)"></span>
             Dark
           </button>
           <button class="theme-option" data-theme-id="2" role="menuitem">
-            <span class="theme-swatch" style="background:#3C2203"></span>
+            <span class="theme-swatch" style="background:var(--theme-2-swatch)"></span>
             Medium
           </button>
         </div>
@@ -33,21 +33,21 @@ class SiteNav extends HTMLElement {
           <div class="nav__dropdown nav__dropdown--mega" role="menu" aria-label="Projects submenu">
             <div class="nav__col">
               <div class="nav__col-head">Research Projects</div>
-              <a href="https://www.felidaefund.org/projects/research/bhutan-wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Bhutan Wild Cat Health Project</a>
-              <a href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" role="menuitem">Patagonia Wild Cats Project</a>
-              <a href="https://www.felidaefund.org/projects/research/pumalink" target="_blank" rel="noopener" role="menuitem">Diablo PumaLink Project</a>
-              <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" role="menuitem">Bay Area Bobcat Project</a>
-              <a href="https://www.felidaefund.org/projects/research/tsavo-cheetah-project" target="_blank" rel="noopener" role="menuitem">Tsavo Cheetah Project</a>
-              <a href="project.html" target="_blank" rel="noopener" role="menuitem">Bay Area Puma Project</a>
-              <a href="https://www.felidaefund.org/projects/research/wild-cat-health-project" target="_blank" rel="noopener" role="menuitem">Wild Cat Health Project</a>
-              <a href="projects.html" target="_blank" rel="noopener" role="menuitem" style="color: var(--gold-300);">View all projects →</a>
+              <a href="project-bhutan.html" role="menuitem">Bhutan Wild Cat Health Project</a>
+              <a href="project-patagonia.html" role="menuitem">Patagonia Wild Cats Project</a>
+              <a href="project-pumalink.html" role="menuitem">Diablo PumaLink Project</a>
+              <a href="project-bobcat.html" role="menuitem">Bay Area Bobcat Project</a>
+              <a href="project-tsavo.html" role="menuitem">Tsavo Cheetah Project</a>
+              <a href="project-bapp.html" role="menuitem">Bay Area Puma Project</a>
+              <a href="project-wildcat-health.html" role="menuitem">Wild Cat Health Project</a>
+              <a href="projects.html" role="menuitem" style="color: var(--gold-300);">View all projects →</a>
             </div>
             <div class="nav__col">
               <div class="nav__col-head">Community Programs</div>
-              <a href="https://www.felidaefund.org/projects/community/living-with-lions" target="_blank" rel="noopener" role="menuitem">Living with Lions</a>
-              <a href="https://www.felidaefund.org/projects/community/cat-aware" target="_blank" rel="noopener" role="menuitem">CAT Aware</a>
-              <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" role="menuitem">Wilde Pod</a>
-              <a href="https://www.felidaefund.org/projects/community/wilde-backyard" target="_blank" rel="noopener" role="menuitem">Wilde Backyard</a>
+              <a href="project-living-with-lions.html" role="menuitem">Living with Lions</a>
+              <a href="project-cat-aware.html" role="menuitem">CAT Aware</a>
+              <a href="project-wilde-pod.html" role="menuitem">Wilde Pod</a>
+              <a href="project-wilde-backyard.html" role="menuitem">Wilde Backyard</a>
             </div>
           </div>
         </li>
@@ -58,16 +58,16 @@ class SiteNav extends HTMLElement {
             <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
           </a>
           <div class="nav__dropdown" role="menu" aria-label="Learn submenu">
-            <a href="https://www.felidaefund.org/about/mission" target="_blank" rel="noopener" role="menuitem">Our Mission</a>
-            <a href="https://www.felidaefund.org/science" target="_blank" rel="noopener" role="menuitem">Science &amp; Research</a>
-            <a href="https://www.felidaefund.org/news" target="_blank" rel="noopener" role="menuitem">News</a>
-            <a href="https://www.felidaefund.org/about" target="_blank" rel="noopener" role="menuitem">About Us</a>
-            <a href="https://www.felidaefund.org/learn/cats" target="_blank" rel="noopener" role="menuitem">Wild Cat Species of the World</a>
-            <a href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" role="menuitem">Protecting Healthy Ecosystems</a>
-            <a href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" role="menuitem">Living Alongside Wild Cats</a>
-            <a href="https://www.felidaefund.org/learn/safety-essentials-wild-cats" target="_blank" rel="noopener" role="menuitem">Safety Essentials</a>
-            <a href="https://www.felidaefund.org/learn/media" target="_blank" rel="noopener" role="menuitem">Photos &amp; Videos</a>
-            <a href="https://www.felidaefund.org/kids" target="_blank" rel="noopener" role="menuitem">Kids Area</a>
+            <a href="mission.html" role="menuitem">Our Mission</a>
+            <a href="science.html" role="menuitem">Science &amp; Research</a>
+            <a href="news.html" role="menuitem">News</a>
+            <a href="about.html" role="menuitem">About Us</a>
+            <a href="learn-cats.html" role="menuitem">Wild Cat Species of the World</a>
+            <a href="learn-ecosystems.html" role="menuitem">Protecting Healthy Ecosystems</a>
+            <a href="learn-living-alongside.html" role="menuitem">Living Alongside Wild Cats</a>
+            <a href="learn-safety.html" role="menuitem">Safety Essentials</a>
+            <a href="learn-media.html" role="menuitem">Photos &amp; Videos</a>
+            <a href="kids.html" role="menuitem">Kids Area</a>
           </div>
         </li>
         <!-- Get Involved -->
@@ -77,14 +77,14 @@ class SiteNav extends HTMLElement {
             <svg class="nav__chevron" viewBox="0 0 12 12" aria-hidden="true"><polyline points="2,4 6,8 10,4"/></svg>
           </a>
           <div class="nav__dropdown" role="menu" aria-label="Get Involved submenu">
-            <a href="https://www.felidaefund.org/take-action/volunteer" target="_blank" rel="noopener" role="menuitem">Volunteer</a>
-            <a href="https://www.felidaefund.org/take-action/spread-awareness" target="_blank" rel="noopener" role="menuitem">Spread Awareness</a>
-            <a href="https://www.felidaefund.org/take-action/community-science" target="_blank" rel="noopener" role="menuitem">Community Scientist</a>
-            <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" role="menuitem">Trail Cam Data (Wilde Pod)</a>
-            <a href="https://www.felidaefund.org/events" target="_blank" rel="noopener" role="menuitem">Events</a>
-            <a href="https://www.felidaefund.org/take-action/more-ways-to-help" target="_blank" rel="noopener" role="menuitem">Ways to Donate</a>
-            <a href="https://www.felidaefund.org/store" target="_blank" rel="noopener" role="menuitem">Store</a>
-            <a href="https://www.felidaefund.org/take-action" target="_blank" rel="noopener" role="menuitem">Take Action</a>
+            <a href="volunteer.html" role="menuitem">Volunteer</a>
+            <a href="spread-awareness.html" role="menuitem">Spread Awareness</a>
+            <a href="community-science.html" role="menuitem">Community Scientist</a>
+            <a href="project-wilde-pod.html" role="menuitem">Trail Cam Data (Wilde Pod)</a>
+            <a href="events.html" role="menuitem">Events</a>
+            <a href="ways-to-donate.html" role="menuitem">Ways to Donate</a>
+            <a href="store.html" role="menuitem">Store</a>
+            <a href="take-action.html" role="menuitem">Take Action</a>
           </div>
         </li>
       </ul>

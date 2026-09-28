@@ -56,6 +56,12 @@
   --r-md:  12px;
   --r-lg:  20px;
 
+  /* Theme picker swatches — each theme's surface, shown side by side.
+     Deliberately fixed values, not var(--espresso-900): the swatches must
+     keep showing both options whichever theme is active. */
+  --theme-1-swatch: #1f1204;
+  --theme-2-swatch: #3c2203;
+
   --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
   --shadow-md: 0 4px 16px rgba(31,18,4,.14);
   --shadow-lg: 0 12px 40px rgba(31,18,4,.12);

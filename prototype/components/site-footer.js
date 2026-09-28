@@ -44,33 +44,33 @@ class SiteFooter extends HTMLElement {
         <nav class="footer__links" aria-label="Footer navigation">
           <div>
             <div class="footer__col-head">Projects</div>
-            <a href="https://www.felidaefund.org/projects/research/bhutan-wild-cat-health-project" target="_blank" rel="noopener" class="footer__link">Bhutan Wild Cat Health Project</a>
-            <a href="https://www.felidaefund.org/projects/research/patagonia-cats-project" target="_blank" rel="noopener" class="footer__link">Patagonia Wild Cats Project</a>
-            <a href="https://www.felidaefund.org/projects/research/pumalink" target="_blank" rel="noopener" class="footer__link">Diablo PumaLink Project</a>
-            <a href="https://www.felidaefund.org/projects/research/bay-area-bobcat-project" target="_blank" rel="noopener" class="footer__link">Bay Area Bobcat Project</a>
-            <a href="https://www.felidaefund.org/projects/research/tsavo-cheetah-project" target="_blank" rel="noopener" class="footer__link">Tsavo Cheetah Project</a>
-            <a href="https://www.felidaefund.org/projects/research/bay-area-puma-project" target="_blank" rel="noopener" class="footer__link">Bay Area Puma Project</a>
-            <a href="https://www.felidaefund.org/projects/research/wild-cat-health-project" target="_blank" rel="noopener" class="footer__link">Wild Cat Health Project</a>
+            <a href="project-bhutan.html" class="footer__link">Bhutan Wild Cat Health Project</a>
+            <a href="project-patagonia.html" class="footer__link">Patagonia Wild Cats Project</a>
+            <a href="project-pumalink.html" class="footer__link">Diablo PumaLink Project</a>
+            <a href="project-bobcat.html" class="footer__link">Bay Area Bobcat Project</a>
+            <a href="project-tsavo.html" class="footer__link">Tsavo Cheetah Project</a>
+            <a href="project-bapp.html" class="footer__link">Bay Area Puma Project</a>
+            <a href="project-wildcat-health.html" class="footer__link">Wild Cat Health Project</a>
           </div>
           <div>
             <div class="footer__col-head">Learn</div>
-            <a href="https://www.felidaefund.org/about/mission" target="_blank" rel="noopener" class="footer__link">Our Mission</a>
-            <a href="https://www.felidaefund.org/news" target="_blank" rel="noopener" class="footer__link">News</a>
-            <a href="https://www.felidaefund.org/about" target="_blank" rel="noopener" class="footer__link">About Us</a>
-            <a href="https://www.felidaefund.org/learn/cats" target="_blank" rel="noopener" class="footer__link">Wild Cat Species</a>
-            <a href="https://www.felidaefund.org/learn/protecting-healthy-ecosystems" target="_blank" rel="noopener" class="footer__link">Healthy Ecosystems</a>
-            <a href="https://www.felidaefund.org/learn/living-alongside-wild-cats" target="_blank" rel="noopener" class="footer__link">Living Alongside Wild Cats</a>
-            <a href="https://www.felidaefund.org/learn/safety-essentials-wild-cats" target="_blank" rel="noopener" class="footer__link">Safety Essentials</a>
+            <a href="mission.html" class="footer__link">Our Mission</a>
+            <a href="news.html" class="footer__link">News</a>
+            <a href="about.html" class="footer__link">About Us</a>
+            <a href="learn-cats.html" class="footer__link">Wild Cat Species</a>
+            <a href="learn-ecosystems.html" class="footer__link">Healthy Ecosystems</a>
+            <a href="learn-living-alongside.html" class="footer__link">Living Alongside Wild Cats</a>
+            <a href="learn-safety.html" class="footer__link">Safety Essentials</a>
           </div>
           <div>
             <div class="footer__col-head">Get Involved</div>
-            <a href="https://www.felidaefund.org/take-action/volunteer" target="_blank" rel="noopener" class="footer__link">Volunteer</a>
-            <a href="https://www.felidaefund.org/take-action/volunteer-and-career-opportunities" target="_blank" rel="noopener" class="footer__link">Volunteer and Career Opportunities</a>
-            <a href="https://www.felidaefund.org/take-action/community-science" target="_blank" rel="noopener" class="footer__link">Community Scientist</a>
-            <a href="https://www.felidaefund.org/projects/community/wilde-pod" target="_blank" rel="noopener" class="footer__link">Wilde Pod (Trail Cam)</a>
-            <a href="https://www.felidaefund.org/events" target="_blank" rel="noopener" class="footer__link">Events</a>
-            <a href="https://www.felidaefund.org/take-action/more-ways-to-help" target="_blank" rel="noopener" class="footer__link">Ways to Donate</a>
-            <a href="https://www.felidaefund.org/take-action" target="_blank" rel="noopener" class="footer__link">Take Action</a>
+            <a href="volunteer.html" class="footer__link">Volunteer</a>
+            <a href="volunteer.html" class="footer__link">Volunteer and Career Opportunities</a>
+            <a href="community-science.html" class="footer__link">Community Scientist</a>
+            <a href="project-wilde-pod.html" class="footer__link">Wilde Pod (Trail Cam)</a>
+            <a href="events.html" class="footer__link">Events</a>
+            <a href="ways-to-donate.html" class="footer__link">Ways to Donate</a>
+            <a href="take-action.html" class="footer__link">Take Action</a>
           </div>
           <div>
             <div class="footer__col-head">Contact</div>
