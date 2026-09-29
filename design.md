@@ -99,6 +99,21 @@ Two things this does not cover:
   `tokens.css`, `page.css`, `components.css` or the component JS, never in
   a page file, or the next refresh erases them.
 
+
+## The preview is blocked from search engines
+
+`prototype/vercel.json` sends `X-Robots-Tag: noindex` on every route, so
+Google will not index the Vercel deployment. Without it the prototype is
+85 pages of near-identical content on a second domain, linked from a
+public README, competing with felidaefund.org in search results.
+
+It changes nothing for people. Anyone with the link opens the site
+normally.
+
+**Remove this file when a version of this becomes the real public site.**
+Shipping with the header still in place means a live site that Google
+cannot list. JSON takes no comments, which is why the note is here.
+
 ## Known defects on the live site
 
 Carried across as-is. These are content decisions for Felidae, not bugs
