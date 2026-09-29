@@ -78,6 +78,27 @@ Run these after any change. Each catches something the others do not.
    newsletter were all lost this way, and all were found by a person
    looking at the live page.
 
+
+## Refreshing content from the live site
+
+Zara edits the live Joomla site. To pull those edits into the prototype:
+
+```
+python3 tools/port-from-joomla.py --fetch
+```
+
+That downloads all 83 source pages and regenerates the 85 prototype pages.
+Without `--fetch` it reuses whatever is already cached in `tools/live/`,
+which is git-ignored because it is derived data.
+
+Two things this does not cover:
+
+- The homepage is Daniel's hand-built page, not generated. Homepage copy
+  has to be edited in `prototype/index.html`.
+- Regenerating overwrites every generated page. Design changes belong in
+  `tokens.css`, `page.css`, `components.css` or the component JS, never in
+  a page file, or the next refresh erases them.
+
 ## Known defects on the live site
 
 Carried across as-is. These are content decisions for Felidae, not bugs

@@ -1,7 +1,7 @@
 import re, html, os, sys
 LIVE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'live')
-OUT  = '/Users/irene/code/felidaefund.org/prototype'
-V    = '?v=14'
+OUT  = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'prototype')
+V    = '?v=27'
 
 def txt(s): return html.unescape(re.sub(r'\s+',' ',re.sub(r'<[^>]+>','',s))).strip()
 def esc(s): return html.escape(s, quote=False)
@@ -986,7 +986,61 @@ LINKMAP.update({
  "/site-map":"site-map.html",
 })
 
+# ── Fetching ─────────────────────────────────────────────────────────
+# Zara edits the live Joomla site; this pulls those pages down so the
+# prototype can be regenerated from them. Run with --fetch to refresh.
+import urllib.request, time
+
+UA = {"User-Agent": "Mozilla/5.0 (felidae prototype porter)"}
+
+def cache_path(src):
+    return os.path.join(LIVE, src.replace('/', '__') + '.html')
+
+def fetch_one(src, force=False):
+    dest = cache_path(src)
+    if not force and os.path.exists(dest) and os.path.getsize(dest) > 1000:
+        return 'cached'
+    try:
+        body = urllib.request.urlopen(
+            urllib.request.Request('https://felidaefund.org/' + src, headers=UA), timeout=30).read()
+    except Exception as e:
+        return 'ERROR ' + str(e)[:60]
+    os.makedirs(LIVE, exist_ok=True)
+    open(dest, 'wb').write(body)
+    return 'fetched'
+
+def all_sources():
+    """Every live page the prototype is built from."""
+    srcs = [row[0] for row in CONTENT] + [row[0] for row in EXTRA] + [row[0] for row in PROJECTS]
+    srcs += ['learn/cats/' + slug for slug in SPECIES]
+    seen, out = set(), []
+    for s_ in srcs:
+        if s_ not in seen:
+            seen.add(s_); out.append(s_)
+    return out
+
+def fetch_all(force=False):
+    srcs = all_sources()
+    counts = {}
+    for i, src in enumerate(srcs, 1):
+        r = fetch_one(src, force)
+        counts[r.split()[0]] = counts.get(r.split()[0], 0) + 1
+        if r.startswith('ERROR'):
+            print(f'  {src}: {r}')
+        if r == 'fetched':
+            time.sleep(0.25)
+    print(f'  {len(srcs)} sources: ' + ', '.join(f'{v} {k}' for k, v in sorted(counts.items())))
+    missing = [s_ for s_ in srcs if not os.path.exists(cache_path(s_))]
+    if missing:
+        print(f'  WARNING: {len(missing)} still missing, e.g. {missing[:3]}')
+    return not missing
+
+
 if __name__ == '__main__':
+    force = '--fetch' in sys.argv
+    print('Fetching from felidaefund.org' + (' (forced refresh)' if force else ' (using cache where present)'))
+    fetch_all(force)
+    print()
     for row in CONTENT:
         print("  %-28s blocks=%-3s hero=%s" % build_content(*row))
     print()
