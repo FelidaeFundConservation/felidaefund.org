@@ -1,0 +1,202 @@
+{
+ "african-golden-cat": {
+  "slug": "african-golden-cat",
+  "common": "African Golden Cat",
+  "sci": "Profelis aurata"
+ },
+ "african-asian-wildcat": {
+  "slug": "african-asian-wildcat",
+  "common": "African-Asian Wildcat",
+  "sci": "Felis silvestris lybica, Felis silvestris ornata"
+ },
+ "andean-mountain-cat": {
+  "slug": "andean-mountain-cat",
+  "common": "Andean Mountain Cat",
+  "sci": "Leopardus jacobita"
+ },
+ "asiatic-golden-cat": {
+  "slug": "asiatic-golden-cat",
+  "common": "Asiatic Golden Cat",
+  "sci": "Catopuma temminckii"
+ },
+ "bay-cat": {
+  "slug": "bay-cat",
+  "common": "Bay Cat",
+  "sci": "Catopuma badia"
+ },
+ "black-footed-cat": {
+  "slug": "black-footed-cat",
+  "common": "Black-footed Cat",
+  "sci": "Felis nigripes"
+ },
+ "bobcat": {
+  "slug": "bobcat",
+  "common": "Bobcat",
+  "sci": "Lynx rufus"
+ },
+ "bornean-clouded-leopard": {
+  "slug": "bornean-clouded-leopard",
+  "common": "Bornean Clouded Leopard",
+  "sci": "Neofelis diardi"
+ },
+ "canadian-lynx": {
+  "slug": "canadian-lynx",
+  "common": "Canadian Lynx",
+  "sci": "Lynx canadensis"
+ },
+ "caracal": {
+  "slug": "caracal",
+  "common": "Caracal",
+  "sci": "Caracal caracal"
+ },
+ "cheetah": {
+  "slug": "cheetah",
+  "common": "Cheetah",
+  "sci": "Acinonyx jubatus"
+ },
+ "chinese-desert-cat": {
+  "slug": "chinese-desert-cat",
+  "common": "Chinese Desert Cat",
+  "sci": "Felis bieti"
+ },
+ "clouded-leopard": {
+  "slug": "clouded-leopard",
+  "common": "Clouded Leopard",
+  "sci": "Neofelis nebulosa"
+ },
+ "domestic-cat": {
+  "slug": "domestic-cat",
+  "common": "Domestic Cat",
+  "sci": "Felis catus"
+ },
+ "eurasian-lynx": {
+  "slug": "eurasian-lynx",
+  "common": "Eurasian Lynx",
+  "sci": "Lynx lynx"
+ },
+ "european-wildcat": {
+  "slug": "european-wildcat",
+  "common": "European Wildcat",
+  "sci": "Felis silvestris"
+ },
+ "fishing-cat": {
+  "slug": "fishing-cat",
+  "common": "Fishing Cat",
+  "sci": "Prionailurus viverrinus"
+ },
+ "flat-headed-cat": {
+  "slug": "flat-headed-cat",
+  "common": "Flat-headed Cat",
+  "sci": "Prionailurus planiceps"
+ },
+ "geoffroys-cat": {
+  "slug": "geoffroys-cat",
+  "common": "Geoffroy\u2019s Cat",
+  "sci": "Leopardus geoffroyi"
+ },
+ "iberian-lynx": {
+  "slug": "iberian-lynx",
+  "common": "Iberian Lynx",
+  "sci": "Lynx pardinus"
+ },
+ "iriomote-cat": {
+  "slug": "iriomote-cat",
+  "common": "Iriomote Cat",
+  "sci": "Prionailurus iriomotensis/Mayailurus iriomotensis"
+ },
+ "jaguar": {
+  "slug": "jaguar",
+  "common": "Jaguar",
+  "sci": "Panthera onca"
+ },
+ "jaguarundi": {
+  "slug": "jaguarundi",
+  "common": "Jaguarundi",
+  "sci": "Herpailurus yaguarondi"
+ },
+ "jungle-cat": {
+  "slug": "jungle-cat",
+  "common": "Jungle Cat",
+  "sci": "Felis chaus"
+ },
+ "kodkod": {
+  "slug": "kodkod",
+  "common": "Kodkod",
+  "sci": "Leopardus guigna"
+ },
+ "leopard": {
+  "slug": "leopard",
+  "common": "Leopard",
+  "sci": "Panthera pardus"
+ },
+ "leopard-cat": {
+  "slug": "leopard-cat",
+  "common": "Leopard Cat",
+  "sci": "Prionailurus bengalensis"
+ },
+ "lion": {
+  "slug": "lion",
+  "common": "Lion",
+  "sci": "Panthera leo"
+ },
+ "marbled-cat": {
+  "slug": "marbled-cat",
+  "common": "Marbled Cat",
+  "sci": "Pardofelis marmorata"
+ },
+ "margay": {
+  "slug": "margay",
+  "common": "Margay",
+  "sci": "Leopardus wiedii"
+ },
+ "mountain-lion": {
+  "slug": "mountain-lion",
+  "common": "Mountain Lion",
+  "sci": "Puma concolor"
+ },
+ "ocelot": {
+  "slug": "ocelot",
+  "common": "Ocelot",
+  "sci": "Leopardus pardalis"
+ },
+ "oncilla": {
+  "slug": "oncilla",
+  "common": "Oncilla",
+  "sci": "Leopardus tigrinus"
+ },
+ "pallas-cat": {
+  "slug": "pallas-cat",
+  "common": "Pallas\u2019s Cat",
+  "sci": "Otocolobus manul"
+ },
+ "pampas-cat": {
+  "slug": "pampas-cat",
+  "common": "Pampas Cat",
+  "sci": "Leopardus colocolo"
+ },
+ "rusty-spotted-cat": {
+  "slug": "rusty-spotted-cat",
+  "common": "Rusty-spotted Cat",
+  "sci": "Prionailurus rubiginosus"
+ },
+ "sand-cat": {
+  "slug": "sand-cat",
+  "common": "Sand Cat",
+  "sci": "Felis margarita"
+ },
+ "serval": {
+  "slug": "serval",
+  "common": "Serval",
+  "sci": "Leptailurus serval"
+ },
+ "snow-leopard": {
+  "slug": "snow-leopard",
+  "common": "Snow Leopard",
+  "sci": "Uncia uncia"
+ },
+ "tiger": {
+  "slug": "tiger",
+  "common": "Tiger",
+  "sci": "Panthera tigris"
+ }
+}

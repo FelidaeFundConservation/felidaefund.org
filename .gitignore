@@ -5,3 +5,6 @@ wp-config.php
 .env
 *.sql
 *.sql.gz
+
+# Porter cache: fetched copies of the live Joomla pages, regenerated on demand
+tools/live/

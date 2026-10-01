@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Felidae Conservation Fund</title>
+  <link rel="icon" type="image/svg+xml" href="https://felidaefund.org/templates/genesis4/images/favicon.svg" />
+  <link rel="alternate icon" href="https://felidaefund.org/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="tokens.css?v=27" />
+  <link rel="stylesheet" href="base.css?v=27" />
+  <link rel="stylesheet" href="components.css?v=27" />
+  <link rel="stylesheet" href="page.css?v=27" />
+
+  <script src="components/site-nav.js?v=27"></script>
+  <script src="components/site-footer.js?v=27"></script>
+  <script src="components/site-donate.js?v=27"></script>
+  <script src="components/page.js?v=27" defer></script>
+</head>
+
+<body style="--page-accent: var(--gold-400)">
+
+  <site-nav></site-nav>
+
+  <main>
+    <header class="page-head">
+      <div class="container">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span aria-hidden="true">/</span>
+          <span>Projects</span>
+        </nav>
+        <p class="page-eyebrow">Our Work</p>
+        <h1 class="page-title">Eleven projects, three continents</h1>
+        <p class="page-lede">
+          Field research that produces the data, and community programs that turn it into
+          protection. Every project below is run or co-funded by Felidae.
+        </p>
+      </div>
+    </header>
+
+    <section class="page-body">
+      <div class="container">
+
+        <div class="filters" role="group" aria-label="Filter projects">
+          <button class="filter-btn" data-filter="all" aria-pressed="true">All projects</button>
+          <button class="filter-btn" data-filter="research" aria-pressed="false">Field research</button>
+          <button class="filter-btn" data-filter="community" aria-pressed="false">Community programs</button>
+          <span class="filter-count" id="filterCount" role="status">Showing all 11</span>
+        </div>
+
+        <div class="group" data-group="research">
+          <div class="group-head">
+            <h2>Field research</h2>
+            <p>Camera traps, collars, genetics and health screening.</p>
+          </div>
+          <div class="proj-grid">
+          <a class="proj-card reveal" href="project-bapp.html"
+             data-cat="research" style="--c: var(--project-bapp)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Bay Area Puma Project</h3>
+            <p class="proj-card__species">Puma concolor</p>
+            <p class="proj-card__desc">The first large-scale research, education and conservation program for pumas around the Bay — and the model the other field projects build on.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>San Francisco Bay Area, CA</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2007</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal reveal-delay-2" href="project-bobcat.html"
+             data-cat="research" style="--c: var(--project-babp)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Bay Area Bobcat Project</h3>
+            <p class="proj-card__species">Lynx rufus</p>
+            <p class="proj-card__desc">Habitat fragmentation is the main threat to Bay Area wildlife. This project tracks how bobcats move between the fragments that are left.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>San Francisco Bay Area, CA</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2012</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal reveal-delay-3" href="project-pumalink.html"
+             data-cat="research" style="--c: var(--project-pumalink)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Diablo PumaLink Project</h3>
+            <p class="proj-card__species">Puma concolor, Lynx rufus</p>
+            <p class="proj-card__desc">Mapping the corridors that connect mountain lion populations across the East Bay's North Diablo Range, where connectivity is disappearing.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Diablo Range, CA</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2023</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal" href="project-wildcat-health.html"
+             data-cat="research" style="--c: var(--project-health)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Wild Cat Health Project</h3>
+            <p class="proj-card__species">Puma concolor, Lynx rufus</p>
+            <p class="proj-card__desc">What apex predators carry tells us about the shared health of the environment, domestic animals and people around them.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>California</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2022</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal reveal-delay-2" href="project-patagonia.html"
+             data-cat="research" style="--c: var(--project-patagonia)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Patagonia Wild Cats Project</h3>
+            <p class="proj-card__species">Leopardus geoffroyi, Puma concolor, Leopardus colocolo</p>
+            <p class="proj-card__desc">Addressing overgrazing and hunting pressure on Argentina's wild felids, while filling in the basic biology of little-known small cats.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Patagonian steppe, Argentina</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2024</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal reveal-delay-3" href="project-tsavo.html"
+             data-cat="research" style="--c: var(--project-tsavo)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Tsavo Cheetah Project</h3>
+            <p class="proj-card__species">Acinonyx jubatus</p>
+            <p class="proj-card__desc">Kenya is one of the last strongholds for cheetah. This study evaluates how the Tsavo population is holding up, and what it needs.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Tsavo Ecosystem, Kenya</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2011</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal" href="project-bhutan.html"
+             data-cat="research" style="--c: var(--project-bhutan)">
+            <p class="proj-card__cat">Field research</p>
+            <h3>Bhutan Wild Cat Health Project</h3>
+            <p class="proj-card__species">Nine native species, snow leopard to clouded leopard</p>
+            <p class="proj-card__desc">A health baseline for all nine of Bhutan's wild cat species, across four national parks and forest divisions.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Four study areas, Bhutan</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2025</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>          </div>
+        </div>
+
+        <div class="group" data-group="community">
+          <div class="group-head">
+            <h2>Community programs</h2>
+            <p>Outreach, education and community science.</p>
+          </div>
+          <div class="proj-grid">
+          <a class="proj-card reveal" href="project-living-with-lions.html"
+             data-cat="community" style="--c: var(--project-lwl)">
+            <p class="proj-card__cat">Community program</p>
+            <h3>Living with Lions</h3>
+            <p class="proj-card__species">Puma concolor, Lynx rufus</p>
+            <p class="proj-card__desc">Practical help for the people who share a landscape with pumas and bobcats: what to expect, what to do, and what not to worry about.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>San Francisco Bay Area, CA</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2021</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal reveal-delay-2" href="project-cat-aware.html"
+             data-cat="community" style="--c: var(--project-cat-aware)">
+            <p class="proj-card__cat">Community program</p>
+            <h3>CAT Aware</h3>
+            <p class="proj-card__species">Puma concolor, Lynx rufus</p>
+            <p class="proj-card__desc">Classroom and field programs that give young people a working appreciation of the ecosystems on their doorstep.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Bay Area schools</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill">Ongoing &middot; since 2021</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal reveal-delay-3" href="project-wilde-pod.html"
+             data-cat="community" style="--c: var(--project-wilde)">
+            <p class="proj-card__cat">Community program</p>
+            <h3>Wilde Pod</h3>
+            <p class="proj-card__species">All wildlife, felid focus</p>
+            <p class="proj-card__desc">A shared database for trail-camera imagery collected across public, state, county, city and private land.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Public and private lands</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill status-pill--future">Future &middot; since 2026</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>
+          <a class="proj-card reveal" href="project-wilde-backyard.html"
+             data-cat="community" style="--c: var(--project-wilde)">
+            <p class="proj-card__cat">Community program</p>
+            <h3>Wilde Backyard</h3>
+            <p class="proj-card__species">Puma concolor, Lynx rufus</p>
+            <p class="proj-card__desc">A community program that partners with residential neighbourhoods to record the wildlife already moving through their backyards.</p>
+            <div class="proj-card__meta">
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Everywhere</span></div>
+              <div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="status-pill status-pill--future">Future &middot; since 2026</span></div>
+            </div>
+            <span class="proj-card__go">View project <svg class="arrow-right" viewBox="0 0 14 14" aria-hidden="true"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="8,3 12,7 8,11"/></svg></span>
+          </a>          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="support">
+      <div class="container support__inner">
+        <div class="reveal">
+          <h2>Fund the work, not the overhead</h2>
+          <p>
+            Gifts can be directed to a single project or spread across the portfolio —
+            whichever keeps the most cameras in the field.
+          </p>
+        </div>
+        <a href="#" class="btn-gold reveal reveal-delay-1" onclick="openDonate(event)">Donate</a>
+      </div>
+    </section>
+  </main>
+
+  <site-footer></site-footer>
+  <site-donate></site-donate>
+
+  <script>
+    // ── Project filter ────────────────────────────────────────────────
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const groups     = document.querySelectorAll('.group');
+    const countEl    = document.getElementById('filterCount');
+
+    function applyFilter(which) {
+      let shown = 0;
+      groups.forEach(g => {
+        const match = which === 'all' || g.dataset.group === which;
+        g.hidden = !match;
+        if (match) shown += g.querySelectorAll('.proj-card').length;
+      });
+      filterBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === which)));
+      countEl.textContent = which === 'all' ? `Showing all ${shown}` : `Showing ${shown}`;
+    }
+
+    filterBtns.forEach(b => b.addEventListener('click', () => applyFilter(b.dataset.filter)));
+  </script>
+</body>
+</html>

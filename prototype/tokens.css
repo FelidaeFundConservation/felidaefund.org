@@ -38,6 +38,13 @@
   --project-cat-aware: #fcf6b3;
   --project-argentina: #c88712;
 
+  /* Provisional accents — these projects have no brand-book colour yet.
+     Picked to sit inside the existing palette; confirm with Zara / Ben. */
+  --project-pumalink:  #6b7f52;
+  --project-bhutan:    #9a6f9b;
+  --project-health:    #4f8a84;
+  --project-wilde:     #a3782f;
+
   /* Type */
   --font-display: 'Raleway', system-ui, sans-serif;
   --font-body:    'Literata', Georgia, 'Times New Roman', serif;
@@ -49,14 +56,41 @@
   --r-md:  12px;
   --r-lg:  20px;
 
+  /* Theme picker swatches — each theme's surface, shown side by side.
+     Deliberately fixed values, not var(--espresso-900): the swatches must
+     keep showing both options whichever theme is active. */
+  --theme-1-swatch: #1f1204;
+  --theme-2-swatch: #3c2203;
+
   --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
   --shadow-md: 0 4px 16px rgba(31,18,4,.14);
   --shadow-lg: 0 12px 40px rgba(31,18,4,.12);
+
+  /* Channels for translucent tints. Keep in sync with the hex values above. */
+  --gold-rgb:  215,183,101;   /* --gold-400 */
+  --cream-rgb: 255,251,240;   /* --cream-100 */
+  --brown-rgb: 129,78,18;     /* --brown-700 */
+  --ink-rgb:   20,10,2;       /* deep shade, darker than espresso-900 */
+  --white-rgb: 255,255,255;
+  --black-rgb: 0,0,0;
+
+  /* Conservation status, IUCN categories */
+  --status-lc: #60c060;  /* least concern */
+  --status-vu: #f0c040;  /* vulnerable */
+  --status-en: #f08040;  /* endangered */
+  --status-cr: #e84040;  /* critically endangered */
+  --trend-stable: #6ddf6d;
+  --trend-down:   #ff6b45;
+
+  /* Component surfaces */
+  --cta-donate-bg: var(--espresso-700);
+
 }
 
 /* Alternate theme, toggled by tapping the logo */
 [data-theme="2"] {
   --nav-bg:       #2d1b06;
+  --cta-donate-bg: #4c2901;
   --espresso-900: #3c2203;
   --espresso-800: #7a4a12;
   --espresso-700: #914f14;

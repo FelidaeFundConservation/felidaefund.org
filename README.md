@@ -3,6 +3,11 @@
 Working repo for the redesigned felidaefund.org.
 The live site runs on Joomla and is not affected by anything in here.
 
+## Before you change the prototype
+
+Read `design.md`. It covers which file to change, the rules a change has
+to follow, and what to run to verify it.
+
 ## What's in here
 
 - `prototype/` is the homepage prototype, shown at felidae-redesign.vercel.app
