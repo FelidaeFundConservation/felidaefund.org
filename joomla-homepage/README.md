@@ -27,6 +27,22 @@ from felidaefund.org if the live menu changes.
 2. Upload the 19 images (3.8 MB, listed below) to Joomla media at
    `/images/homepage/`, keeping the `badges/` subfolder.
 3. Append `homepage.css` to `digi-custom.css`.
+3b. **Add the missing font weights**, or the page will not match the
+   preview. The template self-hosts Raleway at 400 and 800 only, and
+   Literata at 300 and 800 only. The homepage asks for Raleway 500, 600
+   and 700 and Literata 400, none of which exist, so the browser
+   substitutes the nearest: headings and buttons render 800 (too heavy)
+   and body text renders 300 (too light). Add this to the template's
+   `<head>`, above `digi-custom.css`:
+
+   ```html
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400&family=Raleway:wght@500;600;700&display=swap">
+   ```
+
+   It requests only the four missing weights, so the weights the rest of
+   the site already uses keep coming from the local files and nothing
+   else changes.
 4. Upload `homepage.js` and load it from the template, or put it in a
    Custom HTML module with text filtering off. Don't paste it into the
    article: a later edit in the WYSIWYG editor will mangle it.
@@ -90,6 +106,29 @@ view, and it will quietly break the layout.
   `calc(100dvh - var(--fx-hero-offset))`, measured at runtime by
   `homepage.js`. Verified: hero bottom lands exactly on the fold at both
   1440x900 and 375x812, with both buttons above it.
+
+## Where Joomla can still differ from the preview
+
+The preview loads the live stylesheets, header and footer, so layout and
+colour are trustworthy. These are the things it cannot show:
+
+- **Fonts.** Handled by step 3b above. The preview loads the full weight
+  range from Google, so it flatters Joomla until that link is added.
+- **The editor.** TinyMCE rewrites hand-written HTML. Use code view with
+  the editor set to None or CodeMirror.
+- **Content plugins.** Joomla plugins transform article HTML at render
+  time, and some wrap images or inject markup. Nothing in the live
+  homepage suggests this happens, but it only shows up once pasted.
+- **Template JavaScript.** The preview does not run it, so the mobile
+  menu and any scroll behaviour on the header are untested here.
+- **Image paths.** The preview reads from `prototype/assets`; Joomla will
+  read from `/images/homepage/`. Joomla's media manager can also resize
+  on upload.
+
+The way to close the gap is step 5: paste into an unpublished article
+behind an `Access = Special` menu item, then open that URL and the
+preview side by side at the same window width. Anything that differs is
+one of the five above.
 
 ## Still open before this ships
 
