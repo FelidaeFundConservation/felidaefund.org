@@ -1,0 +1,344 @@
+/* Felidae homepage — Joomla build.
+   Generated from the prototype; every rule is scoped to .fx-home so
+   nothing can reach Joomla's header, footer or any other page.
+   Paste below the existing contents of digi-custom.css. */
+
+/* ── Design tokens. No name clashes with the live site's 144 vars. ── */
+/* Felidae design system tokens
+   Source of truth for the website redesign. */
+
+:root {
+  /* Golds */
+  --gold-500: #c4963a;
+  --gold-400: #d7b765;  /* primary: buttons, eyebrows, stats */
+  --gold-300: #e4ca8a;
+  --gold-200: #efddb0;  /* unused */
+  --gold-100: #f8f0d6;  /* tinted panels */
+
+  /* Browns: actions and links */
+  --brown-800: #5a3e1e;
+  --brown-700: #814e12;  /* buttons, links, focus borders */
+  --brown-600: #9a5e1a;  /* button hover */
+  --brown-500: #b87333;  /* unused */
+  --brown-400: #8a6240;
+  --brown-300: #b8906a;
+
+  /* Darks: backgrounds and body text */
+  --nav-bg:       #211102;
+  --espresso-900: #1f1204;
+  --espresso-800: #2e1a06;
+  --espresso-700: #3d2209;
+
+  /* Lights */
+  --cream-100: #fffbf0;  /* page background */
+  --cream-200: #fff8e6;  /* section panels */
+  --cream-300: #fdf4dd;
+  --white:     #ffffff;
+
+  /* Project accents, from the 2021 brand book. Unused until project pages. */
+  --project-bapp:      #7292a1;
+  --project-tsavo:     #b14a57;
+  --project-patagonia: #61568a;
+  --project-lwl:       #007d00;
+  --project-babp:      #8d8513;
+  --project-cat-aware: #fcf6b3;
+  --project-argentina: #c88712;
+
+  /* Provisional accents — these projects have no brand-book colour yet.
+     Picked to sit inside the existing palette; confirm with Zara / Ben. */
+  --project-pumalink:  #6b7f52;
+  --project-bhutan:    #9a6f9b;
+  --project-health:    #4f8a84;
+  --project-wilde:     #a3782f;
+
+  /* Type */
+  --font-display: 'Raleway', system-ui, sans-serif;
+  --font-body:    'Literata', Georgia, 'Times New Roman', serif;
+
+  /* Layout */
+  --nav-h: 86px;
+  --max-w: 1280px;
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+
+  /* Theme picker swatches — each theme's surface, shown side by side.
+     Deliberately fixed values, not var(--espresso-900): the swatches must
+     keep showing both options whichever theme is active. */
+  --theme-1-swatch: #1f1204;
+  --theme-2-swatch: #3c2203;
+
+  --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
+  --shadow-md: 0 4px 16px rgba(31,18,4,.14);
+  --shadow-lg: 0 12px 40px rgba(31,18,4,.12);
+
+  /* Channels for translucent tints. Keep in sync with the hex values above. */
+  --gold-rgb:  215,183,101;   /* --gold-400 */
+  --cream-rgb: 255,251,240;   /* --cream-100 */
+  --brown-rgb: 129,78,18;     /* --brown-700 */
+  --ink-rgb:   20,10,2;       /* deep shade, darker than espresso-900 */
+  --white-rgb: 255,255,255;
+  --black-rgb: 0,0,0;
+
+  /* Conservation status, IUCN categories */
+  --status-lc: #60c060;  /* least concern */
+  --status-vu: #f0c040;  /* vulnerable */
+  --status-en: #f08040;  /* endangered */
+  --status-cr: #e84040;  /* critically endangered */
+  --trend-stable: #6ddf6d;
+  --trend-down:   #ff6b45;
+
+  /* Component surfaces */
+  --cta-donate-bg: var(--espresso-700);
+
+}
+
+/* ── Reset, type, buttons, utilities (was base.css) ───────────────── */
+  /* Base styles shared by every prototype page: reset, typography,
+   container, buttons, section labels, reveal animation.
+   Page-specific sections stay in each page's own <style>. */
+  .fx-home *, .fx-home *::before, .fx-home *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .fx-home { font-family: var(--font-body); touch-action: pan-y; overflow-x: hidden; background: var(--cream-100); color: var(--espresso-900); -webkit-font-smoothing: antialiased; }
+  .fx-home img { display: block; max-width: 100%; }
+  .fx-home a { color: inherit; text-decoration: none; }
+  .fx-home button { cursor: pointer; border: none; background: none; font: inherit; }
+  .fx-home .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+  .fx-home .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--brown-700); color: var(--cream-100); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 12px 24px; border-radius: var(--r-sm); transition: background .2s, transform .15s; }
+  .fx-home .btn-primary:hover { background: var(--brown-600); transform: translateY(-1px); }
+  .fx-home .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: 2px solid currentColor; color: var(--cream-100); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 10px 22px; border-radius: var(--r-sm); transition: background .2s, color .2s; }
+  .fx-home .btn-outline:hover { background: rgba(var(--white-rgb),.12); }
+  .fx-home .btn-gold { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-400); color: var(--espresso-900); font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 12px 28px; border-radius: var(--r-sm); transition: background .2s, transform .15s; }
+  .fx-home .btn-gold:hover { background: var(--gold-300); transform: translateY(-1px); }
+  .fx-home .section-label { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown-700); margin-bottom: 12px; }
+  .fx-home .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.15; color: var(--espresso-900); }
+  .fx-home .section-body { font-family: var(--font-body); font-size: 17px; line-height: 1.75; color: var(--brown-800); max-width: 52ch; }
+  @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+  .fx-home .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; will-change: transform, opacity; }
+  .fx-home .reveal.visible { opacity: 1; transform: translateY(0); will-change: auto; }
+  .fx-home .reveal-delay-1 { transition-delay: .1s; }
+  .fx-home .reveal-delay-2 { transition-delay: .2s; }
+  .fx-home .reveal-delay-3 { transition-delay: .3s; }
+  .fx-home .reveal-delay-4 { transition-delay: .4s; }
+  .fx-home .arrow-right { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  @media (max-width: 1024px) {
+    /* header gets tight — badges show on desktop only */
+    .fx-home .mission__grid { grid-template-columns: 1fr 1fr; }
+    .fx-home .impact__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .impact__stat { border-right: none; border-bottom: 1px solid rgba(var(--gold-rgb),.1); }
+    .fx-home .species__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .projects__grid { grid-template-columns: 1fr 1fr; }
+    .fx-home .news__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    
+    .fx-home .container { padding: 0 20px; }
+  }
+
+/* ── Undo the live site's rules where they reach into this markup ─────
+   Checked against special-pages.css, template.css, digi-custom.css and
+   content.min.css. Two template rules reach the new markup:
+
+   1. .home section + section { margin-top: ... !important }
+   2. * + :not(:first-child):not(main):not(.igui-lightbox)
+          { margin-top: var(--space-s) }   <- template.css
+
+   The second is the template's global flow spacing: it puts 24px on top
+   of EVERY element that has a preceding sibling. The prototype assumes a
+   margin:0 reset, so it has to be switched off inside .fx-home. The
+   selector below mirrors the template's exactly, plus .fx-home, so it can
+   only ever undo that one rule. The handful of margins the design does
+   want back are restored at the end of this file, where equal specificity
+   plus later source order lets them win.
+
+   The two classes that collided outright (.mission, .news) are renamed
+   .fx-mission / .fx-news in the article instead of being fought with
+   !important, and every section carries the template's own full-width
+   class so it is not boxed to 1170px. */
+  .home .fx-home section + section { margin-top: 0 !important; }
+  .fx-home * + :not(:first-child):not(main):not(.igui-lightbox) { margin-top: 0; }
+
+/* ── Homepage sections (was the page's inline <style>) ───────────── */
+  .fx-home .hero { position: relative; height: 100vh;        /* fallback for older browsers */ height: 100dvh;       /* fill the *visible* viewport as mobile browser chrome shows/hides */ display: flex; align-items: flex-end; overflow: hidden; }
+  .fx-home .hero__video-wrap { position: absolute; inset: 0; }
+  .fx-home .hero__video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  /* Hero background image */
+  .fx-home .hero__bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  /* Tint layer under overlay — shows if image fails to load */
+  .fx-home .hero__gradient-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, var(--espresso-700) 0%, var(--espresso-900) 60%), linear-gradient(160deg, var(--espresso-800) 0%, #0d0a04 100%); }
+  /* Dark overlay for text legibility */
+  .fx-home .hero__overlay { position: absolute; inset: 0; background: linear-gradient( to top, rgba(var(--ink-rgb),.85) 0%, rgba(var(--ink-rgb),.45) 28%, transparent 45% ); }
+  /* Decorative paw texture */
+  .fx-home .hero__texture { position: absolute; inset: 0; opacity: .04; background-image: radial-gradient(circle, var(--gold-400) 1px, transparent 1px); background-size: 40px 40px; }
+  .fx-home .hero__content { position: relative; z-index: 2; max-width: var(--max-w); margin: 0 auto; padding: 0 32px; padding-bottom: 32px; width: 100%; }
+  .fx-home .hero__eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .fx-home .hero__eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold-400); }
+  .fx-home .hero__title { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6vw, 80px); line-height: 1.05; letter-spacing: -.02em; color: var(--cream-100); max-width: 14ch; margin-bottom: 24px; }
+  .fx-home .hero__title em { font-style: normal; color: var(--gold-400); }
+  .fx-home .hero__subtitle { font-family: var(--font-body); font-size: clamp(27px, 3.15vw, 36px); line-height: 1.3; color: rgba(var(--cream-rgb),.8); max-width: 36ch; margin-bottom: 36px; }
+  .fx-home .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .fx-home .hero__credit { margin: 20px 0 0; font-family: var(--font-display); font-size: 11px; letter-spacing: .08em; color: rgba(var(--cream-rgb),.5); }
+  .fx-home .hero__scroll { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(var(--cream-rgb),.45); font-family: var(--font-display); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; animation: bounce 2s ease-in-out infinite; }
+  .fx-home .hero__scroll svg { width: 20px; height: 20px; }
+  /* Optional: cat silhouette decoration */
+  .fx-home .hero__cat-silhouette { position: absolute; bottom: 0; right: 5%; width: clamp(200px, 28vw, 420px); opacity: .07; pointer-events: none; }
+  .fx-home .fx-mission { padding: 100px 0; background: var(--cream-100); }
+  .fx-home .mission__header { text-align: center; margin-bottom: 64px; }
+  .fx-home .mission__header .section-body { margin: 16px auto 0; text-align: center; }
+  .fx-home .mission__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .fx-home .mission__card { background: var(--white); border-radius: var(--r-lg); padding: 0; border: 1px solid rgba(var(--gold-rgb),.2); box-shadow: var(--shadow-sm); transition: box-shadow .25s, transform .3s; position: relative; overflow: hidden; }
+  .fx-home .mission__card::before { display: none; }
+  .fx-home .mission__card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px) scale(1.02); }
+  .fx-home .mission__card-img { width: 100%; aspect-ratio: 16/9; height: auto; object-fit: cover; display: block; transition: transform .5s ease; }
+  .fx-home .mission__card:hover .mission__card-img { transform: scale(1.05); }
+  .fx-home .mission__card-content { padding: 32px 32px 36px; }
+  .fx-home .mission__icon { width: 52px; height: 52px; border-radius: var(--r-md); background: var(--gold-100); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .fx-home .mission__icon svg { width: 26px; height: 26px; color: var(--brown-700); }
+  .fx-home .mission__card-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--espresso-900); margin-bottom: 12px; }
+  .fx-home .mission__card-body { font-size: 15.5px; line-height: 1.75; color: var(--brown-800); margin-bottom: 24px; }
+  .fx-home .mission__link { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .06em; color: var(--brown-700); display: inline-flex; align-items: center; gap: 6px; transition: gap .2s; }
+  .fx-home .mission__link:hover { gap: 10px; }
+  .fx-home .impact { background: var(--espresso-900); padding: 80px 0; position: relative; overflow: hidden; }
+  .fx-home .impact::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%23d7b765' opacity='.06'/%3E%3C/svg%3E"); }
+  .fx-home .impact__inner { position: relative; }
+  .fx-home .impact__header { text-align: center; margin-bottom: 56px; }
+  .fx-home .impact__header .section-label { color: var(--gold-400); }
+  .fx-home .impact__header .section-title { color: var(--cream-100); }
+  .fx-home .impact__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .fx-home .impact__stat { text-align: center; padding: 40px 24px; border-right: 1px solid rgba(var(--gold-rgb),.1); }
+  .fx-home .impact__stat:last-child { border-right: none; }
+  .fx-home .impact__number { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 5vw, 60px); color: var(--gold-400); line-height: 1; margin-bottom: 8px; }
+  .fx-home .impact__unit { font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--gold-300); margin-bottom: 8px; letter-spacing: .04em; }
+  .fx-home .impact__label { font-family: var(--font-body); font-size: 14.5px; color: rgba(var(--cream-rgb),.55); line-height: 1.5; }
+  .fx-home .species { padding: 100px 0; background: var(--cream-200); }
+  .fx-home .species__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+  .fx-home .species__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .fx-home .species__card { border-radius: var(--r-md); overflow: hidden; position: relative; aspect-ratio: 3/4; cursor: pointer; transition: transform .3s, box-shadow .3s; }
+  .fx-home .species__card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 0 0 2px rgba(var(--gold-rgb),.3), 0 12px 28px rgba(var(--black-rgb),.18); z-index: 1; }
+  .fx-home .species__card-link { position: absolute; inset: 0; z-index: 2; }
+  .fx-home .species__card-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform .5s ease; }
+  .fx-home .species__card:hover .species__card-img { transform: scale(1.17); }
+  /* CSS placeholder "photo" */
+  .fx-home .species__card-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; position: relative; }
+  .fx-home .species__card-ph::after { content: ''; position: absolute; inset: 0; background: inherit; filter: brightness(.7) saturate(.6); }
+  .fx-home .sp-1 { background: linear-gradient(160deg, #4a3520 0%, #2a1a0a 100%); }
+  .fx-home .sp-2 { background: linear-gradient(160deg, #5c4020 0%, #3a2510 100%); }
+  .fx-home .sp-3 { background: linear-gradient(160deg, #3a4a30 0%, #1e2a16 100%); }
+  .fx-home .sp-4 { background: linear-gradient(160deg, #4a3a20 0%, #2a2010 100%); }
+  .fx-home .species__emoji { position: relative; z-index: 1; font-size: 56px; }
+  .fx-home .species__card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(var(--ink-rgb),.9) 0%, rgba(var(--ink-rgb),.1) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }
+  .fx-home .species__card-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--cream-100); margin-bottom: 4px; }
+  .fx-home .species__card-status { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .fx-home .status-vu { color: var(--status-vu); }
+  .fx-home .status-en { color: var(--status-en); }
+  .fx-home .status-cr { color: var(--status-cr); }
+  .fx-home .status-lc { color: var(--status-lc); }
+  .fx-home .species__card-trend { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .08em; margin-top: 3px; }
+  .fx-home .trend-decreasing { color: var(--trend-down); }
+  .fx-home .trend-stable { color: var(--trend-stable); }
+  .fx-home .projects { padding: 100px 0; background: var(--cream-100); }
+  .fx-home .projects__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+  .fx-home .projects__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .fx-home .project-card { border-radius: var(--r-lg); overflow: hidden; background: var(--white); border: 1px solid rgba(var(--gold-rgb),.18); box-shadow: var(--shadow-sm); transition: box-shadow .25s, transform .25s; display: flex; flex-direction: column; position: relative; }
+  /* whole-card click targets (visible text links stay for affordance) */
+  .fx-home .mission__card-link, .fx-home .project-card-link { position: absolute; inset: 0; z-index: 3; }
+  .fx-home .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px) scale(1.02); }
+  .fx-home .project-card__img { aspect-ratio: 16/9; height: auto; display: flex; align-items: center; justify-content: center; font-size: 52px; position: relative; overflow: hidden; }
+  .fx-home .project-card__img img { transform: scale(1.12); transition: transform .5s ease; }
+  .fx-home .project-card:hover .project-card__img img { transform: scale(1.17); }
+  .fx-home .pc-1 { background: linear-gradient(135deg, #2a4a3a 0%, #0e2218 100%); }
+  .fx-home .pc-2 { background: linear-gradient(135deg, #4a3a28 0%, #201808 100%); }
+  .fx-home .pc-3 { background: linear-gradient(135deg, #3a2a4a 0%, #180e20 100%); }
+  .fx-home .project-card__img-emoji { position: relative; z-index: 1; }
+  .fx-home .project-card__img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(var(--black-rgb),.3) 100%); }
+  .fx-home .project-card__tag { position: absolute; top: 16px; left: 16px; z-index: 2; background: rgba(var(--gold-rgb),.9); color: var(--espresso-900); font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
+  .fx-home .project-card__body { padding: 28px 28px 24px; flex: 1; display: flex; flex-direction: column; }
+  .fx-home .project-card__region { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--brown-700); margin-bottom: 8px; }
+  .fx-home .project-card__title { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--espresso-900); line-height: 1.3; margin-bottom: 12px; }
+  .fx-home .project-card__desc { font-size: 14.5px; line-height: 1.7; color: var(--brown-800); flex: 1; margin-bottom: 20px; }
+  .fx-home .project-card__footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid rgba(var(--gold-rgb),.2); }
+  .fx-home .project-card__stat { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: var(--brown-700); }
+  .fx-home .project-card__link { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--brown-700); display: inline-flex; align-items: center; gap: 5px; transition: gap .2s; }
+  .fx-home .project-card__link:hover { gap: 8px; }
+  .fx-home .fx-news { padding: 100px 0; background: var(--espresso-900); }
+  .fx-home .news__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+  .fx-home .news__header .section-label { color: var(--gold-400); }
+  .fx-home .news__header .section-title { color: var(--cream-100); }
+  .fx-home .news__see-all { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .06em; color: var(--gold-400); display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; transition: gap .2s; }
+  .fx-home .news__see-all:hover { gap: 10px; }
+  .fx-home .news__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .fx-home .news-card { background: rgba(var(--cream-rgb),.05); border: 1px solid rgba(var(--gold-rgb),.12); border-radius: var(--r-md); overflow: hidden; position: relative; transition: border-color .25s, background .25s, transform .3s, box-shadow .3s; }
+  .fx-home .news-card__link { position: absolute; inset: 0; z-index: 2; }
+  .fx-home .news-card:hover { background: rgba(var(--cream-rgb),.08); border-color: rgba(var(--gold-rgb),.4); transform: translateY(-4px) scale(1.02); box-shadow: 0 0 0 1px rgba(var(--gold-rgb),.3), 0 12px 28px rgba(var(--black-rgb),.18); }
+  .fx-home .news-card__img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; }
+  .fx-home img.news-card__img { width: 100%; aspect-ratio: 16/9; height: auto; transform: scale(1.12); display: block; transition: transform .5s ease; margin-bottom: 20px; }
+  .fx-home .news-card:hover img.news-card__img { transform: scale(1.17); }
+  .fx-home .nc-1 { background: linear-gradient(135deg, #3a2808 0%, #1e1004 100%); }
+  .fx-home .nc-2 { background: linear-gradient(135deg, #0e2818 0%, #060e0a 100%); }
+  .fx-home .nc-3 { background: linear-gradient(135deg, #281a08 0%, #120c04 100%); }
+  .fx-home .news-card__body { padding: 20px 22px 22px; }
+  .fx-home .news-card__cat { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 8px; }
+  .fx-home .news-card__title { font-family: var(--font-display); font-weight: 600; font-size: 16.5px; color: var(--cream-100); line-height: 1.4; margin-bottom: 10px; }
+  .fx-home .news-card__excerpt { font-size: 13.5px; line-height: 1.65; color: rgba(var(--cream-rgb),.55); margin-bottom: 14px; }
+  .fx-home .news-card__meta { font-family: var(--font-display); font-size: 11px; color: rgba(var(--cream-rgb),.35); letter-spacing: .04em; }
+  .fx-home .cta-split { display: grid; grid-template-columns: 1fr 1fr; }
+  .fx-home .cta-panel { padding: 80px 64px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .fx-home .cta-panel--volunteer { background: var(--brown-700); }
+  .fx-home .cta-panel--donate { background: var(--espresso-700); }
+  .fx-home .cta-panel__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
+  .fx-home .cta-panel__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 36px); color: var(--cream-100); line-height: 1.2; }
+  .fx-home .cta-panel__body { font-size: 15.5px; line-height: 1.75; color: rgba(var(--cream-rgb),.75); max-width: 38ch; }
+  .fx-home .cta-panel__options { display: flex; flex-direction: column; gap: 8px; margin: 4px 0; }
+  .fx-home .cta-panel__option { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 13.5px; color: rgba(var(--cream-rgb),.8); }
+  .fx-home .cta-panel__option::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-400); flex-shrink: 0; }
+  .fx-home .cta-panel__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
+  .fx-home .donate-badges { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(var(--cream-rgb),.12); }
+  .fx-home .donate-badges a { display: flex; align-items: center; justify-content: center; transition: opacity .2s; }
+  .fx-home .donate-badges a:hover { opacity: .8; }
+  .fx-home .donate-badge-img { height: 56px; width: auto; object-fit: contain; opacity: 1; transition: opacity .2s; }
+  .fx-home .donate-badge-img:hover { opacity: 0.7; }
+  @media (max-width: 768px) {
+    .fx-home .donate-badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .fx-home .donate-badge-img { height: auto; width: 100%; max-height: 56px; object-fit: contain; }
+  }
+  @media (max-width: 768px) {
+    .fx-home .cta-split { grid-template-columns: 1fr; }
+    .fx-home .cta-panel { padding: 56px 32px; }
+    .fx-home .mission__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .news__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .species__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .impact__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .species__header { flex-direction: column; align-items: flex-start; }
+    .fx-home .projects__header { flex-direction: column; align-items: flex-start; }
+    .fx-home .hero { height: 100vh; height: 100dvh; }
+    .fx-home .hero__content { padding-bottom: 28px; }
+    .fx-home .news-card__excerpt { font-size: 15px; }
+    .fx-home .project-card__desc { font-size: 15.5px; }
+    .fx-home .mission__card-body { font-size: 16px; }
+  }
+  @media (max-width: 480px) {
+    .fx-home .species__grid { grid-template-columns: 1fr; }
+  }
+
+/* ── Margins the design wants, restored past the neutraliser above.
+   Same specificity as it, declared later, so these win. ───────── */
+  .fx-home .hero__credit:not(:first-child):not(main) { margin-top: 20px; }
+  .fx-home .mission__header .section-body:not(:first-child):not(main) { margin-top: 16px; }
+  .fx-home .species__card-trend:not(:first-child):not(main) { margin-top: 3px; }
+  .fx-home .cta-panel__options:not(:first-child):not(main) { margin-top: 4px; }
+  .fx-home .cta-panel__actions:not(:first-child):not(main) { margin-top: 8px; }
+  .fx-home .donate-badges:not(:first-child):not(main) { margin-top: 28px; }
+
+/* ── Hero height, allowing for Joomla's header ─────────────────
+   The prototype's nav floats over the hero, so the hero is 100dvh. Joomla's
+   header is sticky and sits in normal flow above the article, about 172px
+   including its top offset. Left at 100dvh the hero runs 172px past the
+   fold and takes its own buttons with it, which is exactly the donate CTA
+   we are trying to make more prominent. homepage.js measures the real
+   offset at runtime, since the header is shorter on narrow screens; the
+   value here is the desktop fallback if the script does not run. */
+  .fx-home .hero { height: calc(100dvh - var(--fx-hero-offset, 172px)); }
+
