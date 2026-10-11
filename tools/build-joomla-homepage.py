@@ -22,7 +22,15 @@ LINKS = {
  'species-snow-leopard.html':'/learn/cats/snow-leopard',
  'ways-to-donate.html':'/take-action/more-ways-to-help',
 }
-FRU = '#XSZEWCKT'          # Fundraise Up checkout, same anchor the live site uses
+# Fundraise Up. The live homepage does not use the #XSZEWCKT element id that
+# the interior pages use: it uses the form-and-UTM form, which is what feeds
+# per-placement attribution in Fundraise Up's reporting. Matching it keeps
+# Zara's homepage conversion numbers continuous.
+#   donate_row_home  - the existing homepage donate row, kept so the history
+#                      stays comparable
+#   donate_hero_home - new, the hero CTA, so the two can be told apart
+FRU_CTA  = '#?utm_content=donate_row_home&form=donate'
+FRU_HERO = '#?utm_content=donate_hero_home&form=donate'
 IMG = '/images/homepage/'  # where the assets get uploaded in Joomla media
 
 # ── markup ───────────────────────────────────────────────────────────
@@ -33,8 +41,12 @@ html = re.sub(r'<!--.*?-->', '', html, flags=re.S)                  # strip comm
 for proto, live in LINKS.items():
     html = html.replace(f'href="{proto}"', f'href="{live}"')
 # donate buttons -> Fundraise Up; "Get Started" -> take action
-html = html.replace('<a href="#" class="btn-gold" onclick="openDonate(event)">',
-                    f'<a href="{FRU}" class="btn-gold">')
+# the hero button first (it is the one followed by a newline + "Donate Now"),
+# then the CTA panel button, so the two get different attribution
+html = html.replace('<a href="#" class="btn-gold" onclick="openDonate(event)">\n          Donate Now',
+                    f'<a href="{FRU_HERO}" class="btn-gold">\n          Donate Now', 1)
+html = html.replace('<a href="#" class="btn-gold" onclick="openDonate(event)">Donate Now</a>',
+                    f'<a href="{FRU_CTA}" class="btn-gold">Donate Now</a>')
 html = html.replace('<a href="#" class="btn-gold" style="margin-top:8px">',
                     '<a href="/take-action" class="btn-gold" style="margin-top:8px">')
 html = re.sub(r'src="assets/', f'src="{IMG}', html)
@@ -46,6 +58,7 @@ html = re.sub(r'<section class="([^"]+)"', lambda m: f'<section class="{m.group(
 html = re.sub(r'\n[ \t]*\n+', '\n', html)
 
 assert 'openDonate' not in html and '.html"' not in html, 'unconverted link or donate handler left'
+assert html.count('form=donate') == 2, f'expected 2 donate links, got {html.count("form=donate")}'
 open(f'{OUT}/article.html','w').write(
   '<div class="fx-home">\n' + html.rstrip() + '\n</div>\n')
 

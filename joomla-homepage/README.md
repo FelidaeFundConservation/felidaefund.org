@@ -58,10 +58,15 @@ view, and it will quietly break the layout.
 
 ## What was changed from the prototype, and why
 
-- **Donate buttons** now point at `#XSZEWCKT`, the Fundraise Up anchor the
-  live site already uses sitewide. The prototype's donation modal is a
-  mockup — its submit button has no handler — so it is dropped entirely.
-  Fundraise Up's script is already in the template `<head>`; nothing to add.
+- **Donate buttons** now use the live homepage's own Fundraise Up format,
+  `#?utm_content=...&form=donate`, not the `#XSZEWCKT` element id the
+  interior pages use. Both work, but only this one carries the attribution
+  that homepage conversion reporting depends on. The CTA panel keeps
+  `donate_row_home` so the existing history stays comparable; the hero
+  button is new and uses `donate_hero_home`, so the two can be told apart.
+  The prototype's donation modal is a mockup — its submit button has no
+  handler — so it is dropped entirely. Fundraise Up's script is already in
+  the template `<head>`; nothing to add.
 - **All 17 internal links** rewritten from prototype filenames to live URLs.
   Every one was checked and returns 200. `projects.html` became
   `/projects/research`, because the live site has no `/projects` index.
@@ -132,7 +137,7 @@ one of the five above.
 
 ## Still open before this ships
 
-- **Click the Donate button once on the staging URL** and confirm the
+- **Click both Donate buttons on the staging URL** and confirm the
   Fundraise Up panel opens. It's a two-minute smoke test, but it's the
   money path, so it should be done by someone with an account.
 - The hero's "Read His Story" and the four project cards point at live

@@ -114,7 +114,8 @@ python3 tools/build-joomla-homepage.py
 Never hand-edit them. Edit `prototype/index.html`, `tokens.css` or
 `base.css` and re-run the script, or the next run erases the edit. The
 script also rewrites prototype links to live URLs, points the donate
-buttons at Fundraise Up, and scopes every rule under `.fx-home`.
+buttons at Fundraise Up (matching the live homepage's own
+`#?utm_content=...&form=donate` format, so attribution survives), and scopes every rule under `.fx-home`.
 
 One live rule has to be fought and is worth knowing about, because a
 class-name collision check will not find it. `template.css` contains:
