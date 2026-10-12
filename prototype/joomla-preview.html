@@ -391,6 +391,20 @@
    background and border with !important of its own, and digi-custom.css
    already does the same to .cf-btn, so a plain rule loses to both.
 
+   :not(#_) is stranger and needs explaining. template.css styles text
+   inputs with
+
+       form input[type="text"]:not(#jform_com_fields_screenshot), ...
+
+   and an id inside :not() counts towards specificity, which is what
+   decides between two !important rules. That selector therefore carries
+   id-level weight, while the entry for email in the same list does not,
+   which is why email picked up this styling and the name fields did not.
+   :not(#_) matches everything (no element has that id) and lends this rule
+   the same id-level weight, so it wins by class count. Lifting the whole
+   file's specificity would be worse: it would break the ordering between
+   these rules and the prototype's own.
+
    Guarded by body:has(.fx-home), so for now this only applies on the new
    homepage. Removing that guard from these rules makes it site-wide. */
   body:has(.fx-home) .moduletable.newsletter {
@@ -406,20 +420,21 @@
   body:has(.fx-home) .moduletable.newsletter .cf-label,
   body:has(.fx-home) .moduletable.newsletter span {
     color: var(--brown-800); }
-  body:has(.fx-home) .moduletable.newsletter .cf-input {
-    padding: 14px 18px;
+  body:has(.fx-home) .moduletable.newsletter .cf-input:not(#_) {
+    padding: 14px 18px !important;
     font-family: var(--font-body); font-size: 15px;
     background: var(--white) !important; color: var(--espresso-900) !important;
     border: 1.5px solid rgba(var(--brown-rgb),.25) !important;
-    border-radius: var(--r-sm); outline: none;
+    border-radius: var(--r-sm) !important; outline: none;
     transition: border-color .2s; }
   body:has(.fx-home) .moduletable.newsletter .cf-input::placeholder {
     color: var(--brown-300); }
-  body:has(.fx-home) .moduletable.newsletter .cf-input:focus {
+  body:has(.fx-home) .moduletable.newsletter .cf-input:not(#_):focus {
     border-color: var(--brown-700) !important; }
   body:has(.fx-home) .moduletable.newsletter .cf-required-label {
     color: var(--brown-700); }
-  body:has(.fx-home) .moduletable.newsletter .cf-btn {
+  body:has(.fx-home) .moduletable.newsletter .cf-btn:not(#_) {
+    border-radius: var(--r-sm) !important;
     background: var(--brown-700) !important;
     background-color: var(--brown-700) !important;
     color: var(--cream-100) !important;
