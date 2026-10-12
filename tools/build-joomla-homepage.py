@@ -49,7 +49,16 @@ html = html.replace('<a href="#" class="btn-gold" onclick="openDonate(event)">Do
                     f'<a href="{FRU_CTA}" class="btn-gold">Donate Now</a>')
 html = html.replace('<a href="#" class="btn-gold" style="margin-top:8px">',
                     '<a href="/take-action" class="btn-gold" style="margin-top:8px">')
+# Joomla's media manager on this server rejects .webp: its type detection
+# fails regardless of the Legal Extensions / MIME settings, while plain
+# JPEG uploads fine. So the upload set is built as JPEG and the article
+# points at .jpg. The prototype keeps its .webp originals, which are
+# smaller and serve fine from Vercel.
+html = re.sub(r'src="assets/([^"]+)\.webp"', rf'src="{IMG}\1.jpg"', html)
 html = re.sub(r'src="assets/', f'src="{IMG}', html)
+# Joomla's media manager flattens on upload, so the badges landed beside the
+# photos rather than in a badges/ subfolder. Point at where they actually are.
+html = html.replace(f'{IMG}badges/', IMG)
 # the two classes that collide with the live homepage CSS
 html = re.sub(r'class="mission(?=[" ])', 'class="fx-mission', html)
 html = re.sub(r'class="news(?=[" ])',    'class="fx-news', html)
@@ -59,8 +68,56 @@ html = re.sub(r'\n[ \t]*\n+', '\n', html)
 
 assert 'openDonate' not in html and '.html"' not in html, 'unconverted link or donate handler left'
 assert html.count('form=donate') == 2, f'expected 2 donate links, got {html.count("form=donate")}'
-open(f'{OUT}/article.html','w').write(
-  '<div class="fx-home">\n' + html.rstrip() + '\n</div>\n')
+# Section order. Zara's note from the Oct 2026 review: the impact numbers
+# come first, then the mission, so the page leads with evidence rather
+# than with a statement about ourselves.
+def move_section(doc, mover, before):
+    # Lift one top-level <section class="X ..."> and re-insert it ahead of
+    # another. The sections are siblings and never nest, so a non-greedy
+    # match to the next </section> is safe.
+    pat = re.compile(r'\n?[ \t]*<section class="' + mover + r'\b.*?</section>', re.S)
+    m = pat.search(doc)
+    if not m: raise SystemExit(f'section {mover} not found')
+    block = m.group(0)
+    doc = doc[:m.start()] + doc[m.end():]
+    anchor = re.search(r'\n?[ \t]*<section class="' + before + r'\b', doc)
+    if not anchor: raise SystemExit(f'section {before} not found')
+    return doc[:anchor.start()] + '\n' + block.strip('\n') + doc[anchor.start():]
+
+html = move_section(html, 'impact', 'fx-mission')
+order = re.findall(r'<section class="([a-z-]+)', html)
+print('  section order:', ' -> '.join(order))
+
+ARTICLE_HTML = '<div class="fx-home">\n' + html.rstrip() + '\n</div>\n'
+open(f'{OUT}/article.html','w').write(ARTICLE_HTML)
+
+# ── upload set: every image the article needs, in a format Joomla accepts ──
+import subprocess, shutil
+IMGDIR = os.path.join(OUT, 'images')
+if os.path.isdir(IMGDIR): shutil.rmtree(IMGDIR)
+os.makedirs(os.path.join(IMGDIR, 'badges'), exist_ok=True)
+wanted = sorted(set(re.findall(r'src="/images/homepage/([^"]+)"', open(f'{OUT}/article.html').read())))
+converted = kept = 0
+for rel in wanted:
+    dest = os.path.join(IMGDIR, rel)
+    # badges live in assets/badges/ but upload flat, so look in both
+    cands = [os.path.join(P, 'assets', rel), os.path.join(P, 'assets', 'badges', rel)]
+    src_jpg = next((c for c in cands if os.path.exists(c)), cands[0])
+    src_webp = next((os.path.splitext(c)[0] + '.webp' for c in cands
+                     if os.path.exists(os.path.splitext(c)[0] + '.webp')),
+                    os.path.splitext(cands[0])[0] + '.webp')
+    if os.path.exists(src_jpg):
+        shutil.copy2(src_jpg, dest); kept += 1
+    elif os.path.exists(src_webp):
+        subprocess.run(['sips', '-s', 'format', 'jpeg', '-s', 'formatOptions', '90',
+                        src_webp, '--out', dest], capture_output=True, check=True)
+        converted += 1
+    else:
+        raise SystemExit(f'missing source for {rel}')
+total = sum(os.path.getsize(os.path.join(r, f))
+            for r, _, fs in os.walk(IMGDIR) for f in fs)
+print(f'images/      {len(wanted)} files ({converted} converted from webp, {kept} copied), '
+      f'{total/1024/1024:.1f} MB')
 
 # ── css ──────────────────────────────────────────────────────────────
 import scope_css as scope
@@ -126,6 +183,95 @@ if restores:
     RESTORE = '\n'.join(lines) + '\n'
 else:
     RESTORE = ''
+
+RESTORE += """
+/* \u2500\u2500 Hosting this page as a Joomla module \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+   The homepage ships as a Custom HTML module in the `after-content`
+   position. Three things there get in the way:
+
+     section.after-content   capped at 1170px
+     .after-content-inner    display:flex, capped at 1098px, so the module
+                             becomes one column beside any other module
+     .mod-custom             padding-right 48px and margin-right 72px,
+                             which pushes the whole page off-centre
+     article.item-page       still renders Joomla's title header
+                             (section.intro) and an empty details box
+                             (section.default) above the module
+
+   Every rule below is guarded by :has(.fx-home), so it applies only where
+   this homepage is actually present and stops applying by itself if the
+   module is removed. The two that reset padding and margin are guarded on
+   the module itself, not the page: any other module sharing the position
+   keeps its own spacing. :has() is supported by every
+   current browser; in an old one the page is narrow but not broken. */
+  body:has(.fx-home) section.after-content,
+  body:has(.fx-home) .after-content-inner {
+    display: block; max-width: none; width: 100%; padding: 0; }
+  .after-content-inner > .moduletable:has(.fx-home),
+  .after-content-inner .mod-custom:has(.fx-home) {
+    width: 100%; max-width: none; padding: 0; margin: 0; }
+  body:has(.fx-home) article.item-page > section.intro,
+  body:has(.fx-home) article.item-page > section.default { display: none; }
+"""
+
+RESTORE += """
+/* \u2500\u2500 Newsletter \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+   The signup is a Convert Forms form in a Joomla module. Its markup is
+   generated by the extension and its submission is wired to Convert Forms,
+   so this restyles it and changes nothing structural: same three fields,
+   same handler, same form id. Replacing the markup would keep the look and
+   silently break the signup.
+
+   Values are taken from .newsletter in the prototype's components.css, not
+   invented. The one thing CSS cannot do is reduce three fields to one as
+   the prototype has: First Name and Last Name are required, and hiding a
+   required field blocks submission.
+
+   The !important marks are not decoration. template.css sets the input
+   background and border with !important of its own, and digi-custom.css
+   already does the same to .cf-btn, so a plain rule loses to both.
+
+   Guarded by body:has(.fx-home), so for now this only applies on the new
+   homepage. Removing that guard from these rules makes it site-wide. */
+  body:has(.fx-home) .moduletable.newsletter {
+    background: var(--gold-100);
+    border-top: 1px solid rgba(var(--gold-rgb),.3);
+    color: var(--espresso-900);
+    padding: 80px 64px; }
+  body:has(.fx-home) .moduletable.newsletter h3 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(22px, 2.5vw, 32px); line-height: 1.15;
+    color: var(--espresso-900); max-width: 480px; }
+  body:has(.fx-home) .moduletable.newsletter .cf-control-group,
+  body:has(.fx-home) .moduletable.newsletter .cf-label,
+  body:has(.fx-home) .moduletable.newsletter span {
+    color: var(--brown-800); }
+  body:has(.fx-home) .moduletable.newsletter .cf-input {
+    padding: 14px 18px;
+    font-family: var(--font-body); font-size: 15px;
+    background: var(--white) !important; color: var(--espresso-900) !important;
+    border: 1.5px solid rgba(var(--brown-rgb),.25) !important;
+    border-radius: var(--r-sm); outline: none;
+    transition: border-color .2s; }
+  body:has(.fx-home) .moduletable.newsletter .cf-input::placeholder {
+    color: var(--brown-300); }
+  body:has(.fx-home) .moduletable.newsletter .cf-input:focus {
+    border-color: var(--brown-700) !important; }
+  body:has(.fx-home) .moduletable.newsletter .cf-required-label {
+    color: var(--brown-700); }
+  body:has(.fx-home) .moduletable.newsletter .cf-btn {
+    background: var(--brown-700) !important;
+    background-color: var(--brown-700) !important;
+    color: var(--cream-100) !important;
+    font-family: var(--font-display); font-weight: 600; font-size: 13px;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 14px 24px; border-radius: var(--r-sm);
+    transition: background .2s; }
+  body:has(.fx-home) .moduletable.newsletter .cf-btn:hover {
+    background: var(--brown-600) !important; }
+  body:has(.fx-home) .moduletable.newsletter .cf-btn .cf-btn-text {
+    color: var(--cream-100) !important; }
+"""
 
 RESTORE += """
 /* \u2500\u2500 Hero height, allowing for Joomla's header \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
@@ -246,6 +392,14 @@ preview = """<!DOCTYPE html>
     .replace('@JS@',  open(f'{OUT}/homepage.js').read()) \
     .replace('@HEADER@', chrome_hdr).replace('@FOOTER@', chrome_ftr)
 open(f'{P}/joomla-preview.html','w').write(preview)
+# ── one paste for the Joomla module: markup + script together ─────────
+# The template would be a tidier home for the script, but that means
+# editing index.php. Inlining it keeps the whole homepage in one Custom
+# HTML module, which is also what gets removed if it is ever rolled back.
+open(f'{OUT}/module.html','w').write(
+    ARTICLE_HTML + '\n<script>\n' + open(f'{OUT}/homepage.js').read().rstrip() + '\n</script>\n')
+print('module.html  (article + inlined script, paste this into the module)')
+
 print('joomla-preview.html -> prototype/')
 print('article.html', len(open(f'{OUT}/article.html').read()), 'bytes')
 print('homepage.css', len(open(f'{OUT}/homepage.css').read()), 'bytes')
