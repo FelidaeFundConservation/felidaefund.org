@@ -376,7 +376,23 @@ chrome_ftr = open(os.path.join(HERE, 'joomla-footer.html')).read()
 # The newsletter module, saved from the live site with its session tokens
 # stripped, so the preview shows the restyle in its real markup.
 chrome_news = open(os.path.join(HERE, 'joomla-newsletter.html')).read()
-harness_art = open(f'{OUT}/article.html').read().replace('src="/images/homepage/', 'src="assets/')
+# The live <head> carries five inline <style> blocks holding 56 custom
+# properties: the whole colour palette, including the header background.
+# Without them the chrome renders unpainted, so the preview must load them
+# first, in the order the live page does.
+chrome_vars = open(os.path.join(HERE, 'joomla-inline-head.css')).read()
+harness_art = open(f'{OUT}/article.html').read()
+def _preview_src(m):
+    # Joomla gets a flat folder of JPEGs; prototype/assets still holds the
+    # webp originals, and the badges in a subfolder. Map back to whatever
+    # actually exists so the preview never shows a broken image.
+    name = m.group(1)
+    stem = os.path.splitext(name)[0]
+    for rel in (stem + '.webp', name, 'badges/' + stem + '.webp', 'badges/' + name):
+        if os.path.exists(os.path.join(P, 'assets', rel)):
+            return f'src="assets/{rel}"'
+    raise SystemExit(f'preview: no source on disk for {name}')
+harness_art = re.sub(r'src="/images/homepage/([^"]+)"', _preview_src, harness_art)
 preview = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Homepage — Joomla build preview</title>
@@ -391,6 +407,9 @@ preview = """<!DOCTYPE html>
      inert here: its session tokens are stripped and submit is disabled.
      The homepage CSS and JS are inlined so this page is self-contained and
      works from Vercel, the local server, or straight off disk. -->
+<style>
+@VARS@
+</style>
 <link rel="stylesheet" href="@B@special-pages.css?1">
 <link rel="stylesheet" href="https://felidaefund.org/media/plg_system_jcepro/site/css/content.min.css">
 <link rel="stylesheet" href="@B@template.css?1.3">
@@ -426,6 +445,7 @@ preview = """<!DOCTYPE html>
     .replace('@CSS@', open(f'{OUT}/homepage.css').read()) \
     .replace('@JS@',  open(f'{OUT}/homepage.js').read()) \
     .replace('@NEWSLETTER@', chrome_news) \
+    .replace('@VARS@', chrome_vars) \
     .replace('@HEADER@', chrome_hdr).replace('@FOOTER@', chrome_ftr)
 open(f'{P}/joomla-preview.html','w').write(preview)
 # ── one paste for the Joomla module: markup + script together ─────────

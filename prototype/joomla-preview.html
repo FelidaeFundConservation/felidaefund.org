@@ -12,6 +12,214 @@
      inert here: its session tokens are stripped and submit is disabled.
      The homepage CSS and JS are inlined so this page is self-contained and
      works from Vercel, the local server, or straight off disk. -->
+<style>
+
+:root {
+    --header-offset: 0px;
+    --button-border-radius:0;
+    --ui-border-radius:0;
+    
+        --color-1-name: dark-brown;
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --color-2-name: light-brown;
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --color-3-name: gold;
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --color-4-name: light-gold;
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --color-5-name: white-gold;
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --color-6-name: subtle-bg;
+        --subtle-bg: 44,88%,93%;
+        --subtle-bg-hs: 44,88%;
+    
+    --page-bg: #fffbf0;
+    --page-bg-hsl: 44,100%,97%;
+    --content-bg: #fffdf6;
+    --content-bg-hsl: 47,100%,98%;
+    --text: #1f1204;
+    --text-hsl: 31,77%,7%;
+    --danger: #b14a57;
+    --danger-hsl: 352,41%,49%;
+    --warning: #eb9f11;
+    --warning-hsl: 39,87%,49%;
+    --success: #007d00;
+    --success-hsl: 120,100%,25%;
+    --info: #769fb3;
+    --info-hsl: 200,29%,58%;
+
+    --duration:0;
+}
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --subtle-bg: 31,77%,7%;
+        --subtle-bg-hs: 31,77%;
+    
+    --page-bg: #382309;
+    --page-bg-hsl: 33,72%,13%;
+    --content-bg: #382309;
+    --content-bg-hsl: 33,72%,13%;
+    --text: #fff8e6;
+    --text-hsl: 43,100%,95%;
+    --danger: #d45b6a;
+    --danger-hsl: 353,58%,59%;
+    --warning: #ffb142;
+    --warning-hsl: 35,100%,63%;
+    --success: #26ad26;
+    --success-hsl: 120,64%,41%;
+    --info: #8bb3c7;
+    --info-hsl: 200,35%,66%;
+
+    }
+}
+body.always-dark {
+    
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --subtle-bg: 31,77%,7%;
+        --subtle-bg-hs: 31,77%;
+    
+    --page-bg: #382309;
+    --page-bg-hsl: 33,72%,13%;
+    --content-bg: #382309;
+    --content-bg-hsl: 33,72%,13%;
+    --text: #fff8e6;
+    --text-hsl: 43,100%,95%;
+    --danger: #d45b6a;
+    --danger-hsl: 353,58%,59%;
+    --warning: #ffb142;
+    --warning-hsl: 35,100%,63%;
+    --success: #26ad26;
+    --success-hsl: 120,64%,41%;
+    --info: #8bb3c7;
+    --info-hsl: 200,35%,66%;
+
+}
+body.always-light {
+    
+        --color-1-name: dark-brown;
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --color-2-name: light-brown;
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --color-3-name: gold;
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --color-4-name: light-gold;
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --color-5-name: white-gold;
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --color-6-name: subtle-bg;
+        --subtle-bg: 44,88%,93%;
+        --subtle-bg-hs: 44,88%;
+    
+    --page-bg: #fffbf0;
+    --page-bg-hsl: 44,100%,97%;
+    --content-bg: #fffdf6;
+    --content-bg-hsl: 47,100%,98%;
+    --text: #1f1204;
+    --text-hsl: 31,77%,7%;
+    --danger: #b14a57;
+    --danger-hsl: 352,41%,49%;
+    --warning: #eb9f11;
+    --warning-hsl: 39,87%,49%;
+    --success: #007d00;
+    --success-hsl: 120,100%,25%;
+    --info: #769fb3;
+    --info-hsl: 200,29%,58%;
+
+}
+@media screen and (prefers-reduced-motion: no-preference) { 
+    :root {
+    --duration:1;
+    }
+}
+
+        #cf_4 .cf-btn:after { 
+            border-radius: 5px
+        }
+    
+.convertforms {
+                --color-primary: #4285F4;
+--color-success: #0F9D58;
+--color-danger: #d73e31;
+--color-warning: #F4B400;
+--color-default: #444;
+--color-grey: #ccc;
+
+            }
+        
+#cf_4 {
+                --background-color: rgba(255, 255, 255, 0);
+--border-radius: 0px;
+--control-gap: 10px;
+--label-color: #888888;
+--label-size: 15px;
+--label-weight: 400;
+--input-color: #888888;
+--input-placeholder-color: #88888870;
+--input-text-align: left;
+--input-background-color: #ffffff;
+--input-border-color: #cccccc;
+--input-border-radius: 3px;
+--input-size: 15px;
+--input-padding: 10px 10px;
+
+            }
+        
+
+            .balance-text {
+                visibility: visible !important;
+            }
+        
+</style>
 <link rel="stylesheet" href="https://felidaefund.org/templates/genesis4/css/special-pages.css?1">
 <link rel="stylesheet" href="https://felidaefund.org/media/plg_system_jcepro/site/css/content.min.css">
 <link rel="stylesheet" href="https://felidaefund.org/templates/genesis4/css/template.css?1.3">
@@ -727,7 +935,7 @@
       <div class="mission__grid">
         <div class="mission__card reveal reveal-delay-1">
           <a class="mission__card-link" href="/projects/research" aria-label="Field Research — explore our projects"></a>
-          <img loading="lazy" class="mission__card-img" src="assets/field-research-913.jpg" alt="Research team hiking through Patagonian grassland">
+          <img loading="lazy" class="mission__card-img" src="assets/field-research-913.webp" alt="Research team hiking through Patagonian grassland">
           <div class="mission__card-content">
             <h3 class="mission__card-title">Field Research</h3>
             <p class="mission__card-body">Camera traps, fecal surveys, hair surveys, bioacoustics, and health biomarkers across two continents give us the data to act precisely where it matters most.</p>
@@ -740,7 +948,7 @@
         
         <div class="mission__card reveal reveal-delay-2">
           <a class="mission__card-link" href="/learn/protecting-healthy-ecosystems" aria-label="Habitat Protection — learn about ecosystems"></a>
-          <img loading="lazy" class="mission__card-img" src="assets/PUC09B-04072020-4-133-1600-1000-90.jpg" alt="Puma in its wild habitat">
+          <img loading="lazy" class="mission__card-img" src="assets/PUC09B-04072020-4-133-1600-1000-90.webp" alt="Puma in its wild habitat">
           <div class="mission__card-content">
             <h3 class="mission__card-title">Habitat Protection</h3>
             <p class="mission__card-body">Working with landowners, policymakers, government agencies, and indigenous communities to identify and maintain corridors where wild cats can move through safely.</p>
@@ -791,7 +999,7 @@
           </div>
         </article>
         <article class="species__card reveal reveal-delay-2">
-          <img loading="lazy" class="species__card-img" src="assets/puma-inaturalist-1-589-384.jpg" alt="Puma" />
+          <img loading="lazy" class="species__card-img" src="assets/puma-inaturalist-1-589-384.webp" alt="Puma" />
           <a class="species__card-link" href="/learn/cats/mountain-lion" aria-label="Puma"></a>
           <div class="species__card-overlay">
             <div class="species__card-name">Puma</div>
@@ -800,7 +1008,7 @@
           </div>
         </article>
         <article class="species__card reveal reveal-delay-3">
-          <img loading="lazy" class="species__card-img" src="assets/ocelot-1-244-960.jpg" alt="Ocelot" />
+          <img loading="lazy" class="species__card-img" src="assets/ocelot-1-244-960.webp" alt="Ocelot" />
           <a class="species__card-link" href="/learn/cats/ocelot" aria-label="Ocelot"></a>
           <div class="species__card-overlay">
             <div class="species__card-name">Ocelot</div>
@@ -809,7 +1017,7 @@
           </div>
         </article>
         <article class="species__card reveal reveal-delay-4">
-          <img loading="lazy" class="species__card-img" src="assets/trishcarney-fullbodybobcat4-872-384.jpg" alt="Bobcat" />
+          <img loading="lazy" class="species__card-img" src="assets/trishcarney-fullbodybobcat4-872-384.webp" alt="Bobcat" />
           <a class="species__card-link" href="/learn/cats/bobcat" aria-label="Bobcat"></a>
           <div class="species__card-overlay">
             <div class="species__card-name">Bobcat</div>
@@ -837,7 +1045,7 @@
         <article class="project-card reveal reveal-delay-1">
           <a class="project-card-link" href="/projects/research/bay-area-puma-project" aria-label="Bay Area Puma Project — learn more"></a>
           <div class="project-card__img pc-1">
-            <img src="assets/COE01A-puma10272020-2-47-1600-1000-90.jpg" alt="Puma in the Bay Area" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <img src="assets/COE01A-puma10272020-2-47-1600-1000-90.webp" alt="Puma in the Bay Area" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
             <span class="project-card__tag">Active</span>
           </div>
           <div class="project-card__body">
@@ -854,7 +1062,7 @@
         <article class="project-card reveal reveal-delay-2">
           <a class="project-card-link" href="/projects/research/patagonia-cats-project" aria-label="Patagonia Wild Cats Project — learn more"></a>
           <div class="project-card__img pc-2">
-            <img src="assets/patagonia_field_f2907.jpg" alt="Patagonia field team" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <img src="assets/patagonia_field_f2907.webp" alt="Patagonia field team" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
             <span class="project-card__tag">Active</span>
           </div>
           <div class="project-card__body">
@@ -871,7 +1079,7 @@
         <article class="project-card reveal reveal-delay-3">
           <a class="project-card-link" href="/projects/research/bay-area-bobcat-project" aria-label="Bay Area Bobcat Project — learn more"></a>
           <div class="project-card__img pc-3">
-            <img src="assets/MWD202103A-bobcat-04230132-432-1600-1000-90.jpg" alt="Bay Area bobcat" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <img src="assets/MWD202103A-bobcat-04230132-432-1600-1000-90.webp" alt="Bay Area bobcat" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
             <span class="project-card__tag">Active</span>
           </div>
           <div class="project-card__body">
@@ -902,7 +1110,7 @@
       </div>
       <div class="news__grid">
         <article class="news-card reveal reveal-delay-1">
-          <img loading="lazy" class="news-card__img" src="assets/joey_2_5002b-384.jpg" alt="Local wildlife science community" style="object-fit:cover;object-position:top;" />
+          <img loading="lazy" class="news-card__img" src="assets/joey_2_5002b-384.webp" alt="Local wildlife science community" style="object-fit:cover;object-position:top;" />
           <a class="news-card__link" href="/news/general/the-unexpected-social-ripple-of-local-wildlife-science" aria-label="Read: The unexpected social ripple of local wildlife science"></a>
           <div class="news-card__body">
             <div class="news-card__cat">Community Science</div>
@@ -912,7 +1120,7 @@
           </div>
         </article>
         <article class="news-card reveal reveal-delay-2">
-          <img loading="lazy" class="news-card__img" src="assets/wcs_0730b-384.jpg" alt="Wildlife crossing reconnecting habitat across a highway" style="object-fit:cover;object-position:center;" />
+          <img loading="lazy" class="news-card__img" src="assets/wcs_0730b-384.webp" alt="Wildlife crossing reconnecting habitat across a highway" style="object-fit:cover;object-position:center;" />
           <a class="news-card__link" href="/news/how-america-is-redesigning-its-roads-for-wildlife" aria-label="Read: How America is Redesigning Its Roads for Wildlife"></a>
           <div class="news-card__body">
             <div class="news-card__cat">Conservation</div>
@@ -922,7 +1130,7 @@
           </div>
         </article>
         <article class="news-card reveal reveal-delay-3">
-          <img loading="lazy" class="news-card__img" src="assets/E1067F0F-2BBB-48F9-91ED-D27F12D1D1BA-384.jpg" alt="Ella Murphy on a trail in the golden California hills" style="object-fit:cover;object-position:center 68%;" />
+          <img loading="lazy" class="news-card__img" src="assets/E1067F0F-2BBB-48F9-91ED-D27F12D1D1BA-384.webp" alt="Ella Murphy on a trail in the golden California hills" style="object-fit:cover;object-position:center 68%;" />
           <a class="news-card__link" href="/news/volunteer-spotlights/ellas-internship-with-felidae" aria-label="Read: Ella's internship with Felidae"></a>
           <div class="news-card__body">
             <div class="news-card__cat">Volunteer Spotlight</div>
@@ -967,18 +1175,18 @@
           <img loading="lazy" class="donate-badge-img" src="https://widgets.guidestar.org/TransparencySeal/7041082" alt="Candid Platinum Seal of Transparency" />
         </a>
         <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
-          <img loading="lazy" class="donate-badge-img" src="assets/greatnonprofits-top-rated-2025.png" alt="Top-Rated Award — Great Nonprofits 2025" />
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/greatnonprofits-top-rated-2025.png" alt="Top-Rated Award — Great Nonprofits 2025" />
         </a>
         <a href="https://directories.onepercentfortheplanet.org/profile/felidae-conservation-fund" target="_blank" rel="noopener">
-          <img loading="lazy" class="donate-badge-img" src="assets/one-percent-for-the-planet.png" alt="1% for the Planet — Nonprofit Partner" />
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/one-percent-for-the-planet.png" alt="1% for the Planet — Nonprofit Partner" />
         </a>
         <a href="https://animalcharitiesofamerica.org" target="_blank" rel="noopener">
-          <img loading="lazy" class="donate-badge-img" src="assets/animal-charities-of-america.jpg" alt="Animal Charities of America" />
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/animal-charities-of-america.jpg" alt="Animal Charities of America" />
         </a>
         <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
-          <img loading="lazy" class="donate-badge-img" src="assets/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
         </a>
-        <img loading="lazy" class="donate-badge-img" src="assets/charity-state-registration-verified.png" alt="Charity State Registration Verified" />
+        <img loading="lazy" class="donate-badge-img" src="assets/badges/charity-state-registration-verified.png" alt="Charity State Registration Verified" />
       </div>
     </div>
   </div>
