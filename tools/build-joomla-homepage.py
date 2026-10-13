@@ -373,6 +373,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # the decision was to keep them. Refresh with --chrome.
 chrome_hdr = open(os.path.join(HERE, 'joomla-header.html')).read()
 chrome_ftr = open(os.path.join(HERE, 'joomla-footer.html')).read()
+# The newsletter module, saved from the live site with its session tokens
+# stripped, so the preview shows the restyle in its real markup.
+chrome_news = open(os.path.join(HERE, 'joomla-newsletter.html')).read()
 harness_art = open(f'{OUT}/article.html').read().replace('src="/images/homepage/', 'src="assets/')
 preview = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -381,7 +384,11 @@ preview = """<!DOCTYPE html>
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <!-- The live site's four stylesheets, in the live order, so this page shows
      exactly what the article will look like once it is pasted into Joomla.
-     The header and footer are the live site's real ones, kept as agreed.
+     The header, footer and newsletter are the live site's real markup, and
+     the homepage sits inside the same after-content wrappers it occupies on
+     Joomla. So this page exercises the same CSS the real one does, which is
+     what makes it worth reviewing instead of a screenshot. The signup is
+     inert here: its session tokens are stripped and submit is disabled.
      The homepage CSS and JS are inlined so this page is self-contained and
      works from Vercel, the local server, or straight off disk. -->
 <link rel="stylesheet" href="@B@special-pages.css?1">
@@ -394,9 +401,22 @@ preview = """<!DOCTYPE html>
 </head>
 <body class="option-com_content view-article no-layout no-task itemid-101  path-home">
 @HEADER@
-<main><article class="home item-page">
+<main>
+<article class="default item-page">
+  <section class="intro"><div class="headline-details center"><div class="headline">
+    <h1>Home</h1></div></div></section>
+  <section class="default"></section>
+</article>
+<!-- the module's real wrappers: after-content > inner > moduletable > mod-custom -->
+<section class="after-content">
+  <div class="after-content-inner">
+    <div class="moduletable "><div class="mod-custom custom">
 @ART@
-</article></main>
+    </div></div>
+  </div>
+</section>
+@NEWSLETTER@
+</main>
 @FOOTER@
 <script>
 @JS@
@@ -405,6 +425,7 @@ preview = """<!DOCTYPE html>
 """.replace('@B@', B).replace('@ART@', harness_art) \
     .replace('@CSS@', open(f'{OUT}/homepage.css').read()) \
     .replace('@JS@',  open(f'{OUT}/homepage.js').read()) \
+    .replace('@NEWSLETTER@', chrome_news) \
     .replace('@HEADER@', chrome_hdr).replace('@FOOTER@', chrome_ftr)
 open(f'{P}/joomla-preview.html','w').write(preview)
 # ── one paste for the Joomla module: markup + script together ─────────

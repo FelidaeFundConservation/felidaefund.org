@@ -5,7 +5,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
 <!-- The live site's four stylesheets, in the live order, so this page shows
      exactly what the article will look like once it is pasted into Joomla.
-     The header and footer are the live site's real ones, kept as agreed.
+     The header, footer and newsletter are the live site's real markup, and
+     the homepage sits inside the same after-content wrappers it occupies on
+     Joomla. So this page exercises the same CSS the real one does, which is
+     what makes it worth reviewing instead of a screenshot. The signup is
+     inert here: its session tokens are stripped and submit is disabled.
      The homepage CSS and JS are inlined so this page is self-contained and
      works from Vercel, the local server, or straight off disk. -->
 <link rel="stylesheet" href="https://felidaefund.org/templates/genesis4/css/special-pages.css?1">
@@ -648,7 +652,16 @@
         </div>
     </div>
 </header>
-<main><article class="home item-page">
+<main>
+<article class="default item-page">
+  <section class="intro"><div class="headline-details center"><div class="headline">
+    <h1>Home</h1></div></div></section>
+  <section class="default"></section>
+</article>
+<!-- the module's real wrappers: after-content > inner > moduletable > mod-custom -->
+<section class="after-content">
+  <div class="after-content-inner">
+    <div class="moduletable "><div class="mod-custom custom">
 <div class="fx-home">
   <section class="hero full-width" id="hero" aria-label="Hero">
     <div class="hero__video-wrap">
@@ -971,7 +984,117 @@
   </div>
 </div>
 
-</article></main>
+    </div></div>
+  </div>
+</section>
+<section class="bottom full-width">
+            <div class="bottom-inner">
+                <div class="moduletable newsletter">
+			<h3 class=" balance-text">Want to be the first to know about wild cat news?</h3>		<div id="cf_4" class="convertforms cf cf-img-above cf-form-bottom cf-success-hideform  cf-hasLabels   cf-labelpos-top" data-id="4">
+	<form onsubmit="return false" name="cf4" id="cf4" method="post">
+				<div class="cf-form-wrap cf-col-16 " >
+			<div class="cf-response"></div>
+			
+							<div class="cf-fields">
+					<div class="cf-control-group balance-text" data-key="5" data-name="html_5" data-label="Description" data-type="html" >
+
+		<div>
+    <span id="docs-internal-guid-cd09f805-7fff-7d89-d65e-08680e0a4c5c" ><span >We’ll keep you updated on our world-class research studies, strategies, planning, and all things wild cat. Not to mention there will be plenty of pictures of our field work!</span></span></div>
+        </div>
+ <div class="cf-control-group " data-key="1" data-name="name" data-label="First Name" data-type="text" data-required>
+
+		<input type="text" name="cf[name]" id="form4_name"
+			required
+		aria-required="true"
+	
+			placeholder=" "
+	
+		
+	
+	
+	
+	
+	
+	
+	class="cf-input cf-width-auto "
+>
+            <label class="cf-label" for="form4_name">
+            First Name                            <span class="cf-required-label">*</span>
+                    </label>
+        </div>
+ <div class="cf-control-group " data-key="3" data-name="lname" data-label="Last Name" data-type="text" data-required>
+
+		<input type="text" name="cf[lname]" id="form4_lname"
+			required
+		aria-required="true"
+	
+			placeholder=" "
+	
+		
+	
+	
+	
+	
+	
+	
+	class="cf-input cf-width-auto "
+>
+            <label class="cf-label" for="form4_lname">
+            Last Name                            <span class="cf-required-label">*</span>
+                    </label>
+        </div>
+ <div class="cf-control-group " data-key="0" data-name="email" data-label="Email" data-type="email" data-required>
+
+		<input type="email" name="cf[email]" id="form4_email"
+			required
+		aria-required="true"
+	
+			placeholder=" "
+	
+		
+	
+	
+	
+	
+	
+	
+	class="cf-input cf-width-auto "
+>
+            <label class="cf-label" for="form4_email">
+            Email                            <span class="cf-required-label">*</span>
+                    </label>
+        </div>
+ <div class="cf-control-group " data-key="2" data-name="submit_2"  data-type="submit" >
+
+		
+<div class="cf-text-left">
+    <button type="submit" class="cf-btn cf-btn-style-flat cf-width-auto btn btn-brown btn-block" >
+        <span class="cf-btn-text">Sign me up!</span>
+        <span class="cf-spinner-container">
+            <span class="cf-spinner">
+                <span class="bounce1"></span>
+                <span class="bounce2"></span>
+                <span class="bounce3"></span>
+            </span>
+        </span>
+    </button>
+</div>
+
+
+        </div>
+				</div>
+			
+					</div>
+
+		
+
+				
+			</form>
+	</div></div>
+
+            </div>
+        </section>
+</main>
 <footer>
     <section class="footer-links">
         <div class="footer-links-inner">
