@@ -535,6 +535,25 @@ body.always-light {
     .fx-home .donate-badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .fx-home .donate-badge-img { height: auto; width: 100%; max-height: 56px; object-fit: contain; }
   }
+  @media (max-width: 768px) {
+    .fx-home .cta-split { grid-template-columns: 1fr; }
+    .fx-home .cta-panel { padding: 56px 32px; }
+    .fx-home .mission__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .news__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .species__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .impact__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .species__header { flex-direction: column; align-items: flex-start; }
+    .fx-home .projects__header { flex-direction: column; align-items: flex-start; }
+    .fx-home .hero { height: 100vh; height: 100dvh; }
+    .fx-home .hero__content { padding-bottom: 28px; }
+    .fx-home .news-card__excerpt { font-size: 15px; }
+    .fx-home .project-card__desc { font-size: 15.5px; }
+    .fx-home .mission__card-body { font-size: 16px; }
+  }
+  @media (max-width: 480px) {
+    .fx-home .species__grid { grid-template-columns: 1fr; }
+  }
 
 /* ── Margins the design wants, restored past the neutraliser above.
    Same specificity as it, declared later, so these win. ───────── */
@@ -893,12 +912,7 @@ body.always-light {
   <div class="after-content-inner">
     <div class="moduletable "><div class="mod-custom custom">
 <div class="fx-home">
-  </style>
-</head>
-<body>
-  
-  <site-nav></site-nav>
-  
+
   <section class="hero full-width" id="hero" aria-label="Hero">
     <div class="hero__video-wrap">
       <img class="hero__bg-img" src="assets/A1107739b.jpg" alt="Puma on rocky terrain in the Diablo Range" />
@@ -1213,6 +1227,11 @@ body.always-light {
         </a>
         <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
           <img loading="lazy" class="donate-badge-img" src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+        </a>
+        <img loading="lazy" class="donate-badge-img" src="assets/badges/charity-state-registration-verified.png" alt="Charity State Registration Verified" />
+      </div>
+    </div>
+  </div>
 </div>
 
     </div></div>
@@ -1380,13 +1399,6 @@ body.always-light {
     return;
   }
 
-  <!-- ═══════════════════════════ FOOTER ════════════════════════════════ -->
-    <site-footer></site-footer>
-  
-    <site-donate></site-donate>
-  
-    <!-- ═══════════════════════════ SCRIPTS ══════════════════════════════ -->
-    <script>
   // ── Animated counters ─────────────────────────────────────────────
   function animateCounter(el, target, duration = 1800) {
     const fmt = el.dataset.format;
@@ -1407,6 +1419,14 @@ body.always-light {
   }
     const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = parseInt(e.target.dataset.target, 10);
+        animateCounter(e.target, target);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  root.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
 
   // The hero fills whatever the Joomla header leaves. Its own height does not
   // affect its top, so this is safe to read at any scroll position.

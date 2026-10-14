@@ -3,6 +3,19 @@ P = '/Users/irene/code/felidaefund.org/prototype'
 OUT = '/Users/irene/code/felidaefund.org/joomla-homepage'
 os.makedirs(OUT, exist_ok=True)
 
+
+def between(lines, start_pred, end_pred, label):
+    """Slice the prototype by landmarks, never by line number. Editing
+    index.html used to shift every hardcoded offset, which silently handed
+    the build the wrong block: the day the hairline rule was added, the
+    counter script came out truncated and every section below the hero
+    stayed invisible."""
+    a = next((i for i, l in enumerate(lines) if start_pred(l)), None)
+    b = next((i for i, l in enumerate(lines) if i > (a or 0) and end_pred(l)), None)
+    if a is None or b is None:
+        raise SystemExit(f'build: could not locate {label} in index.html')
+    return lines[a + 1:b]
+
 LINKS = {
  'learn-cats.html':'/learn/cats',
  'learn-ecosystems.html':'/learn/protecting-healthy-ecosystems',
@@ -35,7 +48,8 @@ IMG = '/images/homepage/'  # where the assets get uploaded in Joomla media
 
 # ── markup ───────────────────────────────────────────────────────────
 src = open(f'{P}/index.html').read().splitlines(keepends=True)
-html = ''.join(src[502:854])            # HERO .. end of CTA, no nav/footer/modal
+html = ''.join(between(src, lambda l: '<site-nav>' in l,
+                            lambda l: '<site-footer>' in l, 'page content'))
 
 html = re.sub(r'<!--.*?-->', '', html, flags=re.S)                  # strip comments (incl. the video block)
 for proto, live in LINKS.items():
@@ -124,7 +138,8 @@ import scope_css as scope
 tokens = open(f'{P}/tokens.css').read()
 tokens = re.sub(r'/\* Alternate theme.*', '', tokens, flags=re.S).rstrip()   # theme picker is parked
 base   = scope.scope_rules(open(f'{P}/base.css').read())
-inline = scope.scope_rules(''.join(src[22:494]))
+inline = scope.scope_rules(''.join(between(src, lambda l: '<style>' in l,
+                                                lambda l: '</style>' in l, 'inline <style>')))
 for css_name in ('base','inline'):
     pass
 base   = base.replace(':root { --nav-h: 72px; }', '')      # hero does not use --nav-h
@@ -356,11 +371,17 @@ open(f'{OUT}/homepage.css','w').write(f"""/* Felidae homepage — Joomla build.
 """)
 
 # ── js ───────────────────────────────────────────────────────────────
-counter = ''.join(src[860:889])
+counter = ''.join(between(src, lambda l: l.strip() == '<script>',
+                               lambda l: l.strip() == '</script>', 'counter script'))
 counter = re.sub(r'^\s{4}', '', counter, flags=re.M)
 counter = counter.replace("document.querySelectorAll('[data-target]')",
                           "root.querySelectorAll('[data-target]')")
 counter = re.sub(r'^[ \t]+(const counterObserver)', r'  \1', counter, flags=re.M)
+# a wrong slice used to fail silently, so check what came out
+for must in ('animateCounter', 'IntersectionObserver', 'requestAnimationFrame'):
+    if must not in counter:
+        raise SystemExit(f'build: counter script is missing {must}; the slice is wrong')
+
 open(f'{OUT}/homepage.js','w').write(
 """// Felidae homepage — counters and scroll reveal.
 // No libraries. Both effects degrade safely: without this file the
