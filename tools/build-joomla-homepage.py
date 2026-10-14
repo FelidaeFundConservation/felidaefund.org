@@ -224,6 +224,13 @@ RESTORE += """
   body:has(.fx-home) section.after-content,
   body:has(.fx-home) .after-content-inner {
     display: block; max-width: none; width: 100%; padding: 0; margin: 0; }
+  /* The same flow spacing reaches the siblings outside .fx-home too, where
+     the 24px shows as a dark band of page background between the CTAs, the
+     newsletter and the footer. */
+  body:has(.fx-home) section.bottom,
+  body:has(.fx-home) main > footer,
+  body:has(.fx-home) body > footer,
+  body:has(.fx-home) footer { margin-top: 0; }
   .after-content-inner > .moduletable:has(.fx-home),
   .after-content-inner .mod-custom:has(.fx-home) {
     width: 100%; max-width: none; padding: 0; margin: 0; }
