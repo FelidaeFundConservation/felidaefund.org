@@ -655,8 +655,13 @@ body.always-light {
     display: flex !important; flex-wrap: wrap; gap: 10px; }
   body:has(.fx-home) .moduletable.newsletter .cf-control-group {
     flex: 1 1 110px; margin: 0 !important; min-width: 0; }
-  /* 0 0 100%, not 1 1 100%: with min-width 0 a shrinkable item compresses
+  /* Two spellings on purpose. The heading carries `balanced-text`, the
+     form's intro group carries `balance-text`. Both are matched because
+     the difference is easy to misread and costs an hour when you do.
+
+     0 0 100%, not 1 1 100%: with min-width 0 a shrinkable item compresses
      onto the same row instead of taking its own line. */
+  body:has(.fx-home) .moduletable.newsletter .cf-control-group.balance-text,
   body:has(.fx-home) .moduletable.newsletter .cf-control-group.balanced-text {
     flex: 0 0 100%; }
   /* the button needs more room than an input before the label wraps */
