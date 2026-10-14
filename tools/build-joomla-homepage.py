@@ -282,11 +282,13 @@ RESTORE += """
   body:has(.fx-home) .moduletable.newsletter .cf-fields {
     display: flex !important; flex-wrap: wrap; gap: 10px; }
   body:has(.fx-home) .moduletable.newsletter .cf-control-group {
-    flex: 1 1 150px; margin: 0 !important; }
+    flex: 1 1 110px; margin: 0 !important; min-width: 0; }
   body:has(.fx-home) .moduletable.newsletter .cf-control-group.balanced-text {
     flex: 1 1 100%; }
   body:has(.fx-home) .moduletable.newsletter .cf-btn:not(#_) {
-    width: 100%; }
+    width: 100% !important; padding-left: 8px !important; padding-right: 8px !important;
+    white-space: nowrap; }
+  body:has(.fx-home) .moduletable.newsletter .cf-text-left { width: 100%; }
   @media (max-width: 900px) {
     body:has(.fx-home) .moduletable.newsletter { grid-template-columns: 1fr; gap: 24px; }
   }
