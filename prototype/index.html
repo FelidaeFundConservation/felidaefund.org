@@ -213,8 +213,17 @@
     /* The mission, species and projects sections share one cream surface,
        so a hairline marks where each ends. rgba(--brown-rgb, .14) rather
        than a grey: the palette has no neutral, and adding one would be a
-       new colour. On cream it reads as a soft grey line. */
-    .species, .projects {
+       new colour. On cream it reads as a soft grey line.
+
+       Drawn as a pseudo-element rather than a border so it stops where the
+       text does instead of running to the window edges. Its width is the
+       container's content box: --max-w less the container's 32px padding
+       on each side, and never wider than the viewport allows. */
+    .species, .projects { position: relative; }
+    .species::before, .projects::before {
+      content: ''; position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: min(100% - 64px, calc(var(--max-w) - 64px));
       border-top: 1px solid rgba(var(--brown-rgb), .14);
     }
 

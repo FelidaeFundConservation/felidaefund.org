@@ -443,8 +443,14 @@ body.always-light {
   /* The mission, species and projects sections share one cream surface,
        so a hairline marks where each ends. rgba(--brown-rgb, .14) rather
        than a grey: the palette has no neutral, and adding one would be a
-       new colour. On cream it reads as a soft grey line. */
-  .fx-home .species, .fx-home .projects { border-top: 1px solid rgba(var(--brown-rgb), .14); }
+       new colour. On cream it reads as a soft grey line.
+
+       Drawn as a pseudo-element rather than a border so it stops where the
+       text does instead of running to the window edges. Its width is the
+       container's content box: --max-w less the container's 32px padding
+       on each side, and never wider than the viewport allows. */
+  .fx-home .species, .fx-home .projects { position: relative; }
+  .fx-home .species::before, .fx-home .projects::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: min(100% - 64px, calc(var(--max-w) - 64px)); border-top: 1px solid rgba(var(--brown-rgb), .14); }
   .fx-home .species__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
   .fx-home .species__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   .fx-home .species__card { border-radius: var(--r-md); overflow: hidden; position: relative; aspect-ratio: 3/4; cursor: pointer; transition: transform .3s, box-shadow .3s; }
