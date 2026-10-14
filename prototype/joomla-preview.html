@@ -628,11 +628,20 @@ body.always-light {
 
    Guarded by body:has(.fx-home), so for now this only applies on the new
    homepage. Removing that guard from these rules makes it site-wide. */
-  body:has(.fx-home) .moduletable.newsletter {
+  /* The cream runs the full width of the band, as the prototype does, so it
+     reads as a section rather than a card floating on brown. The tint goes
+     on section.bottom; .bottom-inner keeps its own max-width, so the text
+     stays aligned with every other section on the page. */
+  body:has(.fx-home) section.bottom {
     background: var(--gold-100);
     border-top: 1px solid rgba(var(--gold-rgb),.3);
     color: var(--espresso-900);
-    padding: 80px 64px; }
+    padding: 80px 0; }
+  body:has(.fx-home) .moduletable.newsletter {
+    background: transparent;
+    border-top: none;
+    color: var(--espresso-900);
+    padding: 0; }
   body:has(.fx-home) .moduletable.newsletter h3 {
     font-family: var(--font-display); font-weight: 700;
     font-size: clamp(22px, 2.5vw, 32px); line-height: 1.15;
