@@ -363,11 +363,10 @@
     display: block; max-width: none; width: 100%; padding: 0; margin: 0; }
   /* The same flow spacing reaches the siblings outside .fx-home too, where
      the 24px shows as a dark band of page background between the CTAs, the
-     newsletter and the footer. */
+     newsletter and the footer. The footer repeats their :not() chain
+     because a plain `footer` loses the specificity tie. */
   body:has(.fx-home) section.bottom,
-  body:has(.fx-home) main > footer,
-  body:has(.fx-home) body > footer,
-  body:has(.fx-home) footer { margin-top: 0; }
+  body:has(.fx-home) footer:not(:first-child):not(main) { margin-top: 0; }
   .after-content-inner > .moduletable:has(.fx-home),
   .after-content-inner .mod-custom:has(.fx-home) {
     width: 100%; max-width: none; padding: 0; margin: 0; }
