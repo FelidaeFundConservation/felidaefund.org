@@ -568,6 +568,8 @@ body.always-light {
                              becomes one column beside any other module
      .mod-custom             padding-right 48px and margin-right 72px,
                              which pushes the whole page off-centre
+     section.after-content   picks up a 24px top margin from the global flow
+                             spacing, showing as a brown band above the hero
      article.item-page       still renders Joomla's title header
                              (section.intro) and an empty details box
                              (section.default) above the module
@@ -580,12 +582,19 @@ body.always-light {
    current browser; in an old one the page is narrow but not broken. */
   body:has(.fx-home) section.after-content,
   body:has(.fx-home) .after-content-inner {
-    display: block; max-width: none; width: 100%; padding: 0; }
+    display: block; max-width: none; width: 100%; padding: 0; margin: 0; }
   .after-content-inner > .moduletable:has(.fx-home),
   .after-content-inner .mod-custom:has(.fx-home) {
     width: 100%; max-width: none; padding: 0; margin: 0; }
   body:has(.fx-home) article.item-page > section.intro,
   body:has(.fx-home) article.item-page > section.default { display: none; }
+
+  /* special-pages.css and template.css both carry
+         h1, .h1 { text-transform: uppercase }
+     and the prototype never declares text-transform on the hero title, so
+     there was nothing to override it and Joomla shouted the headline.
+     Daniel's design is title case. */
+  .fx-home h1 { text-transform: none; }
 
 /* ── Newsletter ────────────────────────────────────────
    The signup is a Convert Forms form in a Joomla module. Its markup is
