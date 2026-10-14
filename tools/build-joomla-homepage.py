@@ -298,6 +298,26 @@ RESTORE += """
 """
 
 RESTORE += """
+/* \u2500\u2500 Hero type, scaled for the shorter Joomla hero \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+   Daniel's note: the headline crowds the photograph here in a way it does
+   not on the prototype. Measured at 1440x900:
+
+     prototype   hero 900px, text block 520px, 380px of image above it
+     Joomla      hero 728px (the header takes 172px), same 520px of text,
+                 leaving only 208px of image
+
+   The text is not too big in itself, it is too big for a hero that lost
+   172px. Keeping the prototype's proportion of 58% text to hero means a
+   422px text block in a 728px hero, so everything here is the prototype's
+   value times 0.81. The prototype itself is untouched: its hero is still
+   the full viewport, and these rules only apply inside .fx-home. */
+  .fx-home .hero__title {
+    font-size: clamp(32px, 4.85vw, 65px); margin-bottom: 19px; }
+  .fx-home .hero__subtitle {
+    font-size: clamp(22px, 2.55vw, 29px); margin-bottom: 29px; }
+"""
+
+RESTORE += """
 /* \u2500\u2500 Hero height, allowing for Joomla's header \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
    The prototype's nav floats over the hero, so the hero is 100dvh. Joomla's
    header is sticky and sits in normal flow above the article, about 172px

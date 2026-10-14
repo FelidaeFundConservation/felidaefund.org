@@ -411,7 +411,7 @@ body.always-light {
   .fx-home .hero__scroll svg { width: 20px; height: 20px; }
   /* Optional: cat silhouette decoration */
   .fx-home .hero__cat-silhouette { position: absolute; bottom: 0; right: 5%; width: clamp(200px, 28vw, 420px); opacity: .07; pointer-events: none; }
-  .fx-home .fx-mission { padding: 100px 0; background: var(--cream-100); }
+  .fx-home .fx-mission { padding: 100px 0; background: var(--cream-200); }
   .fx-home .mission__header { text-align: center; margin-bottom: 64px; }
   .fx-home .mission__header .section-body { margin: 16px auto 0; text-align: center; }
   .fx-home .mission__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
@@ -465,7 +465,7 @@ body.always-light {
   .fx-home .species__card-trend { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .08em; margin-top: 3px; }
   .fx-home .trend-decreasing { color: var(--trend-down); }
   .fx-home .trend-stable { color: var(--trend-stable); }
-  .fx-home .projects { padding: 100px 0; background: var(--cream-100); }
+  .fx-home .projects { padding: 100px 0; background: var(--cream-200); }
   .fx-home .projects__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
   .fx-home .projects__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
   .fx-home .project-card { border-radius: var(--r-lg); overflow: hidden; background: var(--white); border: 1px solid rgba(var(--gold-rgb),.18); box-shadow: var(--shadow-sm); transition: box-shadow .25s, transform .25s; display: flex; flex-direction: column; position: relative; }
@@ -667,6 +667,24 @@ body.always-light {
     background: var(--brown-600) !important; }
   body:has(.fx-home) .moduletable.newsletter .cf-btn .cf-btn-text {
     color: var(--cream-100) !important; }
+
+/* ── Hero type, scaled for the shorter Joomla hero ──────────────
+   Daniel's note: the headline crowds the photograph here in a way it does
+   not on the prototype. Measured at 1440x900:
+
+     prototype   hero 900px, text block 520px, 380px of image above it
+     Joomla      hero 728px (the header takes 172px), same 520px of text,
+                 leaving only 208px of image
+
+   The text is not too big in itself, it is too big for a hero that lost
+   172px. Keeping the prototype's proportion of 58% text to hero means a
+   422px text block in a 728px hero, so everything here is the prototype's
+   value times 0.81. The prototype itself is untouched: its hero is still
+   the full viewport, and these rules only apply inside .fx-home. */
+  .fx-home .hero__title {
+    font-size: clamp(32px, 4.85vw, 65px); margin-bottom: 19px; }
+  .fx-home .hero__subtitle {
+    font-size: clamp(22px, 2.55vw, 29px); margin-bottom: 29px; }
 
 /* ── Hero height, allowing for Joomla's header ─────────────────
    The prototype's nav floats over the hero, so the hero is 100dvh. Joomla's
