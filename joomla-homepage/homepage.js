@@ -16,6 +16,13 @@
     return;
   }
 
+  <!-- ═══════════════════════════ FOOTER ════════════════════════════════ -->
+    <site-footer></site-footer>
+  
+    <site-donate></site-donate>
+  
+    <!-- ═══════════════════════════ SCRIPTS ══════════════════════════════ -->
+    <script>
   // ── Animated counters ─────────────────────────────────────────────
   function animateCounter(el, target, duration = 1800) {
     const fmt = el.dataset.format;
@@ -36,14 +43,6 @@
   }
     const counterObserver = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      if (e.isIntersecting) {
-        const target = parseInt(e.target.dataset.target, 10);
-        animateCounter(e.target, target);
-        counterObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  root.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
 
   // The hero fills whatever the Joomla header leaves. Its own height does not
   // affect its top, so this is safe to read at any scroll position.

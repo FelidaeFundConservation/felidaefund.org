@@ -122,9 +122,9 @@
       background: var(--cream-200);
     }
     .mission__header {
-      text-align: center; margin-bottom: 64px;
+      text-align: left; margin-bottom: 64px;
     }
-    .mission__header .section-body { margin: 16px auto 0; text-align: center; }
+    .mission__header .section-body { margin: 16px 0 0; text-align: left; }
 
     .mission__grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
@@ -210,6 +210,14 @@
       padding: 100px 0;
       background: var(--cream-200);
     }
+    /* The mission, species and projects sections share one cream surface,
+       so a hairline marks where each ends. rgba(--brown-rgb, .14) rather
+       than a grey: the palette has no neutral, and adding one would be a
+       new colour. On cream it reads as a soft grey line. */
+    .species, .projects {
+      border-top: 1px solid rgba(var(--brown-rgb), .14);
+    }
+
     .species__header {
       display: flex; align-items: flex-end; justify-content: space-between;
       margin-bottom: 48px; gap: 24px;
