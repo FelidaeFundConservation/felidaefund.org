@@ -373,6 +373,16 @@
      because a plain `footer` loses the specificity tie. */
   body:has(.fx-home) section.bottom,
   body:has(.fx-home) footer:not(:first-child):not(main) { margin-top: 0; }
+  /* The social icons are mask images painted with a background colour, and
+     several rules compete for it: gold in one state, --light-brown in
+     another. The dark one was winning here, so the icons rendered dark
+     brown on a dark footer: present and clickable, but invisible. Pinned
+     to the site's own --gold, which is what the live footer shows. No new
+     colour: hsl(var(--gold)) is the template's own token. */
+  body:has(.fx-home) footer nav[aria-label="Social Media Icons"] a span.icon {
+    background-color: hsl(var(--gold)) !important; }
+  body:has(.fx-home) footer nav[aria-label="Social Media Icons"] a:hover span.icon {
+    background-color: hsl(var(--light-brown)) !important; }
   .after-content-inner > .moduletable:has(.fx-home),
   .after-content-inner .mod-custom:has(.fx-home) {
     width: 100%; max-width: none; padding: 0; margin: 0; }
