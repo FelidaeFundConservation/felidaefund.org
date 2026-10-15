@@ -446,6 +446,13 @@ chrome_news = open(os.path.join(HERE, 'joomla-newsletter.html')).read()
 # Without them the chrome renders unpainted, so the preview must load them
 # first, in the order the live page does.
 chrome_vars = open(os.path.join(HERE, 'joomla-inline-head.css')).read()
+# The social icons are CSS mask images set in a style attribute:
+#   style="--icon-mask-url:url(/images/icons/.../facebook.svg)"
+# Absolutising src= and href= misses those, so on Vercel they resolved
+# against the preview's own domain and the icon row came out empty.
+for _name in ('chrome_hdr', 'chrome_ftr'):
+    globals()[_name] = re.sub(r'url\((/(?!/))', r'url(https://felidaefund.org\1',
+                              globals()[_name])
 harness_art = open(f'{OUT}/article.html').read()
 def _preview_src(m):
     # Joomla gets a flat folder of JPEGs; prototype/assets still holds the
