@@ -479,7 +479,11 @@ preview = """<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Homepage — Joomla build preview</title>
 <link rel="icon" type="image/svg+xml" href="https://felidaefund.org/templates/genesis4/images/favicon.svg" />
-<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<!-- Only the weights the live site is missing, and deliberately NOT
+     Raleway 500: the template sets the footer menu links to 500, the
+     site self-hosts only 400 and 800, and supplying a real 500 makes
+     those links wider and wrap. See the README. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400&family=Raleway:wght@600;700&display=swap">
 <!-- The live site's four stylesheets, in the live order, so this page shows
      exactly what the article will look like once it is pasted into Joomla.
      The header, footer and newsletter are the live site's real markup, and

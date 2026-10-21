@@ -29,20 +29,24 @@ from felidaefund.org if the live menu changes.
 3. Append `homepage.css` to `digi-custom.css`.
 3b. **Add the missing font weights**, or the page will not match the
    preview. The template self-hosts Raleway at 400 and 800 only, and
-   Literata at 300 and 800 only. The homepage asks for Raleway 500, 600
-   and 700 and Literata 400, none of which exist, so the browser
-   substitutes the nearest: headings and buttons render 800 (too heavy)
-   and body text renders 300 (too light). Add this to the template's
-   `<head>`, above `digi-custom.css`:
+   Literata at 300 and 800 only, so the homepage's Raleway 600 and 700 and
+   its Literata 400 all fall back to the nearest weight: headings and
+   buttons render 800 (too heavy) and body text renders 300 (too light).
+   Add this to the template's `<head>`, above `digi-custom.css`:
 
    ```html
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400&family=Raleway:wght@500;600;700&display=swap">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400&family=Raleway:wght@600;700&display=swap">
    ```
 
-   It requests only the four missing weights, so the weights the rest of
-   the site already uses keep coming from the local files and nothing
-   else changes.
+   **Do not add Raleway 500 to that list.** `template.css` sets the footer
+   menu links to `font-weight: 500`, and because the site has no 500 they
+   currently fall back to 400 and fit on one line. Supplying a real 500
+   makes them wider and they wrap one word per line, on every page. The
+   homepage uses 500 in exactly one place, `.impact__unit`, where falling
+   back to 400 is not noticeable. This was found by comparing the preview
+   against the live site in Safari: identical grid, identical 1328px
+   container, identical 72px gap, different glyph widths.
 4. Upload `homepage.js` and load it from the template, or put it in a
    Custom HTML module with text filtering off. Don't paste it into the
    article: a later edit in the WYSIWYG editor will mangle it.
