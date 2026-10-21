@@ -28,10 +28,16 @@ module is content on a page and cannot touch the cart, payments or settings.
 
 ## Placement
 
-`after-content` renders below the cart, under the Store Checkout button, not
-above it. The cart page is short so it should still be seen, but if it needs
-to sit above the button that is a different position or a CSS change, and
-worth checking once it is live.
+Joomla can only render a module where a position exists, and the nearest one
+to the cart is `after-content`, which sits well below the Store Checkout
+button and lays its modules out as a flex row. The notice ended up as a
+narrow third column that people scrolled straight past.
+
+So the module carries four lines of script that move it up next to the Store
+Checkout button, inside the totals panel, which is where someone is standing
+when checkout fails. If the button is not on the page, or eShop's markup ever
+changes, the script does nothing and the notice stays where Joomla put it.
+It cannot break the page either way.
 
 ## What it does not fix
 
