@@ -195,3 +195,30 @@ badges/animal-charities-of-america.jpg         12 KB
 Most of these came off the live site originally, so some may already exist
 in Joomla media under a different path. Reusing them is fine — just update
 the `src` in the article to match.
+
+## After the switch: check for leftover modules
+
+Shipped on 2026-10-22. Two things caught us out, both worth checking on any
+site that reuses this:
+
+**Article access level.** The homepage article was set to `Special` while it
+lived at `/home-test`. Once menu item 101 pointed at it, logged-in admins saw
+the page render normally and the public got a 404. Set the article to
+`Public` before the switch, and verify anonymously — a private window, or
+`curl -s -o /dev/null -w "%{http_code}" https://felidaefund.org/` — not in a
+browser you are signed in to.
+
+**Leftover modules.** Content → Site Modules, and look at every module whose
+Pages column is not `None`. We checked `after-content` and called it clean,
+but the site has three modules named `Recent News & Updates` (IDs 163, 259,
+175), all in position **`bottom`**. One was assigned to Home and rendered a
+second news block below the newsletter, styled for a light background and so
+unreadable on the dark section. Untick `Home` on it; leave its other pages
+alone, since it is still in use elsewhere.
+
+Quick check against the live page:
+
+```
+curl -s https://felidaefund.org/ | grep -c 'mod-articlesnews newsflash'   # want 0
+curl -s https://felidaefund.org/ | grep -c 'fx-news'                       # want 1
+```
