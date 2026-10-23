@@ -25,7 +25,9 @@
     .hero {
       position: relative;
       height: 100vh;        /* fallback for older browsers */
-      height: 100dvh;       /* fill the *visible* viewport as mobile browser chrome shows/hides */
+      height: 100svh;       /* the *small* viewport: fixed while iOS Safari's toolbar
+                               collapses on scroll. 100dvh tracks the toolbar, which
+                               resized the hero mid-scroll and made the text jump. */
       display: flex; align-items: flex-end;
       overflow: hidden;
     }
@@ -184,7 +186,10 @@
     .impact__header .section-title { color: var(--cream-100); }
 
     .impact__grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      /* minmax(0,…), not a bare 1fr: 1fr floors at the content's min width, so the
+         counting numbers widened their own columns on every frame and shoved the
+         section below down. Measured CLS 0.99 before, 0 after. */
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px;
     }
     .impact__stat {
       text-align: center; padding: 40px 24px;
@@ -193,6 +198,7 @@
     .impact__stat:last-child { border-right: none; }
     .impact__number {
       font-family: var(--font-display); font-weight: 800;
+      font-variant-numeric: tabular-nums;   /* every digit the same width while counting */
       font-size: clamp(40px, 5vw, 60px);
       color: var(--gold-400); line-height: 1; margin-bottom: 8px;
     }
@@ -497,10 +503,10 @@
       .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
       .news__grid     { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
       .species__grid  { grid-template-columns: repeat(2, 1fr); }
-      .impact__grid   { grid-template-columns: repeat(2, 1fr); }
+      .impact__grid   { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .species__header { flex-direction: column; align-items: flex-start; }
       .projects__header { flex-direction: column; align-items: flex-start; }
-      .hero { height: 100vh; height: 100dvh; }
+      .hero { height: 100vh; height: 100svh; }
       .hero__content { padding-bottom: 28px; }
       .news-card__excerpt { font-size: 15px; }
       .project-card__desc { font-size: 15.5px; }

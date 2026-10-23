@@ -33,6 +33,7 @@ LINKS = {
  'species-mountain-lion.html':'/learn/cats/mountain-lion',
  'species-ocelot.html':'/learn/cats/ocelot',
  'species-snow-leopard.html':'/learn/cats/snow-leopard',
+ 'take-action.html':'/take-action',
  'ways-to-donate.html':'/take-action/more-ways-to-help',
 }
 # Fundraise Up. The live homepage does not use the #XSZEWCKT element id that
@@ -54,15 +55,13 @@ html = ''.join(between(src, lambda l: '<site-nav>' in l,
 html = re.sub(r'<!--.*?-->', '', html, flags=re.S)                  # strip comments (incl. the video block)
 for proto, live in LINKS.items():
     html = html.replace(f'href="{proto}"', f'href="{live}"')
-# donate buttons -> Fundraise Up; "Get Started" -> take action
+# donate buttons -> Fundraise Up ("Get Started" goes through LINKS above)
 # the hero button first (it is the one followed by a newline + "Donate Now"),
 # then the CTA panel button, so the two get different attribution
 html = html.replace('<a href="#" class="btn-gold" onclick="openDonate(event)">\n          Donate Now',
                     f'<a href="{FRU_HERO}" class="btn-gold">\n          Donate Now', 1)
 html = html.replace('<a href="#" class="btn-gold" onclick="openDonate(event)">Donate Now</a>',
                     f'<a href="{FRU_CTA}" class="btn-gold">Donate Now</a>')
-html = html.replace('<a href="#" class="btn-gold" style="margin-top:8px">',
-                    '<a href="/take-action" class="btn-gold" style="margin-top:8px">')
 # Joomla's media manager on this server rejects .webp: its type detection
 # fails regardless of the Legal Extensions / MIME settings, while plain
 # JPEG uploads fine. So the upload set is built as JPEG and the article
@@ -359,14 +358,18 @@ RESTORE += """
 
 RESTORE += """
 /* \u2500\u2500 Hero height, allowing for Joomla's header \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-   The prototype's nav floats over the hero, so the hero is 100dvh. Joomla's
-   header is sticky and sits in normal flow above the article, about 172px
-   including its top offset. Left at 100dvh the hero runs 172px past the
-   fold and takes its own buttons with it, which is exactly the donate CTA
-   we are trying to make more prominent. homepage.js measures the real
-   offset at runtime, since the header is shorter on narrow screens; the
-   value here is the desktop fallback if the script does not run. */
-  .fx-home .hero { height: calc(100dvh - var(--fx-hero-offset, 172px)); }
+   The prototype's nav floats over the hero, so the hero fills the viewport.
+   Joomla's header is sticky and sits in normal flow above the article, about
+   172px including its top offset. Left at full height the hero runs 172px
+   past the fold and takes its own buttons with it, which is exactly the
+   donate CTA we are trying to make more prominent. homepage.js measures the
+   real offset at runtime, since the header is shorter on narrow screens; the
+   value here is the desktop fallback if the script does not run.
+
+   svh, not dvh: dvh tracks iOS Safari's collapsing toolbar, so the hero
+   resized mid-scroll and the text appeared to jump. svh is pinned to the
+   smallest viewport and never changes while scrolling. */
+  .fx-home .hero { height: calc(100svh - var(--fx-hero-offset, 172px)); }
 """
 
 
