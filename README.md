@@ -10,7 +10,7 @@ to follow, and what to run to verify it.
 
 ## What's in here
 
-- `prototype/` is the homepage prototype, shown at felidae-redesign.vercel.app
+- `prototype/` is the homepage prototype, deployed from this repo by Vercel
 - `wordpress-poc/` is for the WordPress proof of concept
 
 ## Current status

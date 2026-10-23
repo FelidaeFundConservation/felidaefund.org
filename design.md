@@ -16,6 +16,7 @@ Change things at the lowest layer that will do the job.
 | `page.css` | interior page patterns: headers, fact boxes, cards, galleries, body copy | all pages except the homepage |
 | `components/*.js` | the markup for nav, footer, donate modal | all 85 pages |
 | a page file | that page's content and structure | one page |
+| `joomla-homepage/*` | **generated** — never hand-edit | see below |
 
 Tokens cannot move a section or change a sentence. Layout and copy are
 per page.
@@ -98,6 +99,35 @@ Two things this does not cover:
 - Regenerating overwrites every generated page. Design changes belong in
   `tokens.css`, `page.css`, `components.css` or the component JS, never in
   a page file, or the next refresh erases them.
+
+
+## The Joomla homepage build
+
+`joomla-homepage/` is the front page packaged for the live Joomla site,
+and `prototype/joomla-preview.html` shows it under the live site's own
+stylesheets. All four files are generated:
+
+```
+python3 tools/build-joomla-homepage.py
+```
+
+Never hand-edit them. Edit `prototype/index.html`, `tokens.css` or
+`base.css` and re-run the script, or the next run erases the edit. The
+script also rewrites prototype links to live URLs, points the donate
+buttons at Fundraise Up (matching the live homepage's own
+`#?utm_content=...&form=donate` format, so attribution survives), and scopes every rule under `.fx-home`.
+
+One live rule has to be fought and is worth knowing about, because a
+class-name collision check will not find it. `template.css` contains:
+
+```css
+* + :not(:first-child):not(main):not(.igui-lightbox) { margin-top: var(--space-s); }
+```
+
+That is 24px on top of *every* element that has a preceding sibling.
+Anything pasted into this site inherits it. It is neutralised inside
+`.fx-home`, and the six margins the design does want are restored at the
+end of `homepage.css`.
 
 
 ## The preview is blocked from search engines
