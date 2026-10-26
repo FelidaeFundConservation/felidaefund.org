@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no, viewport-fit=cover">
+<title>Homepage — Joomla build preview</title>
+<link rel="icon" type="image/svg+xml" href="https://felidaefund.org/templates/genesis4/images/favicon.svg" />
+<!-- Only the weights the live site is missing, and deliberately NOT
+     Raleway 500: the template sets the footer menu links to 500, the
+     site self-hosts only 400 and 800, and supplying a real 500 makes
+     those links wider and wrap. See the README. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:wght@400&family=Raleway:wght@600;700&display=swap">
+<!-- The live site's four stylesheets, in the live order, so this page shows
+     exactly what the article will look like once it is pasted into Joomla.
+     The header, footer and newsletter are the live site's real markup, and
+     the homepage sits inside the same after-content wrappers it occupies on
+     Joomla. So this page exercises the same CSS the real one does, which is
+     what makes it worth reviewing instead of a screenshot. The signup is
+     inert here: its session tokens are stripped and submit is disabled.
+     The homepage CSS and JS are inlined so this page is self-contained and
+     works from Vercel, the local server, or straight off disk. -->
+<style>
+
+:root {
+    --header-offset: 0px;
+    --button-border-radius:0;
+    --ui-border-radius:0;
+    
+        --color-1-name: dark-brown;
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --color-2-name: light-brown;
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --color-3-name: gold;
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --color-4-name: light-gold;
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --color-5-name: white-gold;
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --color-6-name: subtle-bg;
+        --subtle-bg: 44,88%,93%;
+        --subtle-bg-hs: 44,88%;
+    
+    --page-bg: #fffbf0;
+    --page-bg-hsl: 44,100%,97%;
+    --content-bg: #fffdf6;
+    --content-bg-hsl: 47,100%,98%;
+    --text: #1f1204;
+    --text-hsl: 31,77%,7%;
+    --danger: #b14a57;
+    --danger-hsl: 352,41%,49%;
+    --warning: #eb9f11;
+    --warning-hsl: 39,87%,49%;
+    --success: #007d00;
+    --success-hsl: 120,100%,25%;
+    --info: #769fb3;
+    --info-hsl: 200,29%,58%;
+
+    --duration:0;
+}
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --subtle-bg: 31,77%,7%;
+        --subtle-bg-hs: 31,77%;
+    
+    --page-bg: #382309;
+    --page-bg-hsl: 33,72%,13%;
+    --content-bg: #382309;
+    --content-bg-hsl: 33,72%,13%;
+    --text: #fff8e6;
+    --text-hsl: 43,100%,95%;
+    --danger: #d45b6a;
+    --danger-hsl: 353,58%,59%;
+    --warning: #ffb142;
+    --warning-hsl: 35,100%,63%;
+    --success: #26ad26;
+    --success-hsl: 120,64%,41%;
+    --info: #8bb3c7;
+    --info-hsl: 200,35%,66%;
+
+    }
+}
+body.always-dark {
+    
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --subtle-bg: 31,77%,7%;
+        --subtle-bg-hs: 31,77%;
+    
+    --page-bg: #382309;
+    --page-bg-hsl: 33,72%,13%;
+    --content-bg: #382309;
+    --content-bg-hsl: 33,72%,13%;
+    --text: #fff8e6;
+    --text-hsl: 43,100%,95%;
+    --danger: #d45b6a;
+    --danger-hsl: 353,58%,59%;
+    --warning: #ffb142;
+    --warning-hsl: 35,100%,63%;
+    --success: #26ad26;
+    --success-hsl: 120,64%,41%;
+    --info: #8bb3c7;
+    --info-hsl: 200,35%,66%;
+
+}
+body.always-light {
+    
+        --color-1-name: dark-brown;
+        --dark-brown: 32,75%,29%;
+        --dark-brown-hs: 32,75%;
+    
+        --color-2-name: light-brown;
+        --light-brown: 32,56%,38%;
+        --light-brown-hs: 32,56%;
+    
+        --color-3-name: gold;
+        --gold: 43,59%,62%;
+        --gold-hs: 43,59%;
+    
+        --color-4-name: light-gold;
+        --light-gold: 45,56%,65%;
+        --light-gold-hs: 45,56%;
+    
+        --color-5-name: white-gold;
+        --white-gold: 43,100%,95%;
+        --white-gold-hs: 43,100%;
+    
+        --color-6-name: subtle-bg;
+        --subtle-bg: 44,88%,93%;
+        --subtle-bg-hs: 44,88%;
+    
+    --page-bg: #fffbf0;
+    --page-bg-hsl: 44,100%,97%;
+    --content-bg: #fffdf6;
+    --content-bg-hsl: 47,100%,98%;
+    --text: #1f1204;
+    --text-hsl: 31,77%,7%;
+    --danger: #b14a57;
+    --danger-hsl: 352,41%,49%;
+    --warning: #eb9f11;
+    --warning-hsl: 39,87%,49%;
+    --success: #007d00;
+    --success-hsl: 120,100%,25%;
+    --info: #769fb3;
+    --info-hsl: 200,29%,58%;
+
+}
+@media screen and (prefers-reduced-motion: no-preference) { 
+    :root {
+    --duration:1;
+    }
+}
+
+        #cf_4 .cf-btn:after { 
+            border-radius: 5px
+        }
+    
+.convertforms {
+                --color-primary: #4285F4;
+--color-success: #0F9D58;
+--color-danger: #d73e31;
+--color-warning: #F4B400;
+--color-default: #444;
+--color-grey: #ccc;
+
+            }
+        
+#cf_4 {
+                --background-color: rgba(255, 255, 255, 0);
+--border-radius: 0px;
+--control-gap: 10px;
+--label-color: #888888;
+--label-size: 15px;
+--label-weight: 400;
+--input-color: #888888;
+--input-placeholder-color: #88888870;
+--input-text-align: left;
+--input-background-color: #ffffff;
+--input-border-color: #cccccc;
+--input-border-radius: 3px;
+--input-size: 15px;
+--input-padding: 10px 10px;
+
+            }
+        
+
+            .balance-text {
+                visibility: visible !important;
+            }
+        
+</style>
+<link rel="stylesheet" href="https://felidaefund.org/templates/genesis4/css/special-pages.css?1">
+<link rel="stylesheet" href="https://felidaefund.org/media/plg_system_jcepro/site/css/content.min.css">
+<link rel="stylesheet" href="https://felidaefund.org/templates/genesis4/css/template.css?1.3">
+<link rel="stylesheet" href="https://felidaefund.org/templates/genesis4/css/digi-custom.css">
+<style>
+/* Felidae homepage — Joomla build.
+   Generated from the prototype; every rule is scoped to .fx-home so
+   nothing can reach Joomla's header, footer or any other page.
+   Paste below the existing contents of digi-custom.css. */
+
+/* ── Design tokens. No name clashes with the live site's 144 vars. ── */
+/* Felidae design system tokens
+   Source of truth for the website redesign. */
+
+:root {
+  /* Golds */
+  --gold-500: #c4963a;
+  --gold-400: #d7b765;  /* primary: buttons, eyebrows, stats */
+  --gold-300: #e4ca8a;
+  --gold-200: #efddb0;  /* unused */
+  --gold-100: #f8f0d6;  /* tinted panels */
+
+  /* Browns: actions and links */
+  --brown-800: #5a3e1e;
+  --brown-700: #814e12;  /* buttons, links, focus borders */
+  --brown-600: #9a5e1a;  /* button hover */
+  --brown-500: #b87333;  /* unused */
+  --brown-400: #8a6240;
+  --brown-300: #b8906a;
+
+  /* Darks: backgrounds and body text */
+  --nav-bg:       #211102;
+  --espresso-900: #1f1204;
+  --espresso-800: #2e1a06;
+  --espresso-700: #3d2209;
+
+  /* Lights */
+  --cream-100: #fffbf0;  /* page background */
+  --cream-200: #fff8e6;  /* section panels */
+  --cream-300: #fdf4dd;
+  --white:     #ffffff;
+
+  /* Project accents, from the 2021 brand book. Unused until project pages. */
+  --project-bapp:      #7292a1;
+  --project-tsavo:     #b14a57;
+  --project-patagonia: #61568a;
+  --project-lwl:       #007d00;
+  --project-babp:      #8d8513;
+  --project-cat-aware: #fcf6b3;
+  --project-argentina: #c88712;
+
+  /* Provisional accents — these projects have no brand-book colour yet.
+     Picked to sit inside the existing palette; confirm with Zara / Ben. */
+  --project-pumalink:  #6b7f52;
+  --project-bhutan:    #9a6f9b;
+  --project-health:    #4f8a84;
+  --project-wilde:     #a3782f;
+
+  /* Type */
+  --font-display: 'Raleway', system-ui, sans-serif;
+  --font-body:    'Literata', Georgia, 'Times New Roman', serif;
+
+  /* Layout */
+  --nav-h: 86px;
+  --max-w: 1280px;
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+
+  /* Theme picker swatches — each theme's surface, shown side by side.
+     Deliberately fixed values, not var(--espresso-900): the swatches must
+     keep showing both options whichever theme is active. */
+  --theme-1-swatch: #1f1204;
+  --theme-2-swatch: #3c2203;
+
+  --shadow-sm: 0 1px 3px rgba(31,18,4,.10);
+  --shadow-md: 0 4px 16px rgba(31,18,4,.14);
+  --shadow-lg: 0 12px 40px rgba(31,18,4,.12);
+
+  /* Channels for translucent tints. Keep in sync with the hex values above. */
+  --gold-rgb:  215,183,101;   /* --gold-400 */
+  --cream-rgb: 255,251,240;   /* --cream-100 */
+  --brown-rgb: 129,78,18;     /* --brown-700 */
+  --ink-rgb:   20,10,2;       /* deep shade, darker than espresso-900 */
+  --white-rgb: 255,255,255;
+  --black-rgb: 0,0,0;
+
+  /* Conservation status, IUCN categories */
+  --status-lc: #60c060;  /* least concern */
+  --status-vu: #f0c040;  /* vulnerable */
+  --status-en: #f08040;  /* endangered */
+  --status-cr: #e84040;  /* critically endangered */
+  --trend-stable: #6ddf6d;
+  --trend-down:   #ff6b45;
+
+  /* Component surfaces */
+  --cta-donate-bg: var(--espresso-700);
+
+}
+
+/* ── Reset, type, buttons, utilities (was base.css) ───────────────── */
+  /* Base styles shared by every prototype page: reset, typography,
+   container, buttons, section labels, reveal animation.
+   Page-specific sections stay in each page's own <style>. */
+  .fx-home *, .fx-home *::before, .fx-home *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .fx-home { font-family: var(--font-body); touch-action: pan-y; overflow-x: hidden; background: var(--cream-100); color: var(--espresso-900); -webkit-font-smoothing: antialiased; }
+  .fx-home img { display: block; max-width: 100%; }
+  .fx-home a { color: inherit; text-decoration: none; }
+  .fx-home button { cursor: pointer; border: none; background: none; font: inherit; }
+  .fx-home .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
+  .fx-home .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--brown-700); color: var(--cream-100); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 12px 24px; border-radius: var(--r-sm); transition: background .2s, transform .15s; }
+  .fx-home .btn-primary:hover { background: var(--brown-600); transform: translateY(-1px); }
+  .fx-home .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: 2px solid currentColor; color: var(--cream-100); font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 10px 22px; border-radius: var(--r-sm); transition: background .2s, color .2s; }
+  .fx-home .btn-outline:hover { background: rgba(var(--white-rgb),.12); }
+  .fx-home .btn-gold { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-400); color: var(--espresso-900); font-family: var(--font-display); font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; padding: 12px 28px; border-radius: var(--r-sm); transition: background .2s, transform .15s; }
+  .fx-home .btn-gold:hover { background: var(--gold-300); transform: translateY(-1px); }
+  .fx-home .section-label { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--brown-700); margin-bottom: 12px; }
+  .fx-home .section-title { font-family: var(--font-display); font-weight: 700; font-size: clamp(28px, 3.5vw, 44px); line-height: 1.15; color: var(--espresso-900); }
+  .fx-home .section-body { font-family: var(--font-body); font-size: 17px; line-height: 1.75; color: var(--brown-800); max-width: 52ch; }
+  @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(6px); }
+    }
+  .fx-home .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; will-change: transform, opacity; }
+  .fx-home .reveal.visible { opacity: 1; transform: translateY(0); will-change: auto; }
+  .fx-home .reveal-delay-1 { transition-delay: .1s; }
+  .fx-home .reveal-delay-2 { transition-delay: .2s; }
+  .fx-home .reveal-delay-3 { transition-delay: .3s; }
+  .fx-home .reveal-delay-4 { transition-delay: .4s; }
+  .fx-home .arrow-right { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  @media (max-width: 1024px) {
+    /* header gets tight — badges show on desktop only */
+    .fx-home .mission__grid { grid-template-columns: 1fr 1fr; }
+    .fx-home .impact__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fx-home .impact__stat { border-right: none; border-bottom: 1px solid rgba(var(--gold-rgb),.1); }
+    .fx-home .species__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .projects__grid { grid-template-columns: 1fr 1fr; }
+    .fx-home .news__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    
+    .fx-home .container { padding: 0 20px; }
+  }
+
+/* ── Undo the live site's rules where they reach into this markup ─────
+   Checked against special-pages.css, template.css, digi-custom.css and
+   content.min.css. Two template rules reach the new markup:
+
+   1. .home section + section { margin-top: ... !important }
+   2. * + :not(:first-child):not(main):not(.igui-lightbox)
+          { margin-top: var(--space-s) }   <- template.css
+
+   The second is the template's global flow spacing: it puts 24px on top
+   of EVERY element that has a preceding sibling. The prototype assumes a
+   margin:0 reset, so it has to be switched off inside .fx-home. The
+   selector below mirrors the template's exactly, plus .fx-home, so it can
+   only ever undo that one rule. The handful of margins the design does
+   want back are restored at the end of this file, where equal specificity
+   plus later source order lets them win.
+
+   The two classes that collided outright (.mission, .news) are renamed
+   .fx-mission / .fx-news in the article instead of being fought with
+   !important, and every section carries the template's own full-width
+   class so it is not boxed to 1170px. */
+  .home .fx-home section + section { margin-top: 0 !important; }
+  .fx-home * + :not(:first-child):not(main):not(.igui-lightbox) { margin-top: 0; }
+
+/* ── Homepage sections (was the page's inline <style>) ───────────── */
+  .fx-home .hero { position: relative; height: 100vh;        /* fallback for older browsers */ height: 100svh;       /* the *small* viewport: fixed while iOS Safari's toolbar collapses on scroll. 100dvh tracks the toolbar, which resized the hero mid-scroll and made the text jump. */ display: flex; align-items: flex-end; overflow: hidden; }
+  .fx-home .hero__video-wrap { position: absolute; inset: 0; }
+  .fx-home .hero__video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  /* Hero background image */
+  .fx-home .hero__bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  /* Tint layer under overlay — shows if image fails to load */
+  .fx-home .hero__gradient-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 40%, var(--espresso-700) 0%, var(--espresso-900) 60%), linear-gradient(160deg, var(--espresso-800) 0%, #0d0a04 100%); }
+  /* Dark overlay for text legibility */
+  .fx-home .hero__overlay { position: absolute; inset: 0; background: linear-gradient( to top, rgba(var(--ink-rgb),.85) 0%, rgba(var(--ink-rgb),.45) 28%, transparent 45% ); }
+  /* Decorative paw texture */
+  .fx-home .hero__texture { position: absolute; inset: 0; opacity: .04; background-image: radial-gradient(circle, var(--gold-400) 1px, transparent 1px); background-size: 40px 40px; }
+  .fx-home .hero__content { position: relative; z-index: 2; max-width: var(--max-w); margin: 0 auto; padding: 0 32px; padding-bottom: 32px; width: 100%; }
+  .fx-home .hero__eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+  .fx-home .hero__eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold-400); }
+  .fx-home .hero__title { font-family: var(--font-display); font-weight: 800; font-size: clamp(40px, 6vw, 80px); line-height: 1.05; letter-spacing: -.02em; color: var(--cream-100); max-width: 14ch; margin-bottom: 24px; }
+  .fx-home .hero__title em { font-style: normal; color: var(--gold-400); }
+  .fx-home .hero__subtitle { font-family: var(--font-body); font-size: clamp(27px, 3.15vw, 36px); line-height: 1.3; color: rgba(var(--cream-rgb),.8); max-width: 36ch; margin-bottom: 36px; }
+  .fx-home .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .fx-home .hero__credit { margin: 20px 0 0; font-family: var(--font-display); font-size: 11px; letter-spacing: .08em; color: rgba(var(--cream-rgb),.5); }
+  .fx-home .hero__scroll { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; color: rgba(var(--cream-rgb),.45); font-family: var(--font-display); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; animation: bounce 2s ease-in-out infinite; }
+  .fx-home .hero__scroll svg { width: 20px; height: 20px; }
+  /* Optional: cat silhouette decoration */
+  .fx-home .hero__cat-silhouette { position: absolute; bottom: 0; right: 5%; width: clamp(200px, 28vw, 420px); opacity: .07; pointer-events: none; }
+  .fx-home .fx-mission { padding: 100px 0; background: var(--cream-200); }
+  .fx-home .mission__header { text-align: left; margin-bottom: 64px; }
+  .fx-home .mission__header .section-body { margin: 16px 0 0; text-align: left; }
+  .fx-home .mission__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .fx-home .mission__card { background: var(--white); border-radius: var(--r-lg); padding: 0; border: 1px solid rgba(var(--gold-rgb),.2); box-shadow: var(--shadow-sm); transition: box-shadow .25s, transform .3s; position: relative; overflow: hidden; }
+  .fx-home .mission__card::before { display: none; }
+  .fx-home .mission__card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px) scale(1.02); }
+  .fx-home .mission__card-img { width: 100%; aspect-ratio: 16/9; height: auto; object-fit: cover; display: block; transition: transform .5s ease; }
+  .fx-home .mission__card:hover .mission__card-img { transform: scale(1.05); }
+  .fx-home .mission__card-content { padding: 32px 32px 36px; }
+  .fx-home .mission__icon { width: 52px; height: 52px; border-radius: var(--r-md); background: var(--gold-100); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .fx-home .mission__icon svg { width: 26px; height: 26px; color: var(--brown-700); }
+  .fx-home .mission__card-title { font-family: var(--font-display); font-weight: 700; font-size: 22px; color: var(--espresso-900); margin-bottom: 12px; }
+  .fx-home .mission__card-body { font-size: 15.5px; line-height: 1.75; color: var(--brown-800); margin-bottom: 24px; }
+  .fx-home .mission__link { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .06em; color: var(--brown-700); display: inline-flex; align-items: center; gap: 6px; transition: gap .2s; }
+  .fx-home .mission__link:hover { gap: 10px; }
+  .fx-home .impact { background: var(--espresso-900); padding: 80px 0; position: relative; overflow: hidden; }
+  .fx-home .impact::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1.5' fill='%23d7b765' opacity='.06'/%3E%3C/svg%3E"); }
+  .fx-home .impact__inner { position: relative; }
+  .fx-home .impact__header { text-align: center; margin-bottom: 56px; }
+  .fx-home .impact__header .section-label { color: var(--gold-400); }
+  .fx-home .impact__header .section-title { color: var(--cream-100); }
+  .fx-home .impact__grid { /* minmax(0,…), not a bare 1fr: 1fr floors at the content's min width, so the counting numbers widened their own columns on every frame and shoved the section below down. Measured CLS 0.99 before, 0 after. */ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
+  .fx-home .impact__stat { text-align: center; padding: 40px 24px; border-right: 1px solid rgba(var(--gold-rgb),.1); }
+  .fx-home .impact__stat:last-child { border-right: none; }
+  .fx-home .impact__number { font-family: var(--font-display); font-weight: 800; font-variant-numeric: tabular-nums;   /* every digit the same width while counting */ font-size: clamp(40px, 5vw, 60px); color: var(--gold-400); line-height: 1; margin-bottom: 8px; }
+  .fx-home .impact__unit { font-family: var(--font-display); font-size: 14px; font-weight: 500; color: var(--gold-300); margin-bottom: 8px; letter-spacing: .04em; }
+  .fx-home .impact__label { font-family: var(--font-body); font-size: 14.5px; color: rgba(var(--cream-rgb),.55); line-height: 1.5; }
+  .fx-home .species { padding: 100px 0; background: var(--cream-200); }
+  /* The mission, species and projects sections share one cream surface,
+       so a hairline marks where each ends. rgba(--brown-rgb, .14) rather
+       than a grey: the palette has no neutral, and adding one would be a
+       new colour. On cream it reads as a soft grey line.
+
+       Drawn as a pseudo-element rather than a border so it stops where the
+       text does instead of running to the window edges. Its width is the
+       container's content box: --max-w less the container's 32px padding
+       on each side, and never wider than the viewport allows. */
+  .fx-home .species, .fx-home .projects { position: relative; }
+  .fx-home .species::before, .fx-home .projects::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: min(100% - 64px, calc(var(--max-w) - 64px)); border-top: 1px solid rgba(var(--brown-rgb), .14); }
+  .fx-home .species__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+  .fx-home .species__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .fx-home .species__card { border-radius: var(--r-md); overflow: hidden; position: relative; aspect-ratio: 3/4; cursor: pointer; transition: transform .3s, box-shadow .3s; }
+  .fx-home .species__card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 0 0 2px rgba(var(--gold-rgb),.3), 0 12px 28px rgba(var(--black-rgb),.18); z-index: 1; }
+  .fx-home .species__card-link { position: absolute; inset: 0; z-index: 2; }
+  .fx-home .species__card-img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform .5s ease; }
+  .fx-home .species__card:hover .species__card-img { transform: scale(1.17); }
+  /* CSS placeholder "photo" */
+  .fx-home .species__card-ph { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 60px; position: relative; }
+  .fx-home .species__card-ph::after { content: ''; position: absolute; inset: 0; background: inherit; filter: brightness(.7) saturate(.6); }
+  .fx-home .sp-1 { background: linear-gradient(160deg, #4a3520 0%, #2a1a0a 100%); }
+  .fx-home .sp-2 { background: linear-gradient(160deg, #5c4020 0%, #3a2510 100%); }
+  .fx-home .sp-3 { background: linear-gradient(160deg, #3a4a30 0%, #1e2a16 100%); }
+  .fx-home .sp-4 { background: linear-gradient(160deg, #4a3a20 0%, #2a2010 100%); }
+  .fx-home .species__emoji { position: relative; z-index: 1; font-size: 56px; }
+  .fx-home .species__card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(var(--ink-rgb),.9) 0%, rgba(var(--ink-rgb),.1) 55%, transparent 100%); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }
+  .fx-home .species__card-name { font-family: var(--font-display); font-weight: 700; font-size: 18px; color: var(--cream-100); margin-bottom: 4px; }
+  .fx-home .species__card-status { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; }
+  .fx-home .status-vu { color: var(--status-vu); }
+  .fx-home .status-en { color: var(--status-en); }
+  .fx-home .status-cr { color: var(--status-cr); }
+  .fx-home .status-lc { color: var(--status-lc); }
+  .fx-home .species__card-trend { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .08em; margin-top: 3px; }
+  .fx-home .trend-decreasing { color: var(--trend-down); }
+  .fx-home .trend-stable { color: var(--trend-stable); }
+  .fx-home .projects { padding: 100px 0; background: var(--cream-200); }
+  .fx-home .projects__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+  .fx-home .projects__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .fx-home .project-card { border-radius: var(--r-lg); overflow: hidden; background: var(--white); border: 1px solid rgba(var(--gold-rgb),.18); box-shadow: var(--shadow-sm); transition: box-shadow .25s, transform .25s; display: flex; flex-direction: column; position: relative; }
+  /* whole-card click targets (visible text links stay for affordance) */
+  .fx-home .mission__card-link, .fx-home .project-card-link { position: absolute; inset: 0; z-index: 3; }
+  .fx-home .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px) scale(1.02); }
+  .fx-home .project-card__img { aspect-ratio: 16/9; height: auto; display: flex; align-items: center; justify-content: center; font-size: 52px; position: relative; overflow: hidden; }
+  .fx-home .project-card__img img { transform: scale(1.12); transition: transform .5s ease; }
+  .fx-home .project-card:hover .project-card__img img { transform: scale(1.17); }
+  .fx-home .pc-1 { background: linear-gradient(135deg, #2a4a3a 0%, #0e2218 100%); }
+  .fx-home .pc-2 { background: linear-gradient(135deg, #4a3a28 0%, #201808 100%); }
+  .fx-home .pc-3 { background: linear-gradient(135deg, #3a2a4a 0%, #180e20 100%); }
+  .fx-home .project-card__img-emoji { position: relative; z-index: 1; }
+  .fx-home .project-card__img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(var(--black-rgb),.3) 100%); }
+  .fx-home .project-card__tag { position: absolute; top: 16px; left: 16px; z-index: 2; background: rgba(var(--gold-rgb),.9); color: var(--espresso-900); font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
+  .fx-home .project-card__body { padding: 28px 28px 24px; flex: 1; display: flex; flex-direction: column; }
+  .fx-home .project-card__region { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--brown-700); margin-bottom: 8px; }
+  .fx-home .project-card__title { font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--espresso-900); line-height: 1.3; margin-bottom: 12px; }
+  .fx-home .project-card__desc { font-size: 14.5px; line-height: 1.7; color: var(--brown-800); flex: 1; margin-bottom: 20px; }
+  .fx-home .project-card__footer { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid rgba(var(--gold-rgb),.2); }
+  .fx-home .project-card__stat { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: var(--brown-700); }
+  .fx-home .project-card__link { font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--brown-700); display: inline-flex; align-items: center; gap: 5px; transition: gap .2s; }
+  .fx-home .project-card__link:hover { gap: 8px; }
+  .fx-home .fx-news { padding: 100px 0; background: var(--espresso-900); }
+  .fx-home .news__header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; gap: 24px; }
+  .fx-home .news__header .section-label { color: var(--gold-400); }
+  .fx-home .news__header .section-title { color: var(--cream-100); }
+  .fx-home .news__see-all { font-family: var(--font-display); font-weight: 600; font-size: 13px; letter-spacing: .06em; color: var(--gold-400); display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; transition: gap .2s; }
+  .fx-home .news__see-all:hover { gap: 10px; }
+  .fx-home .news__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .fx-home .news-card { background: rgba(var(--cream-rgb),.05); border: 1px solid rgba(var(--gold-rgb),.12); border-radius: var(--r-md); overflow: hidden; position: relative; transition: border-color .25s, background .25s, transform .3s, box-shadow .3s; }
+  .fx-home .news-card__link { position: absolute; inset: 0; z-index: 2; }
+  .fx-home .news-card:hover { background: rgba(var(--cream-rgb),.08); border-color: rgba(var(--gold-rgb),.4); transform: translateY(-4px) scale(1.02); box-shadow: 0 0 0 1px rgba(var(--gold-rgb),.3), 0 12px 28px rgba(var(--black-rgb),.18); }
+  .fx-home .news-card__img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; }
+  .fx-home img.news-card__img { width: 100%; aspect-ratio: 16/9; height: auto; transform: scale(1.12); display: block; transition: transform .5s ease; margin-bottom: 20px; }
+  .fx-home .news-card:hover img.news-card__img { transform: scale(1.17); }
+  .fx-home .nc-1 { background: linear-gradient(135deg, #3a2808 0%, #1e1004 100%); }
+  .fx-home .nc-2 { background: linear-gradient(135deg, #0e2818 0%, #060e0a 100%); }
+  .fx-home .nc-3 { background: linear-gradient(135deg, #281a08 0%, #120c04 100%); }
+  .fx-home .news-card__body { padding: 20px 22px 22px; }
+  .fx-home .news-card__cat { font-family: var(--font-display); font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--gold-400); margin-bottom: 8px; }
+  .fx-home .news-card__title { font-family: var(--font-display); font-weight: 600; font-size: 16.5px; color: var(--cream-100); line-height: 1.4; margin-bottom: 10px; }
+  .fx-home .news-card__excerpt { font-size: 13.5px; line-height: 1.65; color: rgba(var(--cream-rgb),.55); margin-bottom: 14px; }
+  .fx-home .news-card__meta { font-family: var(--font-display); font-size: 11px; color: rgba(var(--cream-rgb),.35); letter-spacing: .04em; }
+  .fx-home .cta-split { display: grid; grid-template-columns: 1fr 1fr; }
+  .fx-home .cta-panel { padding: 80px 64px; display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .fx-home .cta-panel--volunteer { background: var(--brown-700); }
+  .fx-home .cta-panel--donate { background: var(--espresso-700); }
+  .fx-home .cta-panel__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
+  .fx-home .cta-panel__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 36px); color: var(--cream-100); line-height: 1.2; }
+  .fx-home .cta-panel__body { font-size: 15.5px; line-height: 1.75; color: rgba(var(--cream-rgb),.75); max-width: 38ch; }
+  .fx-home .cta-panel__options { display: flex; flex-direction: column; gap: 8px; margin: 4px 0; }
+  .fx-home .cta-panel__option { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 13.5px; color: rgba(var(--cream-rgb),.8); }
+  .fx-home .cta-panel__option::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-400); flex-shrink: 0; }
+  .fx-home .cta-panel__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
+  .fx-home .donate-badges { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(var(--cream-rgb),.12); }
+  .fx-home .donate-badges a { display: flex; align-items: center; justify-content: center; transition: opacity .2s; }
+  .fx-home .donate-badges a:hover { opacity: .8; }
+  .fx-home .donate-badge-img { height: 56px; width: auto; object-fit: contain; opacity: 1; transition: opacity .2s; }
+  .fx-home .donate-badge-img:hover { opacity: 0.7; }
+  @media (max-width: 768px) {
+    .fx-home .donate-badges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .fx-home .donate-badge-img { height: auto; width: 100%; max-height: 56px; object-fit: contain; }
+  }
+  @media (max-width: 768px) {
+    .fx-home .cta-split { grid-template-columns: 1fr; }
+    .fx-home .cta-panel { padding: 56px 32px; }
+    .fx-home .mission__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .news__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .fx-home .species__grid { grid-template-columns: repeat(2, 1fr); }
+    .fx-home .impact__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .fx-home .species__header { flex-direction: column; align-items: flex-start; }
+    .fx-home .projects__header { flex-direction: column; align-items: flex-start; }
+    .fx-home .hero { height: 100vh; height: 100svh; }
+    .fx-home .hero__content { padding-bottom: 28px; }
+    .fx-home .news-card__excerpt { font-size: 15px; }
+    .fx-home .project-card__desc { font-size: 15.5px; }
+    .fx-home .mission__card-body { font-size: 16px; }
+  }
+  @media (max-width: 480px) {
+    .fx-home .species__grid { grid-template-columns: 1fr; }
+  }
+
+/* ── Margins the design wants, restored past the neutraliser above.
+   Same specificity as it, declared later, so these win. ───────── */
+  .fx-home .hero__credit:not(:first-child):not(main) { margin-top: 20px; }
+  .fx-home .mission__header .section-body:not(:first-child):not(main) { margin-top: 16px; }
+  .fx-home .species__card-trend:not(:first-child):not(main) { margin-top: 3px; }
+  .fx-home .cta-panel__options:not(:first-child):not(main) { margin-top: 4px; }
+  .fx-home .cta-panel__actions:not(:first-child):not(main) { margin-top: 8px; }
+  .fx-home .donate-badges:not(:first-child):not(main) { margin-top: 28px; }
+
+/* ── Hosting this page as a Joomla module ────────────────────
+   The homepage ships as a Custom HTML module in the `after-content`
+   position. Three things there get in the way:
+
+     section.after-content   capped at 1170px
+     .after-content-inner    display:flex, capped at 1098px, so the module
+                             becomes one column beside any other module
+     .mod-custom             padding-right 48px and margin-right 72px,
+                             which pushes the whole page off-centre
+     section.after-content   picks up a 24px top margin from the global flow
+                             spacing, showing as a brown band above the hero
+     article.item-page       still renders Joomla's title header
+                             (section.intro) and an empty details box
+                             (section.default) above the module
+
+   Every rule below is guarded by :has(.fx-home), so it applies only where
+   this homepage is actually present and stops applying by itself if the
+   module is removed. The two that reset padding and margin are guarded on
+   the module itself, not the page: any other module sharing the position
+   keeps its own spacing. :has() is supported by every
+   current browser; in an old one the page is narrow but not broken. */
+  body:has(.fx-home) section.after-content,
+  body:has(.fx-home) .after-content-inner {
+    display: block; max-width: none; width: 100%; padding: 0; margin: 0; }
+  /* The same flow spacing reaches the siblings outside .fx-home too, where
+     the 24px shows as a dark band of page background between the CTAs, the
+     newsletter and the footer. The footer repeats their :not() chain
+     because a plain `footer` loses the specificity tie. */
+  body:has(.fx-home) section.bottom,
+  body:has(.fx-home) footer:not(:first-child):not(main) { margin-top: 0; }
+  /* The social icons are mask images painted with a background colour, and
+     several rules compete for it: gold in one state, --light-brown in
+     another. The dark one was winning here, so the icons rendered dark
+     brown on a dark footer: present and clickable, but invisible. Pinned
+     to the site's own --gold, which is what the live footer shows. No new
+     colour: hsl(var(--gold)) is the template's own token. */
+  body:has(.fx-home) footer nav[aria-label="Social Media Icons"] a span.icon {
+    background-color: hsl(var(--gold)) !important; }
+  body:has(.fx-home) footer nav[aria-label="Social Media Icons"] a:hover span.icon {
+    background-color: hsl(var(--light-brown)) !important; }
+  .after-content-inner > .moduletable:has(.fx-home),
+  .after-content-inner .mod-custom:has(.fx-home) {
+    width: 100%; max-width: none; padding: 0; margin: 0; }
+  body:has(.fx-home) article.item-page > section.intro,
+  body:has(.fx-home) article.item-page > section.default { display: none; }
+
+  /* special-pages.css and template.css both carry
+         h1, .h1 { text-transform: uppercase }
+     and the prototype never declares text-transform on the hero title, so
+     there was nothing to override it and Joomla shouted the headline.
+     Daniel's design is title case. */
+  .fx-home h1 { text-transform: none; }
+
+/* ── Newsletter ────────────────────────────────────────
+   The signup is a Convert Forms form in a Joomla module. Its markup is
+   generated by the extension and its submission is wired to Convert Forms,
+   so this restyles it and changes nothing structural: same three fields,
+   same handler, same form id. Replacing the markup would keep the look and
+   silently break the signup.
+
+   Values are taken from .newsletter in the prototype's components.css, not
+   invented. The one thing CSS cannot do is reduce three fields to one as
+   the prototype has: First Name and Last Name are required, and hiding a
+   required field blocks submission.
+
+   The !important marks are not decoration. template.css sets the input
+   background and border with !important of its own, and digi-custom.css
+   already does the same to .cf-btn, so a plain rule loses to both.
+
+   :not(#_) is stranger and needs explaining. template.css styles text
+   inputs with
+
+       form input[type="text"]:not(#jform_com_fields_screenshot), ...
+
+   and an id inside :not() counts towards specificity, which is what
+   decides between two !important rules. That selector therefore carries
+   id-level weight, while the entry for email in the same list does not,
+   which is why email picked up this styling and the name fields did not.
+   :not(#_) matches everything (no element has that id) and lends this rule
+   the same id-level weight, so it wins by class count. Lifting the whole
+   file's specificity would be worse: it would break the ordering between
+   these rules and the prototype's own.
+
+   Guarded by body:has(.fx-home), so for now this only applies on the new
+   homepage. Removing that guard from these rules makes it site-wide. */
+  /* The cream runs the full width of the band, as the prototype does, so it
+     reads as a section rather than a card floating on brown. The tint goes
+     on section.bottom; .bottom-inner keeps its own max-width, so the text
+     stays aligned with every other section on the page. */
+  body:has(.fx-home) section.bottom {
+    background: var(--gold-100);
+    border-top: 1px solid rgba(var(--gold-rgb),.3);
+    color: var(--espresso-900);
+    padding: 80px 0; }
+  body:has(.fx-home) .moduletable.newsletter {
+    background: transparent;
+    border-top: none;
+    color: var(--espresso-900);
+    padding: 0; }
+  body:has(.fx-home) .moduletable.newsletter h3 {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(22px, 2.5vw, 32px); line-height: 1.15;
+    color: var(--espresso-900); max-width: 480px; }
+  body:has(.fx-home) .moduletable.newsletter .cf-control-group,
+  body:has(.fx-home) .moduletable.newsletter .cf-label,
+  body:has(.fx-home) .moduletable.newsletter span {
+    color: var(--brown-800); }
+  body:has(.fx-home) .moduletable.newsletter .cf-input:not(#_) {
+    padding: 14px 18px !important;
+    font-family: var(--font-body); font-size: 15px;
+    background: var(--white) !important; color: var(--espresso-900) !important;
+    border: 1.5px solid rgba(var(--brown-rgb),.25) !important;
+    border-radius: var(--r-sm) !important; outline: none;
+    transition: border-color .2s; }
+  body:has(.fx-home) .moduletable.newsletter .cf-input::placeholder {
+    color: var(--brown-300); }
+  body:has(.fx-home) .moduletable.newsletter .cf-input:not(#_):focus {
+    border-color: var(--brown-700) !important; }
+  body:has(.fx-home) .moduletable.newsletter .cf-required-label {
+    color: var(--brown-700); }
+  body:has(.fx-home) .moduletable.newsletter .cf-btn:not(#_) {
+    border-radius: var(--r-sm) !important;
+    background: var(--brown-700) !important;
+    background-color: var(--brown-700) !important;
+    color: var(--cream-100) !important;
+    font-family: var(--font-display); font-weight: 600; font-size: 13px;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: 14px 24px; border-radius: var(--r-sm);
+    transition: background .2s; }
+  body:has(.fx-home) .moduletable.newsletter .cf-btn:hover {
+    background: var(--brown-600) !important; }
+  body:has(.fx-home) .moduletable.newsletter .cf-btn .cf-btn-text {
+    color: var(--cream-100) !important; }
+
+/* ── Hero type, scaled for the shorter Joomla hero ──────────────
+   Daniel's note: the headline crowds the photograph here in a way it does
+   not on the prototype. Measured at 1440x900:
+
+     prototype   hero 900px, text block 520px, 380px of image above it
+     Joomla      hero 728px (the header takes 172px), same 520px of text,
+                 leaving only 208px of image
+
+   The text is not too big in itself, it is too big for a hero that lost
+   172px. Keeping the prototype's proportion of 58% text to hero means a
+   422px text block in a 728px hero, so everything here is the prototype's
+   value times 0.81. The prototype itself is untouched: its hero is still
+   the full viewport, and these rules only apply inside .fx-home. */
+  .fx-home .hero__title {
+    font-size: clamp(32px, 4.85vw, 65px); margin-bottom: 19px; }
+  .fx-home .hero__subtitle {
+    font-size: clamp(22px, 2.55vw, 29px); margin-bottom: 29px; }
+
+/* ── Hero height, allowing for Joomla's header ─────────────────
+   The prototype's nav floats over the hero, so the hero fills the viewport.
+   Joomla's header is sticky and sits in normal flow above the article, about
+   172px including its top offset. Left at full height the hero runs 172px
+   past the fold and takes its own buttons with it, which is exactly the
+   donate CTA we are trying to make more prominent. homepage.js measures the
+   real offset at runtime, since the header is shorter on narrow screens; the
+   value here is the desktop fallback if the script does not run.
+
+   svh, not dvh: dvh tracks iOS Safari's collapsing toolbar, so the hero
+   resized mid-scroll and the text appeared to jump. svh is pinned to the
+   smallest viewport and never changes while scrolling. */
+  .fx-home .hero { height: calc(100svh - var(--fx-hero-offset, 172px)); }
+
+
+</style>
+</head>
+<body class="option-com_content view-article no-layout no-task itemid-101  path-home">
+<header id="site-header">
+    <div class="wrapper">
+        <div class="header-inner">
+                            <a class="logo">
+                                            <picture>
+                                                            <source
+                                        type="image/webp" srcset="https://felidaefund.org/images/logos/logo_felidae-01.webp"
+                                        media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+                                />
+                                                                                        <source
+                                        type="image/png" srcset="https://felidaefund.org/images/logos/logo_felidae_neg-01.png"
+                                        media="(prefers-color-scheme: dark)"
+                                />
+                                                                    <source
+                                            type="image/webp" srcset="https://felidaefund.org/images/logos/logo_felidae_neg-01.webp"
+                                            media="(prefers-color-scheme: dark)"
+                                    />
+                                                            <source
+                                        type="image/png" srcset="https://felidaefund.org/images/logos/logo_felidae-01.png"
+                                        media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+                                />
+                                                                    <img src="https://felidaefund.org/images/logos/logo_felidae-01.webp" alt="Felidae Conservation Fund" width="500" height="162" class="logo" loading="eager" decoding="sync"/>
+                                                        </picture>
+                                    </a>
+                            <div class="header-links">
+                    <button id="nav-icon" href="javascript:void(0);" rel="nofollow" aria-label="Open Mobile Menu" >
+                        <span></span>
+                    </button>
+                    <nav class="menu "  aria-label="Main Menu">
+    <ul>
+
+    <li class="item-130 deeper parent">    <span tabindex="0" class="mod-menu__heading nav-header ">Learn</span>
+<ul class="nav-child unstyled small"><li class="item-134"><a href="https://felidaefund.org/learn/cats" >Wild Cats Around the World</a></li><li class="item-271"><a href="https://felidaefund.org/learn/protecting-healthy-ecosystems" >Protecting Healthy Ecosystems</a></li><li class="item-272"><a href="https://felidaefund.org/learn/living-alongside-wild-cats" >Living Alongside Wild Cats</a></li><li class="item-273"><a href="https://felidaefund.org/learn/safety-essentials-wild-cats" >Safety Essentials</a></li><li class="item-275"><a href="https://felidaefund.org/learn/media" >Photos &amp; Videos</a></li></ul><li class="item-131 deeper parent">    <span tabindex="0" class="mod-menu__heading nav-header ">Explore Projects</span>
+<ul class="nav-child unstyled small"><li class="item-135">    <div class="menu-inner-module">
+        <span class="mod-menu__heading nav-header ">Research</span>
+        <div class="moduletable ">
+		<ul class="mod-articlescategory category-module mod-list">
+					<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/bhutan-wild-cat-health-project">
+			Bhutan Wild Cat Health Project            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/patagonia-cats-project">
+			Patagonia Wild Cats Project             		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/pumalink">
+			Diablo PumaLink Project            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/bay-area-bobcat-project">
+			Bay Area Bobcat Project            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/tsavo-cheetah-project">
+			Tsavo Cheetah Project            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/bay-area-puma-project">
+			Bay Area Puma Project            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/research/wild-cat-health-project">
+			Wild Cat Health Project            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+	</ul>
+</div>
+    </div>
+</li><li class="item-136">    <div class="menu-inner-module">
+        <span class="mod-menu__heading nav-header ">Community Programs</span>
+        <div class="moduletable ">
+		<ul class="mod-articlescategory category-module mod-list">
+					<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/community/living-with-lions">
+			Living with Lions                        <span class="subtitle">Educating CA Communities</span>
+            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/community/cat-aware">
+			CAT Aware                        <span class="subtitle">K-12 Outreach & Education</span>
+            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/community/wilde-backyard">
+			Wilde Backyard                        <span class="subtitle">Encouraging community science</span>
+            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+<li>
+			<a class="mod-articles-category-title " href="https://felidaefund.org/projects/community/wilde-pod">
+			Wilde Pod                        <span class="subtitle">Cloud data for conservation</span>
+            		</a>
+	
+	
+	
+	
+	
+	
+	
+	</li>
+	</ul>
+</div>
+    </div>
+</li><li class="item-137"><a href="https://felidaefund.org/projects/archive" class="btn btn-gold-ghost">View Our Past Projects</a></li></ul><li class="item-132 deeper parent"><a href="https://felidaefund.org/take-action" >Take Action</a><ul class="nav-child unstyled small"><li class="item-1506"><a href="https://donate.infinitegiving.com/felidae-conservation-fund" target="_blank" rel="noopener noreferrer">Donate Stock</a></li><li class="item-280"><a href="https://felidaefund.org/take-action/community-science" >Become a Community Scientist</a></li><li class="item-281 hide-submenu"><a href="https://felidaefund.org/take-action/volunteer" >Volunteer</a><ul class="nav-child unstyled small"><li class="item-282"><a href="https://felidaefund.org/take-action/volunteer/apply" >Apply as a Volunteer</a></li></ul><li class="item-1509"><a href="https://felidaefund.org/take-action/volunteer-and-career-opportunities" >Volunteer and Career Opportunities</a></li><li class="item-283"><a href="https://felidaefund.org/take-action/spread-awareness" >Spread Awareness</a></li><li class="item-284 hide-submenu"><a href="https://felidaefund.org/take-action/host-an-event" >Host an Event</a><ul class="nav-child unstyled small"><li class="item-670"><a href="https://felidaefund.org/take-action/host-an-event/inquire" >Event Inquiry Form</a></li></ul><li class="item-285"><a href="https://felidaefund.org/take-action/more-ways-to-help" >More Ways to Help</a></li></ul><li class="item-133"><a href="#?form=donate" class="btn btn-brown FRU" FRU="btn btn-brown FRU" onclick="plausible('Opened Donation Checkout',{props: {path: document.location.pathname}})">Donate</a></li>    </ul>
+</nav>
+
+                </div>
+
+                    </div>
+        <div class="secondary-menu">
+            <div class="inner">
+                <nav class="menu "  aria-label="Secondary Menu">
+    <span class="item-286 parent"><a href="https://felidaefund.org/kids" >Kids Area</a></span><span class="item-287"><a href="https://felidaefund.org/science" >Science &amp; Research</a></span><span class="item-288"><a href="https://felidaefund.org/news" >News</a></span><span class="item-289"><a href="https://felidaefund.org/events" >Events</a></span><span class="item-553"><a href="https://felidaefund.org/store" >Store</a></span></nav>
+
+            </div>
+        </div>
+    </div>
+</header>
+<main>
+<article class="default item-page">
+  <section class="intro"><div class="headline-details center"><div class="headline">
+    <h1>Home</h1></div></div></section>
+  <section class="default"></section>
+</article>
+<!-- the module's real wrappers: after-content > inner > moduletable > mod-custom -->
+<section class="after-content">
+  <div class="after-content-inner">
+    <div class="moduletable "><div class="mod-custom custom">
+<div class="fx-home">
+
+  <section class="hero full-width" id="hero" aria-label="Hero">
+    <div class="hero__video-wrap">
+      <img class="hero__bg-img" src="assets/A1107739b.jpg" alt="Puma on rocky terrain in the Diablo Range" />
+    </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__texture"></div>
+    <div class="hero__content">
+      <h1 class="hero__title">
+        The Cat in the Bottleneck
+      </h1>
+      <p class="hero__subtitle">
+        A young male puma must cross freeways and developed areas
+        to reach the Diablo Range — or his population edges toward local extinction.
+      </p>
+      <div class="hero__actions">
+        <a href="/projects/research/pumalink" class="btn-outline" target="_blank" rel="noopener">Read His Story →</a>
+        <a href="#?utm_content=donate_hero_home&form=donate" class="btn-gold">
+          Donate Now
+        </a>
+      </div>
+      <p class="hero__credit">Photo by Sharon Osberg</p>
+    </div>
+  </section>
+  
+  <section class="impact full-width" aria-labelledby="impact-title">
+    <div class="container impact__inner">
+      <div class="impact__header reveal">
+        <div class="section-label">Impact by the Numbers</div>
+        <h2 class="section-title" id="impact-title">Decades of work. Measurable results.</h2>
+      </div>
+      <div class="impact__grid">
+        <div class="impact__stat reveal reveal-delay-1">
+          <div class="impact__number" data-target="2400000" data-format="M">0</div>
+          <div class="impact__unit">Data Points</div>
+          <div class="impact__label">Collected via camera traps, fecal samples, hair samples, and community-submitted research</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-2">
+          <div class="impact__number" data-target="156000">0</div>
+          <div class="impact__unit">+ People Reached</div>
+          <div class="impact__label">Through in-person events, virtual workshops, and classroom programs since 2022</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-3">
+          <div class="impact__number" data-target="488">0</div>
+          <div class="impact__unit">+ Volunteers</div>
+          <div class="impact__label">Contributing 9,957+ hours to field work, data entry, software engineering, AI training, citizen science, writing, and community programs</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-4">
+          <div class="impact__number" data-target="9">0</div>
+          <div class="impact__unit">Active Studies</div>
+          <div class="impact__label">Spanning 4 continents and 7 distinct ecosystems worldwide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="fx-mission full-width" id="mission" aria-labelledby="mission-title">
+    <div class="container">
+      <div class="mission__header reveal">
+        <div class="section-label">Our Mission</div>
+        <h2 class="section-title" id="mission-title">Protecting local wildlife and the spaces they call home</h2>
+        <p class="section-body">Innovative Wild Cat Research and Conservation</p>
+      </div>
+      <div class="mission__grid">
+        <div class="mission__card reveal reveal-delay-1">
+          <a class="mission__card-link" href="/projects/research" aria-label="Field Research — explore our projects"></a>
+          <img loading="lazy" class="mission__card-img" src="assets/field-research-913.webp" alt="Research team hiking through Patagonian grassland">
+          <div class="mission__card-content">
+            <h3 class="mission__card-title">Field Research</h3>
+            <p class="mission__card-body">Camera traps, fecal surveys, hair surveys, bioacoustics, and health biomarkers across two continents give us the data to act precisely where it matters most.</p>
+            <a href="/projects/research" class="mission__link">
+              Explore our projects
+              <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="mission__card reveal reveal-delay-2">
+          <a class="mission__card-link" href="/learn/protecting-healthy-ecosystems" aria-label="Habitat Protection — learn about ecosystems"></a>
+          <img loading="lazy" class="mission__card-img" src="assets/habitat-protection.jpg" alt="Puma moving through mossy forest">
+          <div class="mission__card-content">
+            <h3 class="mission__card-title">Habitat Protection</h3>
+            <p class="mission__card-body">Working with landowners, policymakers, government agencies, and indigenous communities to identify and maintain corridors where wild cats can move through safely.</p>
+            <a href="/learn/protecting-healthy-ecosystems" class="mission__link">
+              Learn about ecosystems
+              <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="mission__card reveal reveal-delay-3">
+          <a class="mission__card-link" href="/learn/living-alongside-wild-cats" aria-label="Education and Coexistence — coexistence resources"></a>
+          <img loading="lazy" class="mission__card-img" src="assets/pu-0107--1--836-1600-1000-90-crop.jpg" alt="Puma in the wild">
+          <div class="mission__card-content">
+            <h3 class="mission__card-title">Education &amp; Coexistence</h3>
+            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats — reducing conflict, building the understanding that fuels long-term protection.</p>
+            <a href="/learn/living-alongside-wild-cats" class="mission__link">
+              Coexistence resources
+              <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  <section class="species full-width" aria-labelledby="species-title">
+    <div class="container">
+      <div class="species__header">
+        <div class="reveal">
+          <div class="section-label">Wild Cats of the World</div>
+          <h2 class="section-title" id="species-title">40 species. Each worth protecting.</h2>
+        </div>
+        <a href="/learn/cats" class="mission__link reveal" style="flex-shrink:0">
+          Explore all species
+          <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="species__grid">
+        <article class="species__card reveal reveal-delay-1">
+          <img loading="lazy" class="species__card-img" src="assets/snow-leopard-268-crop.jpg" alt="Snow Leopard" />
+          <a class="species__card-link" href="/learn/cats/snow-leopard" aria-label="Snow Leopard"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Snow Leopard</div>
+            <div class="species__card-status status-vu">Vulnerable</div>
+            <div class="species__card-trend trend-decreasing">↓ Decreasing</div>
+          </div>
+        </article>
+        <article class="species__card reveal reveal-delay-2">
+          <img loading="lazy" class="species__card-img" src="assets/puma-inaturalist-1-589-384.webp" alt="Puma" />
+          <a class="species__card-link" href="/learn/cats/mountain-lion" aria-label="Puma"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Puma</div>
+            <div class="species__card-status status-lc">Least Concern</div>
+            <div class="species__card-trend trend-decreasing">↓ Decreasing</div>
+          </div>
+        </article>
+        <article class="species__card reveal reveal-delay-3">
+          <img loading="lazy" class="species__card-img" src="assets/ocelot-1-244-960.webp" alt="Ocelot" />
+          <a class="species__card-link" href="/learn/cats/ocelot" aria-label="Ocelot"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Ocelot</div>
+            <div class="species__card-status status-lc">Least Concern</div>
+            <div class="species__card-trend trend-decreasing">↓ Decreasing</div>
+          </div>
+        </article>
+        <article class="species__card reveal reveal-delay-4">
+          <img loading="lazy" class="species__card-img" src="assets/trishcarney-fullbodybobcat4-872-384.webp" alt="Bobcat" />
+          <a class="species__card-link" href="/learn/cats/bobcat" aria-label="Bobcat"></a>
+          <div class="species__card-overlay">
+            <div class="species__card-name">Bobcat</div>
+            <div class="species__card-status status-lc">Least Concern</div>
+            <div class="species__card-trend trend-stable">→ Stable</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+  <section class="projects full-width" aria-labelledby="projects-title">
+    <div class="container">
+      <div class="projects__header">
+        <div class="reveal">
+          <div class="section-label">Current Research</div>
+          <h2 class="section-title" id="projects-title">In the field, right now.</h2>
+        </div>
+        <a href="/projects/research" class="mission__link reveal" style="flex-shrink:0">
+          All projects
+          <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="projects__grid">
+        <article class="project-card reveal reveal-delay-1">
+          <a class="project-card-link" href="/projects/research/bay-area-puma-project" aria-label="Bay Area Puma Project — learn more"></a>
+          <div class="project-card__img pc-1">
+            <img src="assets/COE01A-puma10272020-2-47-1600-1000-90.webp" alt="Puma in the Bay Area" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <span class="project-card__tag">Active</span>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__region">North America · California</div>
+            <h3 class="project-card__title">Bay Area Puma Project</h3>
+            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area — building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
+            <div class="project-card__footer">
+              <span class="project-card__stat">14 individuals tracked</span>
+              <a href="/projects/research/bay-area-puma-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+            </div>
+          </div>
+        </article>
+        
+        <article class="project-card reveal reveal-delay-2">
+          <a class="project-card-link" href="/projects/research/patagonia-cats-project" aria-label="Patagonia Wild Cats Project — learn more"></a>
+          <div class="project-card__img pc-2">
+            <img src="assets/patagonia_field_f2907.webp" alt="Patagonia field team" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <span class="project-card__tag">Active</span>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__region">South America · Argentina &amp; Chile</div>
+            <h3 class="project-card__title">Patagonia Wild Cats Project</h3>
+            <p class="project-card__desc">Studying puma movement and Andean cat behavior across Patagonia's steppe. GPS collar data is reshaping conservation boundaries for protected areas across the region.</p>
+            <div class="project-card__footer">
+              <span class="project-card__stat">18-month study</span>
+              <a href="/projects/research/patagonia-cats-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+            </div>
+          </div>
+        </article>
+        
+        <article class="project-card reveal reveal-delay-3">
+          <a class="project-card-link" href="/projects/research/bay-area-bobcat-project" aria-label="Bay Area Bobcat Project — learn more"></a>
+          <div class="project-card__img pc-3">
+            <img src="assets/MWD202103A-bobcat-04230132-432-1600-1000-90.webp" alt="Bay Area bobcat" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;" />
+            <span class="project-card__tag">Active</span>
+          </div>
+          <div class="project-card__body">
+            <div class="project-card__region">California · Bay Area</div>
+            <h3 class="project-card__title">Bay Area Bobcat Project</h3>
+            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface — building the case for wildlife corridor protections across the East Bay hills.</p>
+            <div class="project-card__footer">
+              <span class="project-card__stat">12 camera traps</span>
+              <a href="/projects/research/bay-area-bobcat-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+  <section class="fx-news full-width" aria-labelledby="news-title">
+    <div class="container">
+      <div class="news__header reveal">
+        <div>
+          <div class="section-label">News</div>
+          <h2 class="section-title" id="news-title">Stories, updates & spotlights.</h2>
+        </div>
+        <a href="/news" class="news__see-all">
+          All news
+          <svg class="arrow-right" viewBox="0 0 14 14" style="stroke:currentColor"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="news__grid">
+        <article class="news-card reveal reveal-delay-1">
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/images/slim.png" alt="A puma photographed at night by a camera trap" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://felidaefund.org/news/the-hidden-toll-of-rodenticides-poisoning-pumas-and-bobcats" aria-label="Read: The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats"></a>
+          <div class="news-card__body">
+            <div class="news-card__cat">News</div>
+            <h3 class="news-card__title">The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats</h3>
+            <p class="news-card__excerpt">If there is one fundamental truth about chemical poisons, it is that they never stay where we put them.</p>
+            <div class="news-card__meta">October 13, 2026</div>
+          </div>
+        </article>
+        <article class="news-card reveal reveal-delay-2">
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/images/japan%20cats/Iriomote_cat_1_cropped%201.jpg" alt="An Iriomote cat in dense undergrowth" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://felidaefund.org/news/the-wild-cats-of-japan-a-fight-for-survival" aria-label="Read: The Wild Cats of Japan: A Fight for Survival"></a>
+          <div class="news-card__body">
+            <div class="news-card__cat">News</div>
+            <h3 class="news-card__title">The Wild Cats of Japan: A Fight for Survival</h3>
+            <p class="news-card__excerpt">Japan’s only two native wild cats, the Tsushima leopard cat and the Iriomote cat, are on the brink of extinction.</p>
+            <div class="news-card__meta">October 07, 2026</div>
+          </div>
+        </article>
+        <article class="news-card reveal reveal-delay-3">
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/images/164425899_3803363123032006_6158343618227394568_n.jpeg" alt="Cheetahs resting in dry grassland" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://felidaefund.org/news/a-genetic-mishap-decoding-the-cheetah-s-dna" aria-label="Read: A Genetic Mishap: Decoding the Cheetah’s DNA"></a>
+          <div class="news-card__body">
+            <div class="news-card__cat">News</div>
+            <h3 class="news-card__title">A Genetic Mishap: Decoding the Cheetah’s DNA</h3>
+            <p class="news-card__excerpt">The cheetah (Acinonyx jubatus) is the undisputed speed champion of the land, but behind that incredible athleticism lies a complicated genetic history.</p>
+            <div class="news-card__meta">August 21, 2026</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  
+  <div class="cta-split" aria-label="Get involved">
+    <div class="cta-panel cta-panel--volunteer">
+      <div class="cta-panel__eyebrow">Get Involved</div>
+      <h2 class="cta-panel__title">Your time creates lasting change.</h2>
+      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer — there's a role for you in wild cat conservation.</p>
+      <div class="cta-panel__options">
+        <div class="cta-panel__option">Volunteer in the field</div>
+        <div class="cta-panel__option">Become a community scientist</div>
+        <div class="cta-panel__option">Submit trail cam data via Wilde Pod</div>
+        <div class="cta-panel__option">Host a local event</div>
+      </div>
+      <a href="/take-action" class="btn-gold" style="margin-top:8px">Get Started</a>
+    </div>
+    
+    <div class="cta-panel cta-panel--donate">
+      <div class="cta-panel__eyebrow">Support our Work</div>
+      <h2 class="cta-panel__title">Make a difference today.</h2>
+      <p class="cta-panel__body">Every dollar funds real science — camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
+      <div class="cta-panel__options">
+        <div class="cta-panel__option">Monthly giving sustains long-term projects</div>
+        <div class="cta-panel__option">One-time gifts fund equipment and travel</div>
+        <div class="cta-panel__option">Legacy giving protects wild cats for generations</div>
+      </div>
+      <div class="cta-panel__actions">
+        <a href="#?utm_content=donate_row_home&form=donate" class="btn-gold">Donate Now</a>
+        <a href="/take-action/more-ways-to-help" class="btn-outline">Ways to Donate</a>
+      </div>
+      <div class="donate-badges" aria-label="Partner and accreditation logos">
+        <a href="https://app.candid.org/profile/7041082/felidae-conservation-fund-20-5089093" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="https://widgets.guidestar.org/TransparencySeal/7041082" alt="Candid Platinum Seal of Transparency" />
+        </a>
+        <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/greatnonprofits-top-rated-2025.png" alt="Top-Rated Award — Great Nonprofits 2025" />
+        </a>
+        <a href="https://directories.onepercentfortheplanet.org/profile/felidae-conservation-fund" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/one-percent-for-the-planet.png" alt="1% for the Planet — Nonprofit Partner" />
+        </a>
+        <a href="https://animalcharitiesofamerica.org" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/animal-charities-of-america.jpg" alt="Animal Charities of America" />
+        </a>
+        <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
+        </a>
+        <img loading="lazy" class="donate-badge-img" src="assets/badges/charity-state-registration-verified.png" alt="Charity State Registration Verified" />
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div></div>
+  </div>
+</section>
+<section class="bottom full-width">
+            <div class="bottom-inner">
+                <div class="moduletable newsletter">
+			<h3 class=" balance-text">Want to be the first to know about wild cat news?</h3>		<div id="cf_4" class="convertforms cf cf-img-above cf-form-bottom cf-success-hideform  cf-hasLabels   cf-labelpos-top" data-id="4">
+	<form onsubmit="return false" name="cf4" id="cf4" method="post">
+				<div class="cf-form-wrap cf-col-16 " >
+			<div class="cf-response"></div>
+			
+							<div class="cf-fields">
+					<div class="cf-control-group balance-text" data-key="5" data-name="html_5" data-label="Description" data-type="html" >
+
+		<div>
+    <span id="docs-internal-guid-cd09f805-7fff-7d89-d65e-08680e0a4c5c" ><span >We’ll keep you updated on our world-class research studies, strategies, planning, and all things wild cat. Not to mention there will be plenty of pictures of our field work!</span></span></div>
+        </div>
+ <div class="cf-control-group " data-key="1" data-name="name" data-label="First Name" data-type="text" data-required>
+
+		<input type="text" name="cf[name]" id="form4_name"
+			required
+		aria-required="true"
+	
+			placeholder=" "
+	
+		
+	
+	
+	
+	
+	
+	
+	class="cf-input cf-width-auto "
+>
+            <label class="cf-label" for="form4_name">
+            First Name                            <span class="cf-required-label">*</span>
+                    </label>
+        </div>
+ <div class="cf-control-group " data-key="3" data-name="lname" data-label="Last Name" data-type="text" data-required>
+
+		<input type="text" name="cf[lname]" id="form4_lname"
+			required
+		aria-required="true"
+	
+			placeholder=" "
+	
+		
+	
+	
+	
+	
+	
+	
+	class="cf-input cf-width-auto "
+>
+            <label class="cf-label" for="form4_lname">
+            Last Name                            <span class="cf-required-label">*</span>
+                    </label>
+        </div>
+ <div class="cf-control-group " data-key="0" data-name="email" data-label="Email" data-type="email" data-required>
+
+		<input type="email" name="cf[email]" id="form4_email"
+			required
+		aria-required="true"
+	
+			placeholder=" "
+	
+		
+	
+	
+	
+	
+	
+	
+	class="cf-input cf-width-auto "
+>
+            <label class="cf-label" for="form4_email">
+            Email                            <span class="cf-required-label">*</span>
+                    </label>
+        </div>
+ <div class="cf-control-group " data-key="2" data-name="submit_2"  data-type="submit" >
+
+		
+<div class="cf-text-left">
+    <button type="submit" class="cf-btn cf-btn-style-flat cf-width-auto btn btn-brown btn-block" >
+        <span class="cf-btn-text">Sign me up!</span>
+        <span class="cf-spinner-container">
+            <span class="cf-spinner">
+                <span class="bounce1"></span>
+                <span class="bounce2"></span>
+                <span class="bounce3"></span>
+            </span>
+        </span>
+    </button>
+</div>
+
+
+        </div>
+				</div>
+			
+					</div>
+
+		
+
+				
+			</form>
+	</div></div>
+
+            </div>
+        </section>
+</main>
+<footer>
+    <section class="footer-links">
+        <div class="footer-links-inner">
+                            <a class="logo">
+                                            <picture>
+                                                            <source srcset="https://felidaefund.org/images/logos/logo_felidae_neg-01.png"
+                                        media="(prefers-color-scheme: dark)"
+                                />
+                                                            <source srcset="https://felidaefund.org/images/logos/logo_felidae-01.png"
+                                        media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+                                />
+                                <img src="https://felidaefund.org/images/logos/logo_felidae-01.png" alt="Felidae Conservation Fund" width="500" height="162" class="logo" loading="lazy" />
+                                                    </picture>
+                                    </a>
+                        <nav class="menu "  aria-label="Footer Menu">
+    <span class="item-295 deeper parent"><a href="https://felidaefund.org/about" >About Us</a><div class="nav-child unstyled small"><span class="item-650"><a href="https://felidaefund.org/about/who-we-are" >Who We Are</a></span></div></span><span class="item-298"><a href="https://felidaefund.org/contact-us" >Contact Us</a></span><span class="item-333"><a href="https://felidaefund.org/site-map" >Site Map</a></span><span class="item-129"><a href="https://felidaefund.org/privacy" >Privacy Policy</a></span><span class="item-296"><a href="https://felidaefund.org/careers" >Volunteer and Career Opportunities</a></span></nav>
+<nav class="menu "  aria-label="Partnerships">
+    <span class="item-316"><a href="https://www.guidestar.org/profile/shared/a15168d2-0e7a-4981-86bd-4e7a06c25340" rel="noopener noreferrer" aria-label="Candid Platinum Seal of Transparency" target="_blank"><img width="225" height="225" loading="lazy" class="partnerlogo" src="https://felidaefund.org/images/partnerships/Candid.png" alt="Candid Platinum Seal of Transparency"></a></span><span class="item-671"><a href="https://greatnonprofits.org/org/felidae-conservation-fund" title="2025 Top-rated nonprofits and charities" rel="noopener noreferrer" aria-label="2023 Top-Rated Award on Great Nonprofits" target="_blank"><img width="691" height="518" loading="lazy" class="partnerlogo" src="https://felidaefund.org/images/partnerships/2025TRbadge-lg.png" alt="2023 Top-Rated Award on Great Nonprofits"></a></span><span class="item-317"><a href="https://directories.onepercentfortheplanet.org/profile/felidae-conservation-fund" rel="noopener" aria-label="One Percent for the Planet - Nonprofit Partner"><img width="400" height="528" loading="lazy" class="partnerlogo" src="https://felidaefund.org/images/partnerships/1ftp_EnvironmentalPartner_Vertical_FullColor.png" alt="One Percent for the Planet - Nonprofit Partner"></a></span><span class="item-318"><a href="https://animalcharitiesofamerica.org/find/processsearch.php?id=20-5089093&amp;listflag=1" rel="noopener" aria-label="Animal Charities of America"><img width="134" height="200" loading="lazy" class="partnerlogo" src="https://felidaefund.org/images/partnerships/acalogo_web.jpg" alt="Animal Charities of America"></a></span><span class="item-1507"><a href="https://www.charitynavigator.org/ein/205089093" rel="noopener noreferrer" aria-label="Charity Navigator" target="_blank"><img width="1801" height="1801" loading="lazy" class="partnerlogo" src="https://felidaefund.org/images/partnerships/Four-Star Rating Badge_Transparent_2026.png" alt="Charity Navigator"></a></span><span class="item-1508"><a href="#" aria-label="Charity State Registration Verified"><img width="375" height="375" loading="lazy" class="partnerlogo" src="https://felidaefund.org/images/partnerships/charity-state-registration-verified.png" alt="Charity State Registration Verified"></a></span></nav>
+<nav class="menu "  aria-label="Social Media Icons">
+    <span class="item-299"><a href="https://www.facebook.com/felidaefund" title="Facebook" rel="noopener" aria-label="Facebook"><span style="--icon-mask-url:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20height%3D%22100%22%20width%3D%22100%22%3E%20%3Cg%20transform%3D%22matrix%284.166666666666667%2C0%2C0%2C4.166666666666667%2C0%2C0%29%22%3E%3Cpath%20d%3D%22M19.55%2C14.56a.5.5%2C0%2C0%2C1-.49.44H17a.51.51%2C0%2C0%2C0-.5.5v8a.5.5%2C0%2C0%2C0%2C.5.5h6a1%2C1%2C0%2C0%2C0%2C1-1V1a1%2C1%2C0%2C0%2C0-1-1H1A1%2C1%2C0%2C0%2C0%2C0%2C1V23a1%2C1%2C0%2C0%2C0%2C1%2C1H12a.51.51%2C0%2C0%2C0%2C.5-.5v-8A.5.5%2C0%2C0%2C0%2C12%2C15H10a.5.5%2C0%2C0%2C1-.5-.5v-3A.5.5%2C0%2C0%2C1%2C10%2C11h2a.5.5%2C0%2C0%2C0%2C.5-.5V9.19A5.69%2C5.69%2C0%2C0%2C1%2C18.19%2C3.5H19.5A.5.5%2C0%2C0%2C1%2C20%2C4V7a.5.5%2C0%2C0%2C1-.5.5H18.19A1.69%2C1.69%2C0%2C0%2C0%2C16.5%2C9.19V10.5a.5.5%2C0%2C0%2C0%2C.5.5h2.43a.5.5%2C0%2C0%2C1%2C.38.17.51.51%2C0%2C0%2C1%2C.12.39Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');" title="Facebook" class="icon"></span></a></span><span class="item-301"><a href="https://www.instagram.com/felidaefund/" title="Instagram" rel="noopener" aria-label="Instagram"><span style="--icon-mask-url:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20height%3D%22100%22%20width%3D%22100%22%3E%20%3Cg%20transform%3D%22matrix%284.166666666666667%2C0%2C0%2C4.166666666666667%2C0%2C0%29%22%3E%3Cg%3E%20%3Cpath%20d%3D%22M18.5%2C0H5.5A5.51%2C5.51%2C0%2C0%2C0%2C0%2C5.5v13A5.51%2C5.51%2C0%2C0%2C0%2C5.5%2C24h13A5.51%2C5.51%2C0%2C0%2C0%2C24%2C18.5V5.5A5.51%2C5.51%2C0%2C0%2C0%2C18.5%2C0ZM20%2C16a4%2C4%2C0%2C0%2C1-4%2C4H8a4%2C4%2C0%2C0%2C1-4-4V8A4%2C4%2C0%2C0%2C1%2C8%2C4h8a4%2C4%2C0%2C0%2C1%2C4%2C4Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%20%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%224%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fcircle%3E%20%3Ccircle%20cx%3D%2217%22%20cy%3D%227%22%20r%3D%221%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fcircle%3E%20%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');" title="Instagram" class="icon"></span></a></span><span class="item-302"><a href="https://www.tiktok.com/@felidaefund" title="TikTok" aria-label="TikTok"><span style="--icon-mask-url:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20height%3D%22100%22%20width%3D%22100%22%3E%20%3Cg%20transform%3D%22matrix%284.166666666666667%2C0%2C0%2C4.166666666666667%2C0%2C0%29%22%3E%3Cpath%20d%3D%22M18.5%2C0H5.5A5.51%2C5.51%2C0%2C0%2C0%2C0%2C5.5v13A5.51%2C5.51%2C0%2C0%2C0%2C5.5%2C24h13A5.51%2C5.51%2C0%2C0%2C0%2C24%2C18.5V5.5A5.51%2C5.51%2C0%2C0%2C0%2C18.5%2C0Zm1%2C10.25A6.76%2C6.76%2C0%2C0%2C1%2C14.5%2C8v7.5a5%2C5%2C0%2C1%2C1-5-5%2C4.23%2C4.23%2C0%2C0%2C1%2C.5.05v2.5A2.73%2C2.73%2C0%2C0%2C0%2C9.5%2C13%2C2.5%2C2.5%2C0%2C1%2C0%2C12%2C15.5V3.5h3l.15.6A4.48%2C4.48%2C0%2C0%2C0%2C19.5%2C7.5Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');" title="TikTok" class="icon"></span></a></span><span class="item-303"><a href="https://www.youtube.com/felidaefund" title="YouTube" rel="noopener" aria-label="YouTube"><span style="--icon-mask-url:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20height%3D%22100%22%20width%3D%22100%22%3E%20%3Cg%20transform%3D%22matrix%284.166666666666667%2C0%2C0%2C4.166666666666667%2C0%2C0%29%22%3E%3Cpath%20d%3D%22M20.06%2C3.5H3.94A4%2C4%2C0%2C0%2C0%2C0%2C7.44v9.12A4%2C4%2C0%2C0%2C0%2C3.94%2C20.5H20.06A4%2C4%2C0%2C0%2C0%2C24%2C16.56V7.44A4%2C4%2C0%2C0%2C0%2C20.06%2C3.5ZM16.54%2C12%2C9.77%2C16.36a.45.45%2C0%2C0%2C1-.27.08.5.5%2C0%2C0%2C1-.24-.06A.51.51%2C0%2C0%2C1%2C9%2C15.94V7.28a.51.51%2C0%2C0%2C1%2C.26-.44.49.49%2C0%2C0%2C1%2C.51%2C0l6.77%2C4.33a.5.5%2C0%2C0%2C1%2C0%2C.84Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');" title="YouTube" class="icon"></span></a></span><span class="item-304"><a href="https://www.linkedin.com/company/felidae-conservation-fund/" title="LinkedIn" rel="noopener" aria-label="LinkedIn"><span style="--icon-mask-url:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20height%3D%22100%22%20width%3D%22100%22%3E%20%3Cg%20transform%3D%22matrix%284.166666666666667%2C0%2C0%2C4.166666666666667%2C0%2C0%29%22%3E%3Cg%3E%20%3Crect%20x%3D%222%22%20y%3D%228.5%22%20width%3D%225%22%20height%3D%2214%22%20rx%3D%220.5%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Frect%3E%20%3Cpath%20d%3D%22M4.48%2C6.5A2.5%2C2.5%2C0%2C1%2C0%2C2%2C4%2C2.49%2C2.49%2C0%2C0%2C0%2C4.48%2C6.5Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%20%3Cpath%20d%3D%22M18.5%2C22.5h3A.5.5%2C0%2C0%2C0%2C22%2C22V13.6C22%2C9.83%2C19.87%2C8%2C16.89%2C8a4.22%2C4.22%2C0%2C0%2C0-3.18%2C1.28.39.39%2C0%2C0%2C1-.45.09A.4.4%2C0%2C0%2C1%2C13%2C9a.5.5%2C0%2C0%2C0-.5-.5h-3A.5.5%2C0%2C0%2C0%2C9%2C9V22a.5.5%2C0%2C0%2C0%2C.5.5h3A.5.5%2C0%2C0%2C0%2C13%2C22V14.5a2.5%2C2.5%2C0%2C0%2C1%2C5%2C0V22A.5.5%2C0%2C0%2C0%2C18.5%2C22.5Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%20%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');" title="LinkedIn" class="icon"></span></a></span><span class="item-300"><a href="https://twitter.com/felidaefund" title="Twitter" rel="noopener" aria-label="Twitter"><span style="--icon-mask-url:url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20height%3D%22100%22%20width%3D%22100%22%3E%20%3Cg%20transform%3D%22matrix%284.166666666666667%2C0%2C0%2C4.166666666666667%2C0%2C0%29%22%3E%3Cpath%20d%3D%22M23.32%2C6.44a.5.5%2C0%2C0%2C0-.2-.87l-.79-.19A.49.49%2C0%2C0%2C1%2C22%2C5.1a.5.5%2C0%2C0%2C1%2C0-.43l.45-.89a.5.5%2C0%2C0%2C0-.59-.7l-2%2C.56a.48.48%2C0%2C0%2C1-.43-.09%2C5%2C5%2C0%2C0%2C0-8%2C4v.36a.25.25%2C0%2C0%2C1-.22.25c-2.81.33-5.5-1.1-8.4-4.44a.5.5%2C0%2C0%2C0-.51-.16A.49.49%2C0%2C0%2C0%2C2%2C4a7.52%2C7.52%2C0%2C0%2C0%2C.46%2C4.92.27.27%2C0%2C0%2C1%2C0%2C.26.24.24%2C0%2C0%2C1-.25.1L1.08%2C9.06a.52.52%2C0%2C0%2C0-.44.15.51.51%2C0%2C0%2C0-.13.44%2C5.15%2C5.15%2C0%2C0%2C0%2C2.37%2C3.78.25.25%2C0%2C0%2C1%2C.12.23.24.24%2C0%2C0%2C1-.15.22l-.54.21a.53.53%2C0%2C0%2C0-.28.29.51.51%2C0%2C0%2C0%2C0%2C.4%2C4.36%2C4.36%2C0%2C0%2C0%2C3.2%2C2.48.27.27%2C0%2C0%2C1%2C.19.22.26.26%2C0%2C0%2C1-.15.26A11%2C11%2C0%2C0%2C1%2C1%2C18.56a.49.49%2C0%2C0%2C0-.2%2C1%2C19.92%2C19.92%2C0%2C0%2C0%2C8.14%2C1.93%2C12.6%2C12.6%2C0%2C0%2C0%2C7-2A12.48%2C12.48%2C0%2C0%2C0%2C21.5%2C9.06V8.19a.49.49%2C0%2C0%2C1%2C.18-.38Z%22%20style%3D%22fill%3A%20%23000001%22%3E%3C%2Fpath%3E%3C%2Fg%3E%3C%2Fsvg%3E');" title="Twitter" class="icon"></span></a></span></nav>
+
+        </div>
+    </section>
+    <section class="copyright">
+        <div class="copyright-inner">
+            <p class="balance-text">
+                Felidae Conservation Fund is a registered 501(c)3 nonprofit in the United States. EIN # 20-5089093<br /><br />                Copyright &copy; 2013–2026 Felidae Conservation Fund. All Rights Reserved.
+            </p>
+            
+                        <!-- <p class="small balance-text">Joomla Services by <a href="https://helpwithjoomla.com" rel="nofollow noopener" target="_blank">Help With Joomla</a>.</p> -->
+                    </div>
+    </section>
+
+
+</footer>
+<script>
+// Felidae homepage — counters and scroll reveal.
+// No libraries. Both effects degrade safely: without this file the
+// numbers show their final values and the sections simply appear.
+(function () {
+  'use strict';
+  var root = document.querySelector('.fx-home');
+  if (!root) return;
+
+  if (!('IntersectionObserver' in window)) {           // very old browser
+    root.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
+    root.querySelectorAll('[data-target]').forEach(function (el) {
+      el.textContent = el.dataset.format === 'M'
+        ? (el.dataset.target / 1000000).toFixed(1) + 'M'
+        : (+el.dataset.target).toLocaleString();
+    });
+    return;
+  }
+
+  // ── Animated counters ─────────────────────────────────────────────
+  function animateCounter(el, target, duration = 1800) {
+    const fmt = el.dataset.format;
+    const start = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const val = eased * target;
+      if (fmt === 'M') {
+        el.textContent = (val / 1000000).toFixed(1) + 'M';
+      } else {
+        el.textContent = Math.floor(val).toLocaleString();
+      }
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = fmt === 'M' ? (target / 1000000).toFixed(1) + 'M' : target.toLocaleString();
+    };
+    requestAnimationFrame(step);
+  }
+    const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const target = parseInt(e.target.dataset.target, 10);
+        animateCounter(e.target, target);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  root.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+  // The hero fills whatever the Joomla header leaves. Its own height does not
+  // affect its top, so this is safe to read at any scroll position.
+  var setHeroOffset = function () {
+    var hero = root.querySelector('.hero');
+    if (!hero) return;
+    var top = Math.round(hero.getBoundingClientRect().top + window.scrollY);
+    document.documentElement.style.setProperty('--fx-hero-offset', top + 'px');
+  };
+  setHeroOffset();
+  window.addEventListener('resize', setHeroOffset);
+
+  var revealObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  root.querySelectorAll('.reveal').forEach(function (el) { revealObserver.observe(el); });
+})();
+
+</script>
+</body></html>

@@ -91,7 +91,7 @@
     @media (max-width: 1024px) {
       .nav__badges    { display: none; }  /* header gets tight — badges show on desktop only */
       .mission__grid  { grid-template-columns: 1fr 1fr; }
-      .impact__grid   { grid-template-columns: repeat(2, 1fr); }
+      .impact__grid   { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .impact__stat   { border-right: none; border-bottom: 1px solid rgba(var(--gold-rgb),.1); }
       .impact__stat:nth-child(2n) { }
       .species__grid  { grid-template-columns: repeat(2, 1fr); }

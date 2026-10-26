@@ -25,7 +25,9 @@
     .hero {
       position: relative;
       height: 100vh;        /* fallback for older browsers */
-      height: 100dvh;       /* fill the *visible* viewport as mobile browser chrome shows/hides */
+      height: 100svh;       /* the *small* viewport: fixed while iOS Safari's toolbar
+                               collapses on scroll. 100dvh tracks the toolbar, which
+                               resized the hero mid-scroll and made the text jump. */
       display: flex; align-items: flex-end;
       overflow: hidden;
     }
@@ -119,12 +121,12 @@
     /* ─── Mission Pillars ────────────────────────────────────────────── */
     .mission {
       padding: 100px 0;
-      background: var(--cream-100);
+      background: var(--cream-200);
     }
     .mission__header {
-      text-align: center; margin-bottom: 64px;
+      text-align: left; margin-bottom: 64px;
     }
-    .mission__header .section-body { margin: 16px auto 0; text-align: center; }
+    .mission__header .section-body { margin: 16px 0 0; text-align: left; }
 
     .mission__grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
@@ -184,7 +186,10 @@
     .impact__header .section-title { color: var(--cream-100); }
 
     .impact__grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+      /* minmax(0,…), not a bare 1fr: 1fr floors at the content's min width, so the
+         counting numbers widened their own columns on every frame and shoved the
+         section below down. Measured CLS 0.99 before, 0 after. */
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px;
     }
     .impact__stat {
       text-align: center; padding: 40px 24px;
@@ -193,6 +198,7 @@
     .impact__stat:last-child { border-right: none; }
     .impact__number {
       font-family: var(--font-display); font-weight: 800;
+      font-variant-numeric: tabular-nums;   /* every digit the same width while counting */
       font-size: clamp(40px, 5vw, 60px);
       color: var(--gold-400); line-height: 1; margin-bottom: 8px;
     }
@@ -210,6 +216,23 @@
       padding: 100px 0;
       background: var(--cream-200);
     }
+    /* The mission, species and projects sections share one cream surface,
+       so a hairline marks where each ends. rgba(--brown-rgb, .14) rather
+       than a grey: the palette has no neutral, and adding one would be a
+       new colour. On cream it reads as a soft grey line.
+
+       Drawn as a pseudo-element rather than a border so it stops where the
+       text does instead of running to the window edges. Its width is the
+       container's content box: --max-w less the container's 32px padding
+       on each side, and never wider than the viewport allows. */
+    .species, .projects { position: relative; }
+    .species::before, .projects::before {
+      content: ''; position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: min(100% - 64px, calc(var(--max-w) - 64px));
+      border-top: 1px solid rgba(var(--brown-rgb), .14);
+    }
+
     .species__header {
       display: flex; align-items: flex-end; justify-content: space-between;
       margin-bottom: 48px; gap: 24px;
@@ -275,7 +298,7 @@
     /* ─── Projects ───────────────────────────────────────────────────── */
     .projects {
       padding: 100px 0;
-      background: var(--cream-100);
+      background: var(--cream-200);
     }
     .projects__header {
       display: flex; align-items: flex-end; justify-content: space-between;
@@ -480,10 +503,10 @@
       .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
       .news__grid     { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
       .species__grid  { grid-template-columns: repeat(2, 1fr); }
-      .impact__grid   { grid-template-columns: repeat(2, 1fr); }
+      .impact__grid   { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .species__header { flex-direction: column; align-items: flex-start; }
       .projects__header { flex-direction: column; align-items: flex-start; }
-      .hero { height: 100vh; height: 100dvh; }
+      .hero { height: 100vh; height: 100svh; }
       .hero__content { padding-bottom: 28px; }
       .news-card__excerpt { font-size: 15px; }
       .project-card__desc { font-size: 15.5px; }
@@ -561,7 +584,7 @@
         <!-- Habitat -->
         <div class="mission__card reveal reveal-delay-2">
           <a class="mission__card-link" href="learn-ecosystems.html" aria-label="Habitat Protection — learn about ecosystems"></a>
-          <img loading="lazy" class="mission__card-img" src="assets/PUC09B-04072020-4-133-1600-1000-90.webp" alt="Puma in its wild habitat">
+          <img loading="lazy" class="mission__card-img" src="assets/habitat-protection.jpg" alt="Puma moving through mossy forest">
           <div class="mission__card-content">
             <h3 class="mission__card-title">Habitat Protection</h3>
             <p class="mission__card-body">Working with landowners, policymakers, government agencies, and indigenous communities to identify and maintain corridors where wild cats can move through safely.</p>
@@ -764,35 +787,35 @@
 
       <div class="news__grid">
         <article class="news-card reveal reveal-delay-1">
-          <img loading="lazy" class="news-card__img" src="assets/joey_2_5002b-384.webp" alt="Local wildlife science community" style="object-fit:cover;object-position:top;" />
-          <a class="news-card__link" href="news-wildlife-science.html" aria-label="Read: The unexpected social ripple of local wildlife science"></a>
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/images/slim.png" alt="A puma photographed at night by a camera trap" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://felidaefund.org/news/the-hidden-toll-of-rodenticides-poisoning-pumas-and-bobcats" aria-label="Read: The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats"></a>
           <div class="news-card__body">
-            <div class="news-card__cat">Community Science</div>
-            <h3 class="news-card__title">The unexpected social ripple of local wildlife science</h3>
-            <p class="news-card__excerpt">Community volunteers in wildlife research undergo a personal transformation that extends far beyond fieldwork — catalyzing neighborhood-wide shifts toward valuing and protecting local wild cats.</p>
-            <div class="news-card__meta">July 21, 2026 · 5 min read</div>
+            <div class="news-card__cat">News</div>
+            <h3 class="news-card__title">The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats</h3>
+            <p class="news-card__excerpt">If there is one fundamental truth about chemical poisons, it is that they never stay where we put them.</p>
+            <div class="news-card__meta">October 13, 2026</div>
           </div>
         </article>
 
         <article class="news-card reveal reveal-delay-2">
-          <img loading="lazy" class="news-card__img" src="assets/wcs_0730b-384.webp" alt="Wildlife crossing reconnecting habitat across a highway" style="object-fit:cover;object-position:center;" />
-          <a class="news-card__link" href="news-roads-for-wildlife.html" aria-label="Read: How America is Redesigning Its Roads for Wildlife"></a>
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/images/japan%20cats/Iriomote_cat_1_cropped%201.jpg" alt="An Iriomote cat in dense undergrowth" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://felidaefund.org/news/the-wild-cats-of-japan-a-fight-for-survival" aria-label="Read: The Wild Cats of Japan: A Fight for Survival"></a>
           <div class="news-card__body">
-            <div class="news-card__cat">Conservation</div>
-            <h3 class="news-card__title">How America is Redesigning Its Roads for Wildlife</h3>
-            <p class="news-card__excerpt">Wildlife crossings and smarter road design are reconnecting habitat fragmented by highways — giving pumas, bobcats, and other wild cats safe passage across the landscapes we share.</p>
-            <div class="news-card__meta">July 20, 2026 · Charlotte Stevenson</div>
+            <div class="news-card__cat">News</div>
+            <h3 class="news-card__title">The Wild Cats of Japan: A Fight for Survival</h3>
+            <p class="news-card__excerpt">Japan’s only two native wild cats, the Tsushima leopard cat and the Iriomote cat, are on the brink of extinction.</p>
+            <div class="news-card__meta">October 07, 2026</div>
           </div>
         </article>
 
         <article class="news-card reveal reveal-delay-3">
-          <img loading="lazy" class="news-card__img" src="assets/E1067F0F-2BBB-48F9-91ED-D27F12D1D1BA-384.webp" alt="Ella Murphy on a trail in the golden California hills" style="object-fit:cover;object-position:center 68%;" />
-          <a class="news-card__link" href="news-ella-internship.html" aria-label="Read: Ella's internship with Felidae"></a>
+          <img loading="lazy" class="news-card__img" src="https://felidaefund.org/images/164425899_3803363123032006_6158343618227394568_n.jpeg" alt="Cheetahs resting in dry grassland" style="object-fit:cover;object-position:center;" />
+          <a class="news-card__link" href="https://felidaefund.org/news/a-genetic-mishap-decoding-the-cheetah-s-dna" aria-label="Read: A Genetic Mishap: Decoding the Cheetah’s DNA"></a>
           <div class="news-card__body">
-            <div class="news-card__cat">Volunteer Spotlight</div>
-            <h3 class="news-card__title">Ella's internship with Felidae</h3>
-            <p class="news-card__excerpt">Ella Murphy shares what it's like working alongside puma researchers in the field — from checking camera traps on cattle ranches to building the case for habitat corridors across the Bay Area.</p>
-            <div class="news-card__meta">May 13, 2024 · Volunteer Spotlight</div>
+            <div class="news-card__cat">News</div>
+            <h3 class="news-card__title">A Genetic Mishap: Decoding the Cheetah’s DNA</h3>
+            <p class="news-card__excerpt">The cheetah (Acinonyx jubatus) is the undisputed speed champion of the land, but behind that incredible athleticism lies a complicated genetic history.</p>
+            <div class="news-card__meta">August 21, 2026</div>
           </div>
         </article>
       </div>
@@ -812,7 +835,7 @@
         <div class="cta-panel__option">Submit trail cam data via Wilde Pod</div>
         <div class="cta-panel__option">Host a local event</div>
       </div>
-      <a href="#" class="btn-gold" style="margin-top:8px">Get Started</a>
+      <a href="take-action.html" class="btn-gold" style="margin-top:8px">Get Started</a>
     </div>
 
     <!-- Donate -->
