@@ -9,7 +9,7 @@ class SiteFooter extends HTMLElement {
       <div class="newsletter__text reveal">
         <div class="section-label">Stay Close to the Science</div>
         <h2 class="section-title" id="newsletter-title">Updates from the field, in your inbox.</h2>
-        <p class="section-body">Camera trap images, project milestones, and new research — direct from our teams. No fluff. <a href="https://felidaefund.org/newsletter" class="newsletter__preview-link">Read the latest issue →</a></p>
+        <p class="section-body">Camera trap images, project milestones, and new research; direct from our teams. No fluff. <a href="https://felidaefund.org/newsletter" class="newsletter__preview-link">Read the latest issue →</a></p>
       </div>
       <div class="newsletter__form reveal reveal-delay-2">
         <form onsubmit="handleSubscribe(event)">

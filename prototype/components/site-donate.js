@@ -19,7 +19,7 @@ class SiteDonate extends HTMLElement {
         </button>
       </div>
       <div class="modal__body">
-        <p class="modal__subtitle">Your gift funds field research, community science, and habitat protection — where wild cats need it most.</p>
+        <p class="modal__subtitle">Your gift funds field research, community science, and habitat protection, where wild cats need it most.</p>
 
         <!-- Frequency -->
         <div class="donate-freq" role="group" aria-label="Donation frequency">
@@ -63,11 +63,11 @@ class SiteDonate extends HTMLElement {
 
         <!-- Impact message -->
         <div class="donate-impact" id="donateImpact">
-          "$25/month keeps a camera trap running for a full year — capturing the data we need to protect wild cats."
+          "$25/month keeps a camera trap running for a full year, capturing the data we need to protect wild cats."
         </div>
 
         <button class="donate-submit" id="donateBtn">Give $25 / month</button>
-        <p class="donate-note">🔒 Secure processing via Stripe. Felidae Conservation Fund is a 501(c)(3) nonprofit — your gift is tax-deductible.</p>
+        <p class="donate-note">🔒 Secure processing via Stripe. Felidae Conservation Fund is a 501(c)(3) nonprofit. Your gift is tax-deductible.</p>
       </div>
     </div>
   </div>
@@ -97,7 +97,7 @@ function initDonate() {
   });
 
   const impactMessages = {
-    25:  '"$25/month keeps a camera trap running for a full year — capturing the data we need to protect wild cats."',
+    25:  '"$25/month keeps a camera trap running for a full year, capturing the data we need to protect wild cats."',
     50:  '"$50 powers GPS collar batteries that tell us exactly where wild cats roam and what corridors they need."',
     100: '"$100 funds a full field day — two researchers, travel, and data collection in the habitat."',
     250: '"$250 deploys a GPS collar on a wild cat, giving us months of movement data we\'d never get otherwise."',
