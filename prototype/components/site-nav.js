@@ -94,7 +94,7 @@ class SiteNav extends HTMLElement {
             <img src="assets/badges/candid-platinum-2026.png" alt="Candid Platinum Seal of Transparency 2026" />
           </a>
           <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
-            <img src="assets/badges/greatnonprofits-top-rated-2025.png" alt="GreatNonprofits 2025 Top-Rated Nonprofit" />
+            <img src="assets/badges/greatnonprofits-top-rated-2026.png" alt="GreatNonprofits 2026 Top-Rated Nonprofit" />
           </a>
           <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
             <img src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
@@ -123,7 +123,7 @@ class SiteNav extends HTMLElement {
               <img src="assets/badges/candid-platinum-2026.png" alt="Candid Platinum Seal of Transparency 2026" />
             </a>
             <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
-              <img src="assets/badges/greatnonprofits-top-rated-2025.png" alt="GreatNonprofits 2025 Top-Rated Nonprofit" />
+              <img src="assets/badges/greatnonprofits-top-rated-2026.png" alt="GreatNonprofits 2026 Top-Rated Nonprofit" />
             </a>
             <a href="https://www.charitynavigator.org/ein/205089093" target="_blank" rel="noopener">
               <img src="assets/badges/charity-navigator-four-star-2026.png" alt="Charity Navigator Four-Star Rating 2026" />
