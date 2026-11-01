@@ -557,6 +557,12 @@ body.always-light {
     .fx-home .projects__header { flex-direction: column; align-items: flex-start; }
     .fx-home .hero { height: 100vh; height: 100svh; }
     .fx-home .hero__content { padding-bottom: 28px; }
+    /* Mobile: the whole hero is a tap target for "Read His Story".
+       .hero__content stretches to the hero's full height, and the story
+       link's ::after covers it. Donate sits above the overlay. */
+    .fx-home .hero__content { align-self: stretch; display: flex; flex-direction: column; justify-content: flex-end; }
+    .fx-home .hero__actions .btn-outline::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+    .fx-home .hero__actions .btn-gold { position: relative; z-index: 2; }
     .fx-home .news-card__excerpt { font-size: 15px; }
     .fx-home .project-card__desc { font-size: 15.5px; }
     .fx-home .mission__card-body { font-size: 16px; }
@@ -955,10 +961,10 @@ body.always-light {
       </h1>
       <p class="hero__subtitle">
         A young male puma must cross freeways and developed areas
-        to reach the Diablo Range — or his population edges toward local extinction.
+        to reach the Diablo Range, or his population edges toward local extinction.
       </p>
       <div class="hero__actions">
-        <a href="/projects/research/pumalink" class="btn-outline" target="_blank" rel="noopener">Read His Story →</a>
+        <a href="/projects/research/pumalink" class="btn-outline">Read His Story →</a>
         <a href="#?utm_content=donate_hero_home&form=donate" class="btn-gold">
           Donate Now
         </a>
@@ -975,18 +981,18 @@ body.always-light {
       </div>
       <div class="impact__grid">
         <div class="impact__stat reveal reveal-delay-1">
-          <div class="impact__number" data-target="2400000" data-format="M">0</div>
+          <div class="impact__number" data-target="3600000" data-format="M">0</div>
           <div class="impact__unit">Data Points</div>
           <div class="impact__label">Collected via camera traps, fecal samples, hair samples, and community-submitted research</div>
         </div>
         <div class="impact__stat reveal reveal-delay-2">
-          <div class="impact__number" data-target="156000">0</div>
-          <div class="impact__unit">+ People Reached</div>
+          <div class="impact__number" data-target="150000" data-format="k" data-suffix="+">0</div>
+          <div class="impact__unit">People Reached</div>
           <div class="impact__label">Through in-person events, virtual workshops, and classroom programs since 2022</div>
         </div>
         <div class="impact__stat reveal reveal-delay-3">
-          <div class="impact__number" data-target="488">0</div>
-          <div class="impact__unit">+ Volunteers</div>
+          <div class="impact__number" data-target="488" data-suffix="+">0</div>
+          <div class="impact__unit">Volunteers</div>
           <div class="impact__label">Contributing 9,957+ hours to field work, data entry, software engineering, AI training, citizen science, writing, and community programs</div>
         </div>
         <div class="impact__stat reveal reveal-delay-4">
@@ -1036,7 +1042,7 @@ body.always-light {
           <img loading="lazy" class="mission__card-img" src="assets/pu-0107--1--836-1600-1000-90-crop.jpg" alt="Puma in the wild">
           <div class="mission__card-content">
             <h3 class="mission__card-title">Education &amp; Coexistence</h3>
-            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats — reducing conflict, building the understanding that fuels long-term protection.</p>
+            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats. Reducing conflict, building the understanding that fuels long-term protection.</p>
             <a href="/learn/living-alongside-wild-cats" class="mission__link">
               Coexistence resources
               <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
@@ -1123,7 +1129,7 @@ body.always-light {
           <div class="project-card__body">
             <div class="project-card__region">North America · California</div>
             <h3 class="project-card__title">Bay Area Puma Project</h3>
-            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area — building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
+            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area. Building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">14 individuals tracked</span>
               <a href="/projects/research/bay-area-puma-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -1157,7 +1163,7 @@ body.always-light {
           <div class="project-card__body">
             <div class="project-card__region">California · Bay Area</div>
             <h3 class="project-card__title">Bay Area Bobcat Project</h3>
-            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface — building the case for wildlife corridor protections across the East Bay hills.</p>
+            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface. Building the case for wildlife corridor protections across the East Bay hills.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">12 camera traps</span>
               <a href="/projects/research/bay-area-bobcat-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -1219,7 +1225,7 @@ body.always-light {
     <div class="cta-panel cta-panel--volunteer">
       <div class="cta-panel__eyebrow">Get Involved</div>
       <h2 class="cta-panel__title">Your time creates lasting change.</h2>
-      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer — there's a role for you in wild cat conservation.</p>
+      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer, there's a role for you in wild cat conservation.</p>
       <div class="cta-panel__options">
         <div class="cta-panel__option">Volunteer in the field</div>
         <div class="cta-panel__option">Become a community scientist</div>
@@ -1232,7 +1238,7 @@ body.always-light {
     <div class="cta-panel cta-panel--donate">
       <div class="cta-panel__eyebrow">Support our Work</div>
       <h2 class="cta-panel__title">Make a difference today.</h2>
-      <p class="cta-panel__body">Every dollar funds real science — camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
+      <p class="cta-panel__body">Every dollar funds real science: camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
       <div class="cta-panel__options">
         <div class="cta-panel__option">Monthly giving sustains long-term projects</div>
         <div class="cta-panel__option">One-time gifts fund equipment and travel</div>
@@ -1247,7 +1253,7 @@ body.always-light {
           <img loading="lazy" class="donate-badge-img" src="https://widgets.guidestar.org/TransparencySeal/7041082" alt="Candid Platinum Seal of Transparency" />
         </a>
         <a href="https://greatnonprofits.org/org/felidae-conservation-fund" target="_blank" rel="noopener">
-          <img loading="lazy" class="donate-badge-img" src="assets/badges/greatnonprofits-top-rated-2025.png" alt="Top-Rated Award — Great Nonprofits 2025" />
+          <img loading="lazy" class="donate-badge-img" src="assets/badges/greatnonprofits-top-rated-2026.png" alt="Top-Rated Award — Great Nonprofits 2026" />
         </a>
         <a href="https://directories.onepercentfortheplanet.org/profile/felidae-conservation-fund" target="_blank" rel="noopener">
           <img loading="lazy" class="donate-badge-img" src="assets/badges/one-percent-for-the-planet.png" alt="1% for the Planet — Nonprofit Partner" />
@@ -1422,28 +1428,30 @@ body.always-light {
   if (!('IntersectionObserver' in window)) {           // very old browser
     root.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('visible'); });
     root.querySelectorAll('[data-target]').forEach(function (el) {
-      el.textContent = el.dataset.format === 'M'
-        ? (el.dataset.target / 1000000).toFixed(1) + 'M'
-        : (+el.dataset.target).toLocaleString();
+      el.textContent = fmtCounter(el, +el.dataset.target);
     });
     return;
   }
 
   // ── Animated counters ─────────────────────────────────────────────
+  // data-format: 'M' → 3.6M, 'k' → 150k; else 488 / 9,957. data-suffix (e.g. '+') is
+  // appended so it sits on the same line as the number.
+  function fmtCounter(el, val) {
+    const f = el.dataset.format;
+    const n = f === 'M' ? (val / 1000000).toFixed(1) + 'M'
+            : f === 'k' ? Math.floor(val / 1000) + 'k'
+            : Math.floor(val).toLocaleString();
+    return n + (el.dataset.suffix || '');
+  }
   function animateCounter(el, target, duration = 1800) {
-    const fmt = el.dataset.format;
     const start = performance.now();
     const step = (now) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const val = eased * target;
-      if (fmt === 'M') {
-        el.textContent = (val / 1000000).toFixed(1) + 'M';
-      } else {
-        el.textContent = Math.floor(val).toLocaleString();
-      }
+      el.textContent = fmtCounter(el, val);
       if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = fmt === 'M' ? (target / 1000000).toFixed(1) + 'M' : target.toLocaleString();
+      else el.textContent = fmtCounter(el, target);
     };
     requestAnimationFrame(step);
   }
