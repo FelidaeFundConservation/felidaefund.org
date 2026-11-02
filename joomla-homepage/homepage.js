@@ -17,20 +17,24 @@
   }
 
   // ── Animated counters ─────────────────────────────────────────────
+  // data-format: 'M' → 3.6M, 'k' → 150k; else 488 / 9,957. data-suffix (e.g. '+') is
+  // appended so it sits on the same line as the number.
+  function fmtCounter(el, val) {
+    const f = el.dataset.format;
+    const n = f === 'M' ? (val / 1000000).toFixed(1) + 'M'
+            : f === 'k' ? Math.floor(val / 1000) + 'k'
+            : Math.floor(val).toLocaleString();
+    return n + (el.dataset.suffix || '');
+  }
   function animateCounter(el, target, duration = 1800) {
-    const fmt = el.dataset.format;
     const start = performance.now();
     const step = (now) => {
       const progress = Math.min((now - start) / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
       const val = eased * target;
-      if (fmt === 'M') {
-        el.textContent = (val / 1000000).toFixed(1) + 'M';
-      } else {
-        el.textContent = Math.floor(val).toLocaleString();
-      }
+      el.textContent = fmtCounter(el, val);
       if (progress < 1) requestAnimationFrame(step);
-      else el.textContent = fmt === 'M' ? (target / 1000000).toFixed(1) + 'M' : target.toLocaleString();
+      else el.textContent = fmtCounter(el, target);
     };
     requestAnimationFrame(step);
   }

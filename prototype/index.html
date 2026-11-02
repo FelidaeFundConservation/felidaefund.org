@@ -508,6 +508,12 @@
       .projects__header { flex-direction: column; align-items: flex-start; }
       .hero { height: 100vh; height: 100svh; }
       .hero__content { padding-bottom: 28px; }
+      /* Mobile: the whole hero is a tap target for "Read His Story".
+         .hero__content stretches to the hero's full height, and the story
+         link's ::after covers it. Donate sits above the overlay. */
+      .hero__content { align-self: stretch; display: flex; flex-direction: column; justify-content: flex-end; }
+      .hero__actions .btn-outline::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+      .hero__actions .btn-gold { position: relative; z-index: 2; }
       .news-card__excerpt { font-size: 15px; }
       .project-card__desc { font-size: 15.5px; }
       .mission__card-body { font-size: 16px; }
@@ -543,10 +549,10 @@
       </h1>
       <p class="hero__subtitle">
         A young male puma must cross freeways and developed areas
-        to reach the Diablo Range — or his population edges toward local extinction.
+        to reach the Diablo Range, or his population edges toward local extinction.
       </p>
       <div class="hero__actions">
-        <a href="project-pumalink.html" class="btn-outline" target="_blank" rel="noopener">Read His Story →</a>
+        <a href="project-pumalink.html" class="btn-outline">Read His Story →</a>
         <a href="#" class="btn-gold" onclick="openDonate(event)">
           Donate Now
         </a>
@@ -554,6 +560,38 @@
       <p class="hero__credit">Photo by Sharon Osberg</p>
     </div>
 
+  </section>
+
+  <!-- ═══════════════════════════ IMPACT ═══════════════════════════════ -->
+  <section class="impact" aria-labelledby="impact-title">
+    <div class="container impact__inner">
+      <div class="impact__header reveal">
+        <div class="section-label">Impact by the Numbers</div>
+        <h2 class="section-title" id="impact-title">Decades of work. Measurable results.</h2>
+      </div>
+      <div class="impact__grid">
+        <div class="impact__stat reveal reveal-delay-1">
+          <div class="impact__number" data-target="3600000" data-format="M">0</div>
+          <div class="impact__unit">Data Points</div>
+          <div class="impact__label">Collected via camera traps, fecal samples, hair samples, and community-submitted research</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-2">
+          <div class="impact__number" data-target="150000" data-format="k" data-suffix="+">0</div>
+          <div class="impact__unit">People Reached</div>
+          <div class="impact__label">Through in-person events, virtual workshops, and classroom programs since 2022</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-3">
+          <div class="impact__number" data-target="488" data-suffix="+">0</div>
+          <div class="impact__unit">Volunteers</div>
+          <div class="impact__label">Contributing 9,957+ hours to field work, data entry, software engineering, AI training, citizen science, writing, and community programs</div>
+        </div>
+        <div class="impact__stat reveal reveal-delay-4">
+          <div class="impact__number" data-target="9">0</div>
+          <div class="impact__unit">Active Studies</div>
+          <div class="impact__label">Spanning 4 continents and 7 distinct ecosystems worldwide</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ═══════════════════════════ TICKER BAR ════════════════════════════ -->
@@ -601,44 +639,12 @@
           <img loading="lazy" class="mission__card-img" src="assets/pu-0107--1--836-1600-1000-90-crop.jpg" alt="Puma in the wild">
           <div class="mission__card-content">
             <h3 class="mission__card-title">Education &amp; Coexistence</h3>
-            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats — reducing conflict, building the understanding that fuels long-term protection.</p>
+            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats. Reducing conflict, building the understanding that fuels long-term protection.</p>
             <a href="learn-living-alongside.html" class="mission__link">
               Coexistence resources
               <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
             </a>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════ IMPACT ═══════════════════════════════ -->
-  <section class="impact" aria-labelledby="impact-title">
-    <div class="container impact__inner">
-      <div class="impact__header reveal">
-        <div class="section-label">Impact by the Numbers</div>
-        <h2 class="section-title" id="impact-title">Decades of work. Measurable results.</h2>
-      </div>
-      <div class="impact__grid">
-        <div class="impact__stat reveal reveal-delay-1">
-          <div class="impact__number" data-target="3600000" data-format="M">0</div>
-          <div class="impact__unit">Data Points</div>
-          <div class="impact__label">Collected via camera traps, fecal samples, hair samples, and community-submitted research</div>
-        </div>
-        <div class="impact__stat reveal reveal-delay-2">
-          <div class="impact__number" data-target="156000">0</div>
-          <div class="impact__unit">+ People Reached</div>
-          <div class="impact__label">Through in-person events, virtual workshops, and classroom programs since 2022</div>
-        </div>
-        <div class="impact__stat reveal reveal-delay-3">
-          <div class="impact__number" data-target="488">0</div>
-          <div class="impact__unit">+ Volunteers</div>
-          <div class="impact__label">Contributing 9,957+ hours to field work, data entry, software engineering, AI training, citizen science, writing, and community programs</div>
-        </div>
-        <div class="impact__stat reveal reveal-delay-4">
-          <div class="impact__number" data-target="9">0</div>
-          <div class="impact__unit">Active Studies</div>
-          <div class="impact__label">Spanning 4 continents and 7 distinct ecosystems worldwide</div>
         </div>
       </div>
     </div>
@@ -724,7 +730,7 @@
           <div class="project-card__body">
             <div class="project-card__region">North America · California</div>
             <h3 class="project-card__title">Bay Area Puma Project</h3>
-            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area — building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
+            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area. Building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">14 individuals tracked</span>
               <a href="project-bapp.html" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -760,7 +766,7 @@
           <div class="project-card__body">
             <div class="project-card__region">California · Bay Area</div>
             <h3 class="project-card__title">Bay Area Bobcat Project</h3>
-            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface — building the case for wildlife corridor protections across the East Bay hills.</p>
+            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface. Building the case for wildlife corridor protections across the East Bay hills.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">12 camera traps</span>
               <a href="project-bobcat.html" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -828,7 +834,7 @@
     <div class="cta-panel cta-panel--volunteer">
       <div class="cta-panel__eyebrow">Get Involved</div>
       <h2 class="cta-panel__title">Your time creates lasting change.</h2>
-      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer — there's a role for you in wild cat conservation.</p>
+      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer, there's a role for you in wild cat conservation.</p>
       <div class="cta-panel__options">
         <div class="cta-panel__option">Volunteer in the field</div>
         <div class="cta-panel__option">Become a community scientist</div>
@@ -842,7 +848,7 @@
     <div class="cta-panel cta-panel--donate">
       <div class="cta-panel__eyebrow">Support our Work</div>
       <h2 class="cta-panel__title">Make a difference today.</h2>
-      <p class="cta-panel__body">Every dollar funds real science — camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
+      <p class="cta-panel__body">Every dollar funds real science: camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
       <div class="cta-panel__options">
         <div class="cta-panel__option">Monthly giving sustains long-term projects</div>
         <div class="cta-panel__option">One-time gifts fund equipment and travel</div>
@@ -882,20 +888,24 @@
   <!-- ═══════════════════════════ SCRIPTS ══════════════════════════════ -->
   <script>
     // ── Animated counters ─────────────────────────────────────────────
+    // data-format: 'M' → 3.6M, 'k' → 150k; else 488 / 9,957. data-suffix (e.g. '+') is
+    // appended so it sits on the same line as the number.
+    function fmtCounter(el, val) {
+      const f = el.dataset.format;
+      const n = f === 'M' ? (val / 1000000).toFixed(1) + 'M'
+              : f === 'k' ? Math.floor(val / 1000) + 'k'
+              : Math.floor(val).toLocaleString();
+      return n + (el.dataset.suffix || '');
+    }
     function animateCounter(el, target, duration = 1800) {
-      const fmt = el.dataset.format;
       const start = performance.now();
       const step = (now) => {
         const progress = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         const val = eased * target;
-        if (fmt === 'M') {
-          el.textContent = (val / 1000000).toFixed(1) + 'M';
-        } else {
-          el.textContent = Math.floor(val).toLocaleString();
-        }
+        el.textContent = fmtCounter(el, val);
         if (progress < 1) requestAnimationFrame(step);
-        else el.textContent = fmt === 'M' ? (target / 1000000).toFixed(1) + 'M' : target.toLocaleString();
+        else el.textContent = fmtCounter(el, target);
       };
       requestAnimationFrame(step);
     }
