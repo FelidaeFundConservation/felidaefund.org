@@ -10,18 +10,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&family=Literata:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="tokens.css?v=27" />
-  <link rel="stylesheet" href="base.css?v=27" />
-  <link rel="stylesheet" href="components.css?v=27" />
-  <link rel="stylesheet" href="page.css?v=27" />
+  <link rel="stylesheet" href="tokens.css?v=29" />
+  <link rel="stylesheet" href="base.css?v=29" />
+  <link rel="stylesheet" href="components.css?v=29" />
+  <link rel="stylesheet" href="page.css?v=29" />
 
-  <script src="components/site-nav.js?v=27"></script>
-  <script src="components/site-footer.js?v=27"></script>
-  <script src="components/site-donate.js?v=27"></script>
-  <script src="components/page.js?v=27" defer></script>
+  <script src="components/site-nav.js?v=29"></script>
+  <script src="components/site-footer.js?v=29"></script>
+  <script src="components/site-donate.js?v=29"></script>
+  <script src="components/page.js?v=29" defer></script>
 </head>
 
-<body style="--page-accent: var(--project-bapp)" data-ported="joomla">
+<body style="--page-accent: var(--project-tsavo)" data-ported="joomla">
 
   <site-nav></site-nav>
 
@@ -39,6 +39,7 @@
         </nav>
         <p class="page-eyebrow">Wild Cat Species</p>
         <h1 class="page-title">Cheetah</h1>
+        <p class="page-binomial"><em>Acinonyx jubatus</em></p>
         <p class="page-lede">One of the most specialized cats, the cheetah resembles a sprinter – with a lean body and long legs. This amazing animal is capable of reaching speeds of up to 70 m.p.h. No other land animal can move as fast.</p>
       </div>
     </header>
@@ -52,7 +53,69 @@
         <div class="prose reveal">
           <h2>Species Facts</h2>
           <p>Cheetahs are not aggressive. During confrontation, the cheetah normally applies the flight mechanism as opposed to the fight mechanism. With its weak jaws and small teeth (the price it paid for speed), it cannot fight larger predators to protect its kill or its young.</p>
-          <ul class="prose-list"><li><strong>Publication Date</strong>: <em>August 20, 2021</em></li><li><strong>Scientific Designation</strong>: <em>Acinonyx jubatus</em></li><li><strong>Related Project:</strong> <a href="project-tsavo.html">Tsavo Cheetah Project</a></li><li><strong>Endangered Status:</strong> Vulnerable (VU)</li><li><strong>Lifespan:</strong> 12 to 14 years (in the wild)</li><li><strong>Weight:</strong> 36-64 kg (80-140 lbs)</li><li><strong>Length:</strong> 44 to 56 in</li><li><strong>Shoulder Height:</strong> 2.5 to 3.0 ft</li><li><strong>Tail Length:</strong> 26 to 33 in</li></ul>
+          <div class="facts__grid">
+
+            <div class="fact fact--status">
+              <span class="fact__label">Conservation status</span>
+              <div class="iucn">
+                <div class="iucn__track" role="img" aria-label="IUCN Red List status: Vulnerable, the third of seven categories.">
+                  <span class="iucn__step" data-i="0" style="--i:0"   title="Least Concern">LC</span>
+                  <span class="iucn__step" data-i="1" style="--i:.17" title="Near Threatened">NT</span>
+                  <span class="iucn__step" data-i="2" style="--i:.33" title="Vulnerable" aria-current="true">VU</span>
+                  <span class="iucn__step" data-i="3" style="--i:.5"  title="Endangered">EN</span>
+                  <span class="iucn__step" data-i="4" style="--i:.67" title="Critically Endangered">CR</span>
+                  <span class="iucn__step" data-i="5" style="--i:.83" title="Extinct in the Wild">EW</span>
+                  <span class="iucn__step" data-i="6" style="--i:1"   title="Extinct">EX</span>
+                </div>
+                <p class="iucn__now">The cheetah is listed as <strong>Vulnerable</strong> on the IUCN Red List.</p>
+              </div>
+            </div>
+
+            <div class="fact">
+              <span class="fact__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+              <span class="fact__label">Lifespan</span>
+              <span class="fact__value">12–14 years</span>
+              <span class="fact__note">in the wild</span>
+            </div>
+
+            <div class="fact">
+              <span class="fact__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l2 11H3L5 8Z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></span>
+              <span class="fact__label">Weight</span>
+              <span class="fact__value">36–64 kg</span>
+              <span class="fact__note">80–140 lbs</span>
+            </div>
+
+            <div class="fact">
+              <span class="fact__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="20" height="6" rx="1.5"/><path d="M7 9v3M12 9v4M17 9v3"/></svg></span>
+              <span class="fact__label">Body length</span>
+              <span class="fact__value">44–56 in</span>
+              <span class="fact__note">112–142 cm</span>
+            </div>
+
+            <div class="fact">
+              <span class="fact__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="m8 7 4-4 4 4"/><path d="m8 17 4 4 4-4"/></svg></span>
+              <span class="fact__label">Shoulder height</span>
+              <span class="fact__value">2.5–3.0 ft</span>
+              <span class="fact__note">76–91 cm</span>
+            </div>
+
+            <div class="fact">
+              <span class="fact__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19c6 0 5-7 9-7s4 4 7 2"/></svg></span>
+              <span class="fact__label">Tail length</span>
+              <span class="fact__value">26–33 in</span>
+              <span class="fact__note">66–84 cm</span>
+            </div>
+
+            <a class="fact fact--project" href="project-tsavo.html">
+              <span class="fact__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg></span>
+              <span>
+                <span class="fact__label">Felidae works on this species</span>
+                <span class="fact__value">Tsavo Cheetah Project</span>
+              </span>
+              <span class="fact__arrow" aria-hidden="true">→</span>
+            </a>
+
+          </div>
           <h2>Appearance &amp; Build</h2>
           <p>The cheetah is often mistaken for a leopard. It has long teardrop-shaped lines on each side of the nose, from the corner of its eyes to its mouth. Its coat is tan or buff, with solid black spots that are evenly spaced. There are no spots on its white belly, and the tail has spots that merge to form four to six dark rings at the end. The tail usually ends in a bushy white tuft. Male cheetahs are slightly larger than females and have a slightly bigger head, but it is difficult to tell males and females apart by appearance alone.</p>
           <figure class="prose-figure"><img src="https://felidaefund.org/media/cache/autosized/images/igallery/original/101-200/cheetah-vjHrP78-4K-196-960.webp" alt="" loading="lazy" /></figure>

@@ -431,3 +431,155 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 .shot figcaption a:hover, .prose-figure figcaption a:hover {
   color: var(--brown-600); text-decoration-color: currentColor;
 }
+
+/* ─────────────────────────────────────────────────────────────────────
+   Species facts — bento grid
+   Replaces the <ul class="prose-list"> facts list on species pages.
+
+   Cell count across the 40 species runs 3 to 9, so the small cells use
+   auto-fit and the two wide cells span the full row. A page with three
+   facts reflows to one row rather than leaving holes in a fixed grid.
+
+   Publication Date is deliberately absent: it reads "August 20, 2021"
+   on all 40 pages. It is the content import date, not a species fact.
+   Scientific Designation moves to the page header, under the H1.
+   ───────────────────────────────────────────────────────────────────── */
+
+.facts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(154px, 1fr));
+  gap: 12px;
+  margin: 0 0 26px;
+}
+
+.fact {
+  background: var(--cream-200);
+  border: 1px solid rgba(var(--brown-rgb), .13);
+  border-radius: var(--r-md);
+  padding: 16px 18px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.fact__icon { width: 19px; height: 19px; color: var(--page-accent, var(--brown-700)); flex: none; }
+.fact__icon svg { width: 100%; height: 100%; display: block; }
+
+.fact__label {
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--brown-400);
+}
+
+.fact__value {
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.25;
+  color: var(--espresso-900);
+  overflow-wrap: break-word;
+}
+
+.fact__note {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--brown-400);
+}
+
+/* ── Conservation status: the full IUCN scale, not just a label ────── */
+
+.fact--status { grid-column: 1 / -1; gap: 12px; }
+
+.iucn { display: flex; flex-direction: column; gap: 9px; }
+
+.iucn__track {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.iucn__step {
+  position: relative;
+  height: 34px;
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  /* Intensity ramps with severity using the existing brown scale, set
+     per step via --i (0 at Least Concern, 1 at Extinct). No new hues. */
+  background: rgba(var(--brown-rgb), calc(.07 + (var(--i) * .5)));
+  color: var(--brown-800);
+}
+.iucn__step[data-i="4"], .iucn__step[data-i="5"], .iucn__step[data-i="6"] { color: var(--cream-100); }
+
+.iucn__step[aria-current="true"] {
+  box-shadow: 0 0 0 2px var(--gold-400), 0 0 0 4px rgba(var(--gold-rgb), .28);
+  z-index: 1;
+}
+
+.iucn__now {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--brown-800);
+}
+.iucn__now strong { font-weight: 600; color: var(--espresso-900); }
+
+/* ── Related project: the bridge from "nice cat" to "we work on it" ── */
+
+.fact--project {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  background: rgba(var(--gold-rgb), .14);
+  border-color: rgba(var(--gold-rgb), .45);
+  text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+/* The whole cell is the link, so suppress the .prose underline on the title. */
+.prose .fact--project, .prose .fact--project:hover { text-decoration: none; }
+.fact--project .fact__value { color: var(--espresso-900); }
+.fact--project:hover { background: rgba(var(--gold-rgb), .22); border-color: var(--gold-400); }
+.fact--project > span:not(.fact__icon):not(.fact__arrow) {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.fact--project .fact__value { font-size: 17px; }
+.fact--project .fact__arrow {
+  margin-left: auto;
+  color: var(--brown-700);
+  flex: none;
+  font-size: 19px;
+  line-height: 1;
+  transition: transform .15s;
+}
+.fact--project:hover .fact__arrow { transform: translateX(3px); }
+
+@media (max-width: 560px) {
+  .facts__grid { grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 10px; }
+  .fact { padding: 13px 14px 12px; }
+  .fact__value { font-size: 17px; }
+  .iucn__track { gap: 2px; }
+  .iucn__step { height: 30px; font-size: 10px; }
+}
+
+/* Binomial name, moved out of the facts list to sit under the H1.
+   It is an identifier, not a measurement, and it is the field most
+   likely to overflow a small cell (longest is 49 characters). */
+.page-binomial {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: clamp(17px, 1.7vw, 20px);
+  color: var(--brown-400);
+  margin: -4px 0 14px;
+}
