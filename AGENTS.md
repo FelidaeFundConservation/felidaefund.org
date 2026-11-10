@@ -4,13 +4,27 @@
 
 ## Replies
 
-**Open with the question.** The first sentence restates the question being
-answered, in bold. Irene reads these between other things and needs to know
-instantly which thread a reply belongs to.
+**Answer the question that was asked. Only that question.** If she asks for
+a URL, give the URL. If she asks whether something works, say yes or no.
+Findings she did not ask for are not a bonus, they are noise she has to read
+past. Hold them until she asks, or drop them.
+
+**Match the length to the ask.** A one-line question gets a one-line answer.
+Analysis gets analysis. Never answer a small question with a long piece:
+interesting material is not a reason to send it.
+
+**State the point in the first sentence.** Not context, not setup, not what
+you are about to do. The answer.
+
+**Point form by default.** Bullets and tables, not paragraphs. Prose only
+when the reasoning genuinely does not fit a list.
 
 **Be punchy.** Lead with the answer. Then the reasoning. Then the caveats.
-Lists and tables beat prose. Never make her read three paragraphs to find
-the one sentence she asked for.
+Never make her read three paragraphs to find the one sentence she asked for.
+
+**Open with the question** when the reply needs locating — several threads
+are usually open at once. Skip the restatement when she just asked and the
+answer is one line.
 
 **Explain the jargon.** Irene is a product designer who has taught herself
 the engineering side. She is the most technical person on this team, and she
