@@ -520,8 +520,9 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 .iucn__step:nth-child(3) { --c: #F9E814; --fg: #3b3300; }  /* Vulnerable */
 .iucn__step:nth-child(4) { --c: #FC7F3F; --fg: #3d1900; }  /* Endangered */
 .iucn__step:nth-child(5) { --c: #D81E05; --fg: #ffffff; }  /* Critically Endangered */
-.iucn__step:nth-child(6) { --c: #542344; --fg: #ffffff; }  /* Extinct in the Wild */
-.iucn__step:nth-child(7) { --c: #1b1b1b; --fg: #ffffff; }  /* Extinct */
+/* Extinct in the Wild and Extinct are left off: they are outcomes, not
+   threat levels, and no species with a page here is in either. Ending the
+   track at Critically Endangered keeps the ramp reading green to red. */
 
 .iucn__step {
   position: relative;
@@ -600,7 +601,7 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 
 @media (max-width: 560px) {
   .facts__grid { gap: 10px; }
-  /* The seven-step scale will not fit a half-width cell on a phone. */
+  /* The five-step scale will not fit a half-width cell on a phone. */
   .fact--status { grid-column: 1 / -1; }
   .fact { padding: 13px 14px 12px; }
   .fact__value { font-size: 17px; }
