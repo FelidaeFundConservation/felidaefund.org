@@ -497,32 +497,36 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 .iucn { display: flex; flex-direction: column; gap: 9px; }
 
 .iucn__track {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
 }
 
 .iucn__step {
   position: relative;
-  height: 34px;
-  border-radius: var(--r-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .04em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
   /* Intensity ramps with severity using the existing brown scale, set
      per step via --i (0 at Least Concern, 1 at Extinct). No new hues. */
-  background: rgba(var(--brown-rgb), calc(.07 + (var(--i) * .5)));
-  color: var(--brown-800);
+  background: rgba(var(--brown-rgb), calc(.16 + (var(--i) * .42)));
+  font-size: 0;           /* the code is for screen readers until it is current */
 }
-.iucn__step[data-i="4"], .iucn__step[data-i="5"], .iucn__step[data-i="6"] { color: var(--cream-100); }
 
+/* Only the current category is named. The rest are position markers. */
 .iucn__step[aria-current="true"] {
-  box-shadow: 0 0 0 2px var(--gold-400), 0 0 0 4px rgba(var(--gold-rgb), .28);
-  z-index: 1;
+  width: auto;
+  height: auto;
+  border-radius: 999px;
+  padding: 5px 13px 6px;
+  background: var(--gold-400);
+  color: var(--espresso-900);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
 }
 
 .iucn__now {
@@ -582,4 +586,45 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   font-size: clamp(17px, 1.7vw, 20px);
   color: var(--brown-400);
   margin: -4px 0 14px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+   Split prose: text left, image right.
+   Wraps an <h2> + its paragraphs + the figure that follows it.
+   Stacks below 860px, text first.
+   ───────────────────────────────────────────────────────────────────── */
+
+.prose-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 44px;
+  align-items: start;
+  margin: 48px 0;
+}
+
+.prose-split__text { min-width: 0; }
+.prose-split__text > h2:first-child { margin-top: 0; }
+/* The 64ch cap is for full-width prose; in a half column it never applies
+   and only risks a short measure on wide screens. */
+.prose-split__text p { max-width: none; }
+
+.prose-split > .prose-figure {
+  margin: 0;
+  position: sticky;
+  top: calc(var(--nav-h) + 24px);
+}
+.prose-split > .prose-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--r-md);
+}
+
+@media (max-width: 860px) {
+  .prose-split {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin: 36px 0;
+  }
+  .prose-split > .prose-figure { position: static; }
 }
