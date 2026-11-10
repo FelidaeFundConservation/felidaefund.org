@@ -602,7 +602,8 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   margin: 48px 0;
 }
 
-.prose-split__text { min-width: 0; }
+.prose-split__text { min-width: 0; order: 2; }
+.prose-split > .prose-figure { order: 1; }
 .prose-split__text > h2:first-child { margin-top: 0; }
 /* The 64ch cap is for full-width prose; in a half column it never applies
    and only risks a short measure on wide screens. */
@@ -626,5 +627,7 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
     gap: 22px;
     margin: 36px 0;
   }
-  .prose-split > .prose-figure { position: static; }
+  /* Stacked, the heading leads so sections stay scannable. */
+  .prose-split__text { order: 1; }
+  .prose-split > .prose-figure { order: 2; position: static; }
 }
