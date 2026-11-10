@@ -558,15 +558,18 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   flex-direction: row;
   align-items: center;
   gap: 14px;
-  background: rgba(var(--gold-rgb), .14);
-  border-color: rgba(var(--gold-rgb), .45);
+  /* Secondary, not a CTA: transparent, gold border, dark text. It should
+     not compete with Donate. Radius stays --r-md so it lines up with the
+     six fact cards above it. */
+  background: transparent;
+  border-color: var(--gold-400);
   text-decoration: none;
   transition: background .15s, border-color .15s;
 }
 /* The whole cell is the link, so suppress the .prose underline on the title. */
 .prose .fact--project, .prose .fact--project:hover { text-decoration: none; }
 .fact--project .fact__value { color: var(--espresso-900); }
-.fact--project:hover { background: rgba(var(--gold-rgb), .22); border-color: var(--gold-400); }
+.fact--project:hover { background: rgba(var(--gold-rgb), .13); border-color: var(--gold-300); }
 .fact--project > span:not(.fact__icon):not(.fact__arrow) {
   display: flex;
   flex-direction: column;
