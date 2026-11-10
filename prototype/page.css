@@ -628,40 +628,4 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
    Stacks below 860px, text first.
    ───────────────────────────────────────────────────────────────────── */
 
-.prose-split {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 44px;
-  align-items: start;
-  margin: 48px 0;
-}
-
-.prose-split__text { min-width: 0; order: 2; }
-.prose-split > .prose-figure { order: 1; }
-.prose-split__text > h2:first-child { margin-top: 0; }
-/* The 64ch cap is for full-width prose; in a half column it never applies
-   and only risks a short measure on wide screens. */
-.prose-split__text p { max-width: none; }
-
-.prose-split > .prose-figure {
-  margin: 0;
-  position: sticky;
-  top: calc(var(--nav-h) + 24px);
-}
-.prose-split > .prose-figure img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--r-md);
-}
-
-@media (max-width: 860px) {
-  .prose-split {
-    grid-template-columns: 1fr;
-    gap: 22px;
-    margin: 36px 0;
-  }
-  /* Stacked, the heading leads so sections stay scannable. */
-  .prose-split__text { order: 1; }
-  .prose-split > .prose-figure { order: 2; position: static; }
 }
