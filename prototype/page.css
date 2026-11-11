@@ -460,9 +460,12 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   margin: 0 0 26px;
 }
 
+/* Three levels in this block. Conservation status is the fact the page
+   exists to deliver, the measurements support it, the project link is an
+   onward route. Fill carries the hierarchy: solid, outline, none. */
 .fact {
-  background: var(--cream-200);
-  border: 1px solid rgba(var(--brown-rgb), .13);
+  background: transparent;
+  border: 1px solid rgba(var(--brown-rgb), .16);
   border-radius: var(--r-md);
   padding: 16px 18px 15px;
   display: flex;
@@ -500,7 +503,11 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 
 /* ── Conservation status: the full IUCN scale, not just a label ────── */
 
-.fact--status { gap: 7px; }
+.fact--status {
+  gap: 7px;
+  background: var(--white);
+  border-color: rgba(var(--brown-rgb), .22);
+}
 .fact--status .iucn { margin: 2px 0 1px; }
 
 .iucn { display: flex; flex-direction: column; gap: 7px; }
@@ -558,18 +565,22 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   flex-direction: row;
   align-items: center;
   gap: 14px;
-  /* Secondary, not a CTA: transparent, gold border, dark text. It should
-     not compete with Donate. Radius stays --r-md so it lines up with the
-     six fact cards above it. */
+  /* Tertiary: no box at all, just a hairline rule and an arrow. It is an
+     onward route, not a fact and not a CTA. */
   background: transparent;
-  border-color: var(--gold-400);
+  border: 0;
+  border-top: 1px solid rgba(var(--brown-rgb), .16);
+  border-radius: 0;
+  padding: 16px 2px 2px;
+  margin-top: 4px;
   text-decoration: none;
   transition: background .15s, border-color .15s;
 }
 /* The whole cell is the link, so suppress the .prose underline on the title. */
 .prose .fact--project, .prose .fact--project:hover { text-decoration: none; }
 .fact--project .fact__value { color: var(--espresso-900); }
-.fact--project:hover { background: rgba(var(--gold-rgb), .13); border-color: var(--gold-300); }
+.fact--project:hover { background: transparent; border-top-color: rgba(var(--brown-rgb), .32); }
+.fact--project:hover .fact__value { color: var(--brown-700); }
 .fact--project > span:not(.fact__icon):not(.fact__arrow) {
   display: flex;
   flex-direction: column;
