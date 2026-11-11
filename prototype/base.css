@@ -14,6 +14,21 @@
       -webkit-font-smoothing: antialiased;
     }
     img { display: block; max-width: 100%; }
+
+    /* ─── Orphan control ──────────────────────────────────────────────
+       No single word stranded on its own last line. Headings balance
+       their lines evenly; running text just avoids a short last line.
+       Both are progressive: a browser without them wraps as before, so
+       nothing in the layout depends on either. */
+    h1, h2, h3, h4, h5, h6,
+    .page-title, .section-title, .page-eyebrow, .section-label,
+    .fact__label, .fact__value, .crumbs {
+      text-wrap: balance;
+    }
+    p, li, dd, figcaption, blockquote,
+    .page-lede, .fact__note, .iucn__now {
+      text-wrap: pretty;
+    }
     a { color: inherit; text-decoration: none; }
     button { cursor: pointer; border: none; background: none; font: inherit; }
 
