@@ -1,0 +1,145 @@
+/* ─── Range map ─────────────────────────────────────────────────────
+   Country shapes are Natural Earth (public domain). Nothing here uses
+   IUCN's licensed spatial data. */
+
+.rangemap { margin: 0; }
+
+.rangemap__canvas {
+  background: var(--cream-200);
+  border: 1px solid rgba(var(--brown-rgb), .16);
+  border-radius: var(--r-md);
+  padding: 10px;
+}
+.rangemap__svg { width: 100%; height: auto; display: block; }
+
+.rg {
+  fill: var(--cream-300);
+  stroke: rgba(var(--brown-rgb), .28);
+  stroke-width: .8;
+  stroke-linejoin: round;
+  transition: fill .14s;
+}
+.rg--resident { fill: var(--gold-400); }
+.rg--possible { fill: var(--gold-200); }
+.rg--gone     { fill: rgba(var(--brown-rgb), .17); }
+
+.rg[tabindex] { cursor: pointer; }
+.rg[tabindex]:hover,
+.rg.is-on { fill: var(--project-tsavo); }
+.rg[tabindex]:focus-visible {
+  outline: none;
+  stroke: var(--espresso-900);
+  stroke-width: 2.2;
+}
+
+.rangemap__readout {
+  font-family: var(--font-display);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--espresso-900);
+  min-height: 2.9em;
+  padding: 12px 2px 0;
+}
+.rangemap__readout b { font-weight: 700; }
+.rangemap__hint { color: var(--brown-400); font-weight: 500; }
+.rangemap__status { color: var(--brown-700); }
+
+.rangemap__legend {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  list-style: none; margin: 4px 0 0; padding: 0;
+  font-family: var(--font-display); font-size: 12px; font-weight: 600;
+  letter-spacing: .04em; color: var(--brown-800);
+}
+.rangemap__legend li { display: flex; align-items: center; gap: 7px; }
+.sw {
+  width: 13px; height: 13px; border-radius: 3px; flex: none;
+  border: 1px solid rgba(var(--brown-rgb), .3);
+}
+.sw--resident { background: var(--gold-400); }
+.sw--possible { background: var(--gold-200); }
+.sw--gone     { background: rgba(var(--brown-rgb), .17); }
+
+/* ─── Demo scaffolding (concept page only) ──────────────────────── */
+
+.demo-compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 34px;
+  align-items: start;
+  margin: 0 0 54px;
+}
+.demo-compare__item { margin: 0; min-width: 0; }
+.demo-compare__item > img {
+  width: 100%; height: auto; border-radius: var(--r-md);
+  border: 1px solid rgba(var(--brown-rgb), .16);
+}
+.demo-tag {
+  font-family: var(--font-display); font-size: 11px; font-weight: 700;
+  letter-spacing: .13em; text-transform: uppercase;
+  margin: 0 0 11px; display: inline-block;
+  padding: 4px 11px 5px; border-radius: 999px;
+}
+.demo-tag--now { background: rgba(var(--brown-rgb), .12); color: var(--brown-800); }
+.demo-tag--new { background: var(--gold-400); color: var(--espresso-900); }
+.demo-note {
+  font-family: var(--font-body); font-size: 14px; line-height: 1.55;
+  color: var(--brown-400); margin: 14px 0 0; max-width: 46ch;
+}
+
+.demo-callout {
+  background: var(--gold-100);
+  border: 1px solid rgba(var(--gold-rgb), .45);
+  border-radius: var(--r-md);
+  padding: 22px 26px 24px;
+  margin: 0 0 14px;
+}
+.demo-callout p { margin: 0 0 11px; max-width: none; }
+.demo-callout p:last-child { margin-bottom: 0; }
+
+@media (max-width: 560px) {
+  .demo-compare { gap: 26px; }
+  .demo-callout { padding: 18px 18px 20px; }
+}
+
+/* ─── Range countries: the list is the keyboard path into the map ──── */
+
+.rc { margin: 26px 0 0; }
+.rc__title {
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  color: var(--espresso-900); margin: 0 0 4px;
+}
+.rc__intro {
+  font-family: var(--font-body); font-size: 14px; color: var(--brown-400);
+  margin: 0 0 16px;
+}
+.rc__group { margin: 0 0 16px; }
+.rc__head {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 12px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--brown-800); margin: 0 0 8px;
+}
+.rc__count {
+  font-size: 11px; color: var(--brown-400); letter-spacing: .04em;
+}
+.rc__list {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  list-style: none; margin: 0; padding: 0;
+}
+.rc__btn {
+  font-family: var(--font-display); font-size: 12.5px; font-weight: 500;
+  color: var(--brown-800);
+  background: var(--cream-200);
+  border: 1px solid rgba(var(--brown-rgb), .16);
+  border-radius: 999px;
+  padding: 5px 12px 6px;
+  transition: background .14s, border-color .14s, color .14s;
+}
+.rc__btn:hover,
+.rc__btn:focus-visible {
+  background: var(--project-tsavo);
+  border-color: var(--project-tsavo);
+  color: var(--cream-100);
+  outline: none;
+}
+.rc__btn:focus-visible { box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .55); }
