@@ -1,72 +1,87 @@
 /* ─── Range map ─────────────────────────────────────────────────────
-   Country shapes are Natural Earth (public domain). Nothing here uses
-   IUCN's licensed spatial data. */
+   The IUCN map screenshot as a pale base layer, with its range bands
+   traced out and redrawn as live vector shapes on top. */
 
 .rangemap { margin: 0; }
 
-.rangemap__canvas {
+.rangemap__stage {
+  position: relative;
   background: var(--cream-200);
   border: 1px solid rgba(var(--brown-rgb), .16);
   border-radius: var(--r-md);
-  padding: 10px;
+  overflow: hidden;
+  line-height: 0;
 }
-.rangemap__svg { width: 100%; height: auto; display: block; }
+.rangemap__base {
+  width: 100%; height: auto; display: block;
+  filter: grayscale(1) contrast(.42) brightness(1.2);
+  opacity: .62;
+}
+.rangemap__svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
 
-.rg {
-  fill: var(--cream-300);
-  stroke: rgba(var(--brown-rgb), .28);
-  stroke-width: .8;
+.rp {
+  stroke: rgba(var(--brown-rgb), .55);
+  stroke-width: 1.4;
   stroke-linejoin: round;
-  transition: fill .14s;
+  vector-effect: non-scaling-stroke;
+  transition: fill .13s, opacity .18s;
+  cursor: pointer;
 }
-.rg--resident { fill: var(--gold-400); }
-.rg--possible { fill: var(--gold-200); }
-.rg--gone     { fill: rgba(var(--brown-rgb), .17); }
+.rp--resident { fill: var(--gold-400); }
+.rp--possible { fill: var(--project-tsavo); fill-opacity: .42; }
 
-.rg[tabindex] { cursor: pointer; }
-.rg[tabindex]:hover,
-.rg.is-on { fill: var(--project-tsavo); }
-.rg[tabindex]:focus-visible {
-  outline: none;
-  stroke: var(--espresso-900);
-  stroke-width: 2.2;
-}
+.rp.is-on { fill: var(--espresso-900); fill-opacity: 1; }
 
-.rangemap__readout {
-  font-family: var(--font-display);
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--espresso-900);
-  min-height: 2.9em;
-  padding: 12px 2px 0;
-}
-.rangemap__readout b { font-weight: 700; }
-.rangemap__hint { color: var(--brown-400); font-weight: 500; }
-.rangemap__status { color: var(--brown-700); }
+.rangemap.hide-resident .rp--resident,
+.rangemap.hide-possible .rp--possible { opacity: 0; pointer-events: none; }
 
-.rangemap__legend {
-  display: flex; flex-wrap: wrap; gap: 8px 18px;
-  list-style: none; margin: 4px 0 0; padding: 0;
-  font-family: var(--font-display); font-size: 12px; font-weight: 600;
-  letter-spacing: .04em; color: var(--brown-800);
+/* ─── Controls ──────────────────────────────────────────────────── */
+
+.rangemap__bar {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 14px 0 0;
 }
-.rangemap__legend li { display: flex; align-items: center; gap: 7px; }
-.sw {
+.rmtoggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-size: 12.5px; font-weight: 600;
+  letter-spacing: .03em; color: var(--brown-800);
+  background: var(--cream-200);
+  border: 1px solid rgba(var(--brown-rgb), .18);
+  border-radius: 999px;
+  padding: 6px 14px 7px;
+  transition: background .14s, border-color .14s, opacity .14s;
+}
+.rmtoggle:hover { border-color: rgba(var(--brown-rgb), .4); }
+.rmtoggle:focus-visible {
+  outline: none; box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .55);
+}
+.rmtoggle[aria-pressed="false"] { opacity: .45; }
+.rmtoggle .sw {
   width: 13px; height: 13px; border-radius: 3px; flex: none;
   border: 1px solid rgba(var(--brown-rgb), .3);
 }
 .sw--resident { background: var(--gold-400); }
-.sw--possible { background: var(--gold-200); }
-.sw--gone     { background: rgba(var(--brown-rgb), .17); }
+.sw--possible { background: color-mix(in srgb, var(--project-tsavo) 42%, var(--cream-200)); }
+.rmtoggle__n { font-weight: 400; color: var(--brown-400); }
+
+.rangemap__readout {
+  font-family: var(--font-display); font-size: 14px; line-height: 1.5;
+  color: var(--espresso-900);
+  min-height: 3.1em; padding: 12px 2px 0;
+}
+.rangemap__readout b { font-weight: 700; }
+.rangemap__hint { color: var(--brown-400); font-weight: 500; }
+.rangemap__status { color: var(--brown-700); }
+.rangemap__share { display: block; color: var(--brown-400); font-weight: 500; font-size: 13px; }
 
 /* ─── Demo scaffolding (concept page only) ──────────────────────── */
 
 .demo-compare {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
-  gap: 34px;
-  align-items: start;
-  margin: 0 0 54px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  gap: 34px; align-items: start; margin: 0 0 54px;
 }
 .demo-compare__item { margin: 0; min-width: 0; }
 .demo-compare__item > img {
@@ -85,13 +100,11 @@
   font-family: var(--font-body); font-size: 14px; line-height: 1.55;
   color: var(--brown-400); margin: 14px 0 0; max-width: 46ch;
 }
-
 .demo-callout {
   background: var(--gold-100);
   border: 1px solid rgba(var(--gold-rgb), .45);
   border-radius: var(--r-md);
-  padding: 22px 26px 24px;
-  margin: 0 0 14px;
+  padding: 22px 26px 24px; margin: 0 0 14px;
 }
 .demo-callout p { margin: 0 0 11px; max-width: none; }
 .demo-callout p:last-child { margin-bottom: 0; }
@@ -100,46 +113,3 @@
   .demo-compare { gap: 26px; }
   .demo-callout { padding: 18px 18px 20px; }
 }
-
-/* ─── Range countries: the list is the keyboard path into the map ──── */
-
-.rc { margin: 26px 0 0; }
-.rc__title {
-  font-family: var(--font-display); font-weight: 700; font-size: 17px;
-  color: var(--espresso-900); margin: 0 0 4px;
-}
-.rc__intro {
-  font-family: var(--font-body); font-size: 14px; color: var(--brown-400);
-  margin: 0 0 16px;
-}
-.rc__group { margin: 0 0 16px; }
-.rc__head {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--font-display); font-size: 12px; font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: var(--brown-800); margin: 0 0 8px;
-}
-.rc__count {
-  font-size: 11px; color: var(--brown-400); letter-spacing: .04em;
-}
-.rc__list {
-  display: flex; flex-wrap: wrap; gap: 6px;
-  list-style: none; margin: 0; padding: 0;
-}
-.rc__btn {
-  font-family: var(--font-display); font-size: 12.5px; font-weight: 500;
-  color: var(--brown-800);
-  background: var(--cream-200);
-  border: 1px solid rgba(var(--brown-rgb), .16);
-  border-radius: 999px;
-  padding: 5px 12px 6px;
-  transition: background .14s, border-color .14s, color .14s;
-}
-.rc__btn:hover,
-.rc__btn:focus-visible {
-  background: var(--project-tsavo);
-  border-color: var(--project-tsavo);
-  color: var(--cream-100);
-  outline: none;
-}
-.rc__btn:focus-visible { box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .55); }
