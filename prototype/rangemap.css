@@ -32,12 +32,15 @@
   filter: blur(5px);
 }
 
+/* No outline at rest. Two abutting shapes each carrying a stroke drew a
+   double line that read as a seam between them; the fills are distinct
+   enough on their own. The outline appears on the one being pointed at. */
 .rp {
-  stroke: rgba(var(--brown-rgb), .55);
-  stroke-width: 1.4;
+  stroke: transparent;
+  stroke-width: 1.6;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
-  transition: fill .13s, opacity .18s;
+  transition: fill .13s, fill-opacity .13s, stroke .13s, opacity .18s;
   cursor: pointer;
 }
 /* Light at rest, darker on hover: the same hue going down a step, so the
@@ -45,8 +48,12 @@
 .rp--resident { fill: var(--gold-300); }
 .rp--possible { fill: var(--project-tsavo); fill-opacity: .3; }
 
-.rp--resident:hover, .rp--resident.is-on { fill: var(--gold-500); }
-.rp--possible:hover, .rp--possible.is-on { fill-opacity: .82; }
+.rp--resident:hover, .rp--resident.is-on {
+  fill: var(--gold-500); stroke: var(--espresso-900);
+}
+.rp--possible:hover, .rp--possible.is-on {
+  fill-opacity: .82; stroke: var(--espresso-900);
+}
 
 .rangemap.hide-resident .rp--resident,
 .rangemap.hide-possible .rp--possible { opacity: 0; pointer-events: none; }
@@ -55,7 +62,7 @@
 
 .rangemap__bar {
   display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 14px 0 0;
+  margin: 0 0 10px;
 }
 .rmtoggle {
   display: inline-flex; align-items: center; gap: 8px;
@@ -83,7 +90,7 @@
 .rangemap__readout {
   font-family: var(--font-display); font-size: 14px; line-height: 1.5;
   color: var(--espresso-900);
-  min-height: 3.1em; padding: 12px 2px 0;
+  min-height: 2.9em; padding: 0 2px 10px;
 }
 .rangemap__readout b { font-weight: 700; }
 .rangemap__hint { color: var(--brown-400); font-weight: 500; }
@@ -133,13 +140,14 @@
 @media (max-width: 700px) {
   .rangemap__stage { padding: 6px; border-radius: var(--r-sm); }
   .prose-figure.rangemap { margin: 24px 0; }
-  .rangemap__bar { gap: 6px; margin-top: 10px; }
+  .rangemap__bar { gap: 6px; margin-bottom: 8px; }
   .rmtoggle { font-size: 12px; padding: 6px 11px 7px; }
-  .rangemap__readout { font-size: 13.5px; padding-top: 10px; min-height: 3.4em; }
+  .rangemap__readout { font-size: 13.5px; padding-bottom: 8px; min-height: 3.2em; }
   .rangemap__share { font-size: 12.5px; }
   /* Touch targets: a thin peninsula is hard to hit with a finger, so the
      stroke is widened to give every shape a little more edge to catch. */
   .rp { stroke-width: 3; }
+  .prose-figure.rangemap { max-width: 100%; }
 }
 
 @media (max-width: 560px) {
@@ -153,8 +161,11 @@
 /* Full column width. The basemap underneath is raster, but it is
    desaturated to a faint backdrop and the shapes on top are vector, so
    the detail that matters stays sharp. */
-.prose-figure.rangemap { margin: 32px 0; }
-.prose .rangemap__bar { margin-top: 12px; }
-.prose .rangemap__readout { margin: 0; max-width: none; }
+/* Sized so the whole map, its controls and the readout fit on screen
+   without a second scroll. The maps are square, so height is the
+   constraint, not width. */
+.prose-figure.rangemap { margin: 32px 0; max-width: min(100%, 62vh); }
+.prose .rangemap__bar { margin: 0 0 10px; }
+.prose .rangemap__readout { margin: 0 0 10px; max-width: none; }
 .prose .rangemap__stage { line-height: 0; }
 .prose .rangemap__base { max-width: 100%; }

@@ -29,11 +29,17 @@ def trace(mask, img=None, rgb=None):
         area = int(blob.sum())
         if area < MIN_AREA:
             continue
+        # Where two bands meet, the seam pixels are a blend of both and
+        # match neither threshold, so both masks drop them and the traced
+        # shapes end up with a gap. Grow this blob on its own, after the
+        # components have been counted, so neighbours meet without
+        # separate populations merging into one.
+        blob = ndimage.binary_dilation(blob, np.ones((3, 3)), iterations=2)
         # Purity test. A real range region is solidly its legend colour.
         # Text, labels and legend keys are smears of several colours, so
         # their mean sits well away from it.
         if img is not None:
-            mean = img[blob].mean(axis=0)
+            mean = img[lab == i].mean(axis=0)
             if np.abs(mean - np.array(rgb)).sum() > 95:
                 continue
         ys, xs = np.nonzero(blob)
