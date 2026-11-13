@@ -12,6 +12,20 @@ def build(slug, data_dir):
         f'              <path class="rp rp--{s["band"]}" d="{s["d"]}" '
         f'data-band="{s["band"]}" data-share="{100.0*s["area"]/total:.1f}"/>'
         for s in shapes)
+
+    # Crop to the range itself. The IUCN viewer frames every species in the
+    # same square, so most maps carry dead ocean on two sides; a narrow
+    # range like the snow leopard's wastes most of the frame. Cropping to
+    # the data makes the map wider than it is tall wherever the range is.
+    xs, ys = [], []
+    for sh in shapes:
+        for pt in sh['d'][1:-1].split('L'):
+            x, y = pt.split(',')
+            xs.append(float(x)); ys.append(float(y))
+    pad = max(d['w'], d['h']) * .025
+    vx0 = max(0, min(xs) - pad); vy0 = max(0, min(ys) - pad)
+    vx1 = min(d['w'], max(xs) + pad); vy1 = min(d['h'], max(ys) + pad)
+    vb = f'{vx0:.0f} {vy0:.0f} {vx1-vx0:.0f} {vy1-vy0:.0f}'
     res, pos = counts.get('resident', 0), counts.get('possible', 0)
     # IUCN's own legend is covered: the toggles above the map replace it,
     # and two legends saying the same thing in different styles is noise.
@@ -31,8 +45,8 @@ def build(slug, data_dir):
             <div class="rangemap__bar">{''.join(bar)}</div>
             <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Point at a population.</span><span class="hint-touch">Tap a population.</span></span></p>
             <div class="rangemap__stage">
-              <img class="rangemap__base" src="https://felidaefund.org/media/cache/autosized/images/static/{slug}-map-960.webp" alt="" loading="lazy" />
-              <svg class="rangemap__svg" viewBox="0 0 {d['w']} {d['h']}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">{mask}
+              <svg class="rangemap__svg" viewBox="{vb}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+                <image class="rangemap__base" href="https://felidaefund.org/media/cache/autosized/images/static/{slug}-map-960.webp" x="0" y="0" width="{d['w']}" height="{d['h']}" preserveAspectRatio="none"/>{mask}
 {paths}
               </svg>
             </div>

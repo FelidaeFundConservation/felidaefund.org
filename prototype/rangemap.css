@@ -5,22 +5,19 @@
 .rangemap { margin: 0; }
 
 .rangemap__stage {
-  position: relative;
   background: var(--cream-200);
   border: 1px solid rgba(var(--brown-rgb), .16);
   border-radius: var(--r-md);
   overflow: hidden;
   line-height: 0;
 }
+/* The basemap lives inside the SVG so that cropping the viewBox crops the
+   picture and the shapes together, and they can never drift apart. */
 .rangemap__base {
-  width: 100%; height: auto; display: block;
   filter: grayscale(1) contrast(.42) brightness(1.2);
   opacity: .62;
 }
-.rangemap__svg {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-}
+.rangemap__svg { width: 100%; height: auto; display: block; }
 
 /* Covers IUCN's own legend panel. Matches the desaturated basemap rather
    than the stage, so it reads as part of the map, not a patch on it. */
@@ -147,7 +144,6 @@
   /* Touch targets: a thin peninsula is hard to hit with a finger, so the
      stroke is widened to give every shape a little more edge to catch. */
   .rp { stroke-width: 3; }
-  .prose-figure.rangemap { max-width: 100%; }
 }
 
 @media (max-width: 560px) {
@@ -164,8 +160,7 @@
 /* Sized so the whole map, its controls and the readout fit on screen
    without a second scroll. The maps are square, so height is the
    constraint, not width. */
-.prose-figure.rangemap { margin: 32px 0; max-width: min(100%, 62vh); }
+.prose-figure.rangemap { margin: 32px 0; }
 .prose .rangemap__bar { margin: 0 0 10px; }
 .prose .rangemap__readout { margin: 0 0 10px; max-width: none; }
 .prose .rangemap__stage { line-height: 0; }
-.prose .rangemap__base { max-width: 100%; }
