@@ -58,6 +58,9 @@ def build(slug, data_dir):
                 </g>
               </svg>
               </div>
+              <p class="rangemap__cue" aria-hidden="true"><span class="rangemap__cue-pill">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><path d="m9 6 3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg>
+                  Drag to explore the distribution</span></p>
               <div class="rangemap__scale" aria-hidden="true" data-kmpu="{km_per_unit:.6f}">
                 <span class="rangemap__scale-bar"></span><span class="rangemap__scale-label"></span>
               </div>

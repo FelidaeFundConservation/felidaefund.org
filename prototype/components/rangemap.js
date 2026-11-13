@@ -38,6 +38,16 @@
   const svg = map.querySelector('.rangemap__svg');
   if (!stage || !svg) return;
 
+  const frame = map.querySelector('.rangemap__frame');
+
+  // The map stays desaturated and inert until the reader takes hold of
+  // it, so it reads as one object in the middle of an article rather
+  // than a live control competing for the pointer.
+  const wake = () => frame && frame.classList.add('is-live');
+  stage.addEventListener('pointerdown', wake);
+  stage.addEventListener('focus', wake);
+  map.querySelectorAll('.rmzoom').forEach(b => b.addEventListener('focus', wake));
+
   const base = (svg.dataset.base || '0 0 1000 1000').split(/\s+/).map(Number);
   const MIN = 1, MAX = 8;
   let zoom = 1, cx = base[0] + base[2] / 2, cy = base[1] + base[3] / 2;

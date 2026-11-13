@@ -28,6 +28,42 @@
   touch-action: none;          /* the frame handles the drag itself */
 }
 .rangemap__stage.is-dragging { cursor: grabbing; }
+
+/* ─── Dormant state ─────────────────────────────────────────────────
+   Until the reader takes hold of it the map is desaturated and inert, so
+   it reads as one object to pick up rather than a live control sitting
+   in the middle of an article. */
+.rangemap__frame:not(.is-live) .rangemap__svg {
+  filter: saturate(.18) contrast(.92) brightness(1.03);
+  transition: filter .35s;
+}
+.rangemap__frame:not(.is-live) .rm-range { pointer-events: none; }
+.rangemap__frame.is-live .rangemap__svg { transition: filter .35s; }
+
+.rangemap__frame:not(.is-live) .rangemap__zoom,
+.rangemap__frame:not(.is-live) .rangemap__scale { opacity: 0; }
+.rangemap__zoom, .rangemap__scale { transition: opacity .3s; }
+
+.rangemap__cue {
+  position: absolute; inset: 0; z-index: 3; margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+  background: rgba(var(--brown-rgb), .07);
+  transition: opacity .28s;
+}
+.rangemap__cue-pill {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--font-display); font-size: 13px; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; line-height: 1;
+  color: var(--espresso-900);
+  background: var(--cream-100);
+  border: 1px solid rgba(var(--brown-rgb), .22);
+  border-radius: 999px;
+  padding: 10px 18px 11px 15px;
+  box-shadow: 0 6px 22px -8px rgba(var(--brown-rgb), .5);
+}
+.rangemap__cue-pill svg { width: 17px; height: 17px; flex: none; color: var(--brown-700); }
+.rangemap__frame.is-live .rangemap__cue { opacity: 0; }
 .rangemap__stage:focus-visible {
   outline: 3px solid var(--gold-400);
   outline-offset: 2px;
@@ -235,6 +271,7 @@
 @media (max-width: 700px) {
   .rangemap__stage { height: clamp(300px, 52vh, 460px); border-radius: var(--r-sm); }
   .rangemap__zoom { right: 8px; top: 8px; }
+  .rangemap__cue-pill { font-size: 11.5px; padding: 9px 14px 10px 12px; gap: 7px; }
   .rmzoom { width: 38px; height: 38px; }
   .prose-figure.rangemap { margin: 24px 0; }
   .rangemap__bar { gap: 6px; margin-bottom: 8px; }
@@ -264,4 +301,6 @@
 .prose-figure.rangemap { margin: 32px 0; }
 .prose .rangemap__bar { margin: 0 0 8px; }
 .prose .rangemap__readout { margin: 0; max-width: none; }
+/* .prose p caps paragraph width; the cue is an overlay, not running text. */
+.prose .rangemap__cue { max-width: none; }
 .prose .rangemap__stage { line-height: 0; }
