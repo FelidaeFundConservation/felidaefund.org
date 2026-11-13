@@ -50,9 +50,9 @@ def build(slug, data_dir):
               <div class="rangemap__bar">{''.join(bar)}</div>
               <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
             </div>
-            <div class="rangemap__frame">
+            <div class="rangemap__frame" style="--rm-ar: {W} / {H}">
               <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, {res} resident and {pos} possibly resident areas. Drag to move it, arrow keys to pan, plus and minus to zoom.">
-                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" data-base="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" data-base="0 0 {W} {H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
                 <g class="rm-land">
 {land}
                 </g>

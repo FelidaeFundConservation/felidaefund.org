@@ -52,15 +52,10 @@
   const MIN = 1, MAX = 8;
   let zoom = 1, cx = base[0] + base[2] / 2, cy = base[1] + base[3] / 2;
 
-  // preserveAspectRatio="slice" covers the frame, so the visible window is
-  // narrower than the viewBox on one axis. Panning has to respect that,
-  // otherwise the map can be dragged past its own edge.
-  const visible = () => {
-    const w = base[2] / zoom, h = base[3] / zoom;
-    const fr = stage.clientWidth / stage.clientHeight;
-    const vr = w / h;
-    return fr > vr ? [w, w / fr] : [h * fr, h];
-  };
+  // The frame matches the map's aspect and the SVG is fitted with "meet",
+  // so the whole viewBox is on screen and the visible window is simply
+  // the viewBox itself.
+  const visible = () => [base[2] / zoom, base[3] / zoom];
 
   // Scale bar. Its length is recomputed every time the zoom changes, and
   // the distance it stands for is rounded to something a reader can use.

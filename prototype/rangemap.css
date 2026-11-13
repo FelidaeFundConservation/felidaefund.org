@@ -15,10 +15,18 @@
 
    It pans by dragging and zooms with its own buttons, so it never takes
    the page's scroll away from the reader. */
-.rangemap__frame { position: relative; }
+.rangemap__frame { position: relative; display: flex; flex-direction: column; align-items: center; }
 
+/* Fixed height, width follows the map's own proportions, so the whole
+   range is visible at rest. Filling the frame instead would crop it: the
+   cheetah lost everything below Zambia, and a distribution map that hides
+   part of the distribution is worse than no map. */
 .rangemap__stage {
   height: clamp(340px, 56vh, 620px);
+  aspect-ratio: var(--rm-ar, 1);
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
   background: var(--rm-water);
   border: 1px solid rgba(var(--brown-rgb), .16);
   border-radius: var(--r-md);
