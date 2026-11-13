@@ -113,3 +113,12 @@
   .demo-compare { gap: 26px; }
   .demo-callout { padding: 18px 18px 20px; }
 }
+
+
+/* ─── Inside a species page's prose ─────────────────────────────────
+   .prose styles figures, so the component resets what it needs. */
+.prose-figure.rangemap { margin: 30px 0; max-width: 620px; }
+.prose .rangemap__bar { margin-top: 12px; }
+.prose .rangemap__readout { margin: 0; max-width: none; }
+.prose .rangemap__stage { line-height: 0; }
+.prose .rangemap__base { max-width: 100%; }
