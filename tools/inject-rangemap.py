@@ -13,10 +13,16 @@ LABEL = {'resident': 'Resident', 'possible': 'Possibly resident'}
 def build(slug, data_dir):
     m = json.load(open(os.path.join(data_dir, 'maps', f'{slug}-map.json')))
     W, H = m['w'], m['h']
-    counts = {}
+    counts, shares = {}, {}
     for s in m['shapes']:
         counts[s['band']] = counts.get(s['band'], 0) + 1
+        shares[s['band']] = shares.get(s['band'], 0.0) + s['share']
     res, pos = counts.get('resident', 0), counts.get('possible', 0)
+    # Share of mapped range, not a count of shapes. The count is an
+    # artifact of the tracing threshold and moved between 23 and 37 for
+    # the cheetah as the filters changed; the area barely shifts.
+    res_pc = round(shares.get('resident', 0))
+    pos_pc = round(shares.get('possible', 0))
 
     land = '\n'.join(f'                  <path d="{d}"/>' for d in m['land'])
     rng = '\n'.join(
@@ -34,10 +40,10 @@ def build(slug, data_dir):
     bar = []
     if res:
         bar.append('<button type="button" class="rmtoggle" data-band="resident" aria-pressed="true">'
-                   f'<span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">{res}</span></button>')
+                   f'<span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">{res_pc}%</span></button>')
     if pos:
         bar.append('<button type="button" class="rmtoggle" data-band="possible" aria-pressed="true">'
-                   f'<span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">{pos}</span></button>')
+                   f'<span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">{pos_pc}%</span></button>')
 
     frag = f'''<figure class="prose-figure rangemap">
             <div class="rangemap__head">

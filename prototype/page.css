@@ -682,3 +682,62 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
    ───────────────────────────────────────────────────────────────────── */
 
 }
+
+/* ─── Previous / next species ───────────────────────────────────────
+   Present on every live species page, dropped in the port. Order is
+   alphabetical, matching the index, so moving through pages matches
+   moving along the grid. */
+
+.spnav {
+  border-top: 1px solid rgba(var(--brown-rgb), .16);
+  padding: 30px 0 38px;
+}
+.spnav__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.spnav__slot {
+  display: flex; align-items: center; gap: 16px; min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(var(--brown-rgb), .16);
+  border-radius: var(--r-md);
+  background: transparent;
+  text-decoration: none;
+  transition: border-color .18s, box-shadow .18s, transform .18s;
+}
+.prose .spnav__slot, .spnav__slot:hover { text-decoration: none; }
+.spnav__slot--next { justify-content: flex-end; text-align: right; }
+.spnav__slot--empty { border: 0; }
+.spnav__slot:hover {
+  border-color: rgba(var(--gold-rgb), .42);
+  box-shadow: 0 0 0 1px rgba(var(--gold-rgb), .10),
+              0 4px 14px rgba(var(--gold-rgb), .14),
+              0 14px 40px -6px rgba(var(--brown-rgb), .14);
+  transform: translateY(-1px);
+}
+.spnav__media {
+  width: 62px; height: 62px; flex: none;
+  border-radius: 50%; overflow: hidden;
+  background: var(--cream-200);
+  border: 1px solid rgba(var(--gold-rgb), .3);
+}
+.spnav__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.spnav__text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.spnav__label {
+  font-family: var(--font-display); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--brown-400);
+}
+.spnav__name {
+  font-family: var(--font-body); font-size: 18px; line-height: 1.25;
+  color: var(--espresso-900);
+}
+
+@media (max-width: 620px) {
+  .spnav { padding: 22px 0 28px; }
+  .spnav__inner { grid-template-columns: 1fr; gap: 10px; }
+  .spnav__slot--next { justify-content: flex-start; text-align: left; flex-direction: row-reverse; }
+  .spnav__slot--empty { display: none; }
+  .spnav__media { width: 54px; height: 54px; }
+  .spnav__name { font-size: 16px; }
+}
