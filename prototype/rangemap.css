@@ -22,6 +22,16 @@
   width: 100%; height: 100%;
 }
 
+/* Covers IUCN's own legend panel. Matches the desaturated basemap rather
+   than the stage, so it reads as part of the map, not a patch on it. */
+.rp-mask {
+  stroke: none;
+  pointer-events: none;
+  /* The fill is computed per map from the pixels around the panel, so it
+     lands on the basemap's own tone. The blur dissolves the edges. */
+  filter: blur(5px);
+}
+
 .rp {
   stroke: rgba(var(--brown-rgb), .55);
   stroke-width: 1.4;
@@ -77,6 +87,12 @@
 }
 .rangemap__readout b { font-weight: 700; }
 .rangemap__hint { color: var(--brown-400); font-weight: 500; }
+/* A touch screen has nothing to point with. */
+.hint-touch { display: none; }
+@media (hover: none) {
+  .hint-hover { display: none; }
+  .hint-touch { display: inline; }
+}
 .rangemap__status { color: var(--brown-700); }
 .rangemap__share { display: block; color: var(--brown-400); font-weight: 500; font-size: 13px; }
 
@@ -111,6 +127,20 @@
 }
 .demo-callout p { margin: 0 0 11px; max-width: none; }
 .demo-callout p:last-child { margin-bottom: 0; }
+
+/* ─── Small screens ─────────────────────────────────────────────── */
+
+@media (max-width: 700px) {
+  .rangemap__stage { padding: 6px; border-radius: var(--r-sm); }
+  .prose-figure.rangemap { margin: 24px 0; }
+  .rangemap__bar { gap: 6px; margin-top: 10px; }
+  .rmtoggle { font-size: 12px; padding: 6px 11px 7px; }
+  .rangemap__readout { font-size: 13.5px; padding-top: 10px; min-height: 3.4em; }
+  .rangemap__share { font-size: 12.5px; }
+  /* Touch targets: a thin peninsula is hard to hit with a finger, so the
+     stroke is widened to give every shape a little more edge to catch. */
+  .rp { stroke-width: 3; }
+}
 
 @media (max-width: 560px) {
   .demo-compare { gap: 26px; }

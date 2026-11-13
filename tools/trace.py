@@ -126,7 +126,13 @@ def main(src, out, eps=1.4):
             d = 'M' + 'L'.join(f'{x},{y}' for y, x in simp) + 'Z'
             shapes.append({'band': key, 'area': area, 'd': d})
     shapes.sort(key=lambda s: -s['area'])
-    json.dump({'w': W, 'h': H, 'shapes': shapes}, open(out, 'w'))
+    out_d = {'w': W, 'h': H, 'shapes': shapes}
+    if box:
+        y0, y1, x0, x1 = box
+        # A little bleed so the panel's drop shadow goes with it.
+        out_d['legend'] = {'x': int(x0) - 5, 'y': int(y0) - 5,
+                           'w': int(x1 - x0) + 11, 'h': int(y1 - y0) + 11}
+    json.dump(out_d, open(out, 'w'))
     tot = {}
     for s in shapes:
         tot[s['band']] = tot.get(s['band'], 0) + 1

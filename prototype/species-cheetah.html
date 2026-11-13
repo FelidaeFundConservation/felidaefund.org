@@ -12,17 +12,17 @@
 
   <script>document.documentElement.classList.add('js');</script>
 
-  <link rel="stylesheet" href="tokens.css?v=55" />
-  <link rel="stylesheet" href="base.css?v=55" />
-  <link rel="stylesheet" href="components.css?v=55" />
-  <link rel="stylesheet" href="rangemap.css?v=55" />
-  <link rel="stylesheet" href="page.css?v=55" />
+  <link rel="stylesheet" href="tokens.css?v=58" />
+  <link rel="stylesheet" href="base.css?v=58" />
+  <link rel="stylesheet" href="components.css?v=58" />
+  <link rel="stylesheet" href="rangemap.css?v=58" />
+  <link rel="stylesheet" href="page.css?v=58" />
 
-  <script src="components/site-nav.js?v=55"></script>
-  <script src="components/site-footer.js?v=55"></script>
-  <script src="components/site-donate.js?v=55"></script>
-  <script src="components/rangemap.js?v=55" defer></script>
-  <script src="components/page.js?v=55" defer></script>
+  <script src="components/site-nav.js?v=58"></script>
+  <script src="components/site-footer.js?v=58"></script>
+  <script src="components/site-donate.js?v=58"></script>
+  <script src="components/rangemap.js?v=58" defer></script>
+  <script src="components/page.js?v=58" defer></script>
 </head>
 
 <body style="--page-accent: var(--project-tsavo)" data-ported="joomla">
@@ -137,6 +137,7 @@
             <div class="rangemap__stage">
               <img class="rangemap__base" src="https://felidaefund.org/media/cache/autosized/images/static/cheetah-map-960.webp" alt="" loading="lazy" />
               <svg class="rangemap__svg" viewBox="0 0 1021 1019" role="img" aria-label="Range map: 13 resident and 15 possibly resident populations.">
+                <rect class="rp-mask" x="69" y="563" width="234" height="86" rx="3" fill="#dddbd4"/>
               <path class="rp rp--resident" d="M371,742L371,746L368,748L367,761L370,774L382,792L397,824L405,835L404,851L408,859L408,871L413,885L422,894L426,893L433,886L434,882L430,876L430,872L434,867L433,856L435,848L438,845L449,845L461,850L461,857L457,859L461,869L461,879L464,882L479,882L486,887L487,907L490,906L489,883L492,877L513,877L522,870L523,864L527,863L528,859L549,859L554,854L557,845L575,831L582,833L583,842L580,849L586,857L588,864L592,865L596,863L595,844L600,843L601,837L610,835L610,829L601,830L599,835L591,835L586,827L565,825L560,822L547,824L540,837L535,838L518,813L516,800L518,777L524,778L527,782L528,791L535,795L544,789L542,782L534,776L527,776L525,773L511,773L508,769L479,775L467,775L448,773L440,768L435,773L424,776L422,778L422,786L414,787L413,782L404,774L400,774L399,778L394,777L394,773L399,772L399,768L387,765L387,761L392,759L394,755L392,745L388,742L382,744L372,742Z" data-band="resident" data-share="23.3"/>
               <path class="rp rp--resident" d="M301,238L285,246L273,244L257,248L244,253L242,256L243,278L246,283L246,300L247,304L252,307L255,312L257,329L252,330L247,327L240,328L236,333L236,340L258,360L262,358L270,346L299,339L317,322L367,290L364,283L355,278L350,278L347,275L346,268L340,259L340,254L344,252L343,246L338,244L319,248L307,238L302,238Z" data-band="resident" data-share="15.2"/>
               <path class="rp rp--possible" d="M691,401L687,451L677,451L671,464L675,464L676,456L685,457L686,464L688,465L693,465L699,461L710,464L712,468L711,494L701,504L688,510L693,511L695,517L687,521L683,526L665,524L652,515L643,515L640,512L640,522L629,535L630,544L628,545L628,549L633,549L635,552L636,566L641,564L646,565L646,570L640,571L643,573L643,583L653,581L653,566L647,563L646,555L646,548L649,542L655,543L662,549L667,549L673,543L677,543L680,547L681,555L673,561L672,572L667,573L666,578L663,580L664,590L666,591L678,588L683,588L687,591L692,585L696,585L698,588L702,588L705,585L699,575L699,533L709,520L700,520L702,509L710,507L714,513L714,518L720,517L725,511L731,511L732,518L744,517L746,507L776,477L776,474L765,474L733,463L732,458L736,457L735,452L729,452L728,456L724,456L719,447L719,443L725,433L720,433L708,414L703,411L697,403L692,401Z" data-band="possible" data-share="12.7"/>
@@ -168,7 +169,7 @@
               </svg>
             </div>
             <div class="rangemap__bar"><button type="button" class="rmtoggle" data-band="resident" aria-pressed="true"><span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">13</span></button><button type="button" class="rmtoggle" data-band="possible" aria-pressed="true"><span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">15</span></button></div>
-            <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint">Point at a population.</span></p>
+            <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Point at a population.</span><span class="hint-touch">Tap a population.</span></span></p>
           </figure>
           <h2>Threats to the Cheetah</h2>
           <p>Threats to the cheetah’s survival in the wild include habitat loss, declining prey numbers, and pressure from other species, including the lion, hyena, and the leopard. The cheetah is classified as Vulnerable (VU) by the International Union for Conservation of Nature (IUCN), and is listed in appendix I (which includes species that are most threatened) of the Convention of International Trade in Endangered Species (CITES).</p>

@@ -13,6 +13,13 @@ def build(slug, data_dir):
         f'data-band="{s["band"]}" data-share="{100.0*s["area"]/total:.1f}"/>'
         for s in shapes)
     res, pos = counts.get('resident', 0), counts.get('possible', 0)
+    # IUCN's own legend is covered: the toggles above the map replace it,
+    # and two legends saying the same thing in different styles is noise.
+    lg = d.get('legend')
+    fill = d.get('legendFill', '#ddd9d0')
+    mask = ('' if not lg else
+            f'\n                <rect class="rp-mask" x="{lg["x"]}" y="{lg["y"]}" '
+            f'width="{lg["w"]}" height="{lg["h"]}" rx="3" fill="{fill}"/>')
     bar = []
     if res:
         bar.append('<button type="button" class="rmtoggle" data-band="resident" aria-pressed="true">'
@@ -23,12 +30,12 @@ def build(slug, data_dir):
     return f'''<figure class="prose-figure rangemap">
             <div class="rangemap__stage">
               <img class="rangemap__base" src="https://felidaefund.org/media/cache/autosized/images/static/{slug}-map-960.webp" alt="" loading="lazy" />
-              <svg class="rangemap__svg" viewBox="0 0 {d['w']} {d['h']}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+              <svg class="rangemap__svg" viewBox="0 0 {d['w']} {d['h']}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">{mask}
 {paths}
               </svg>
             </div>
             <div class="rangemap__bar">{''.join(bar)}</div>
-            <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint">Point at a population.</span></p>
+            <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Point at a population.</span><span class="hint-touch">Tap a population.</span></span></p>
           </figure>''', res + pos
 
 def inject(page, slug, data_dir, ver):
