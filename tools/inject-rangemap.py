@@ -27,12 +27,9 @@ def build(slug, data_dir):
         f'                  <text x="{x:.0f}" y="{y:.0f}">{html.escape(n)}</text>'
         for x, y, n in m['labels'])
 
-    bw = m['scale']['units']
-    bx, by = W * .035, H - H * .045
-    scale = (f'                  <line x1="{bx:.0f}" y1="{by:.0f}" x2="{bx+bw:.0f}" y2="{by:.0f}"/>\n'
-             f'                  <line x1="{bx:.0f}" y1="{by-5:.0f}" x2="{bx:.0f}" y2="{by+5:.0f}"/>\n'
-             f'                  <line x1="{bx+bw:.0f}" y1="{by-5:.0f}" x2="{bx+bw:.0f}" y2="{by+5:.0f}"/>\n'
-             f'                  <text x="{bx:.0f}" y="{by-10:.0f}">{m["scale"]["km"]:,} km</text>')
+    # Kilometres per viewBox unit, so the scale bar can be redrawn in the
+    # frame at whatever zoom the reader is on.
+    km_per_unit = m['scale']['km'] / m['scale']['units']
 
     bar = []
     if res:
@@ -48,8 +45,8 @@ def build(slug, data_dir):
               <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
             </div>
             <div class="rangemap__frame">
-              <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, {res} resident and {pos} possibly resident areas. Activate to scroll around it.">
-                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+              <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, {res} resident and {pos} possibly resident areas. Drag to move it, arrow keys to pan, plus and minus to zoom.">
+                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" data-base="0 0 {W} {H}" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
                 <g class="rm-land">
 {land}
                 </g>
@@ -59,12 +56,16 @@ def build(slug, data_dir):
                 <g class="rm-labels" aria-hidden="true">
 {labels}
                 </g>
-                <g class="rm-scale" aria-hidden="true">
-{scale}
-                </g>
               </svg>
               </div>
-              <p class="rangemap__cue" aria-hidden="true"><span>Click to explore</span></p>
+              <div class="rangemap__scale" aria-hidden="true" data-kmpu="{km_per_unit:.6f}">
+                <span class="rangemap__scale-bar"></span><span class="rangemap__scale-label"></span>
+              </div>
+              <div class="rangemap__zoom">
+                <button type="button" class="rmzoom" data-zoom="in" aria-label="Zoom in">+</button>
+                <button type="button" class="rmzoom" data-zoom="out" aria-label="Zoom out">&minus;</button>
+                <button type="button" class="rmzoom rmzoom--reset" data-zoom="reset" aria-label="Reset the view">Reset</button>
+              </div>
             </div>
           </figure>'''
     return frag, res + pos

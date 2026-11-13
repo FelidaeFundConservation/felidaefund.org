@@ -35,8 +35,8 @@
     <header class="page-head">
       <div class="container">
         <p class="page-eyebrow">Concept &middot; Cheetah</p>
-        <h1 class="page-title">The range map, made live</h1>
-        <p class="page-lede">Same map, same shapes. The difference is that the browser now knows what they are, so they can be pointed at, measured and switched off. Point at a population on the right.</p>
+        <h1 class="page-title">The range map, made live</h1>
+        <p class="page-lede">Same map, same shapes. The difference is that the browser now knows what they are, so they can be pointed at, measured and switched off. Point at a population on the right.</p>
       </div>
     </header>
 
@@ -45,9 +45,9 @@
 
         <div class="demo-compare">
           <figure class="demo-compare__item">
-            <p class="demo-tag demo-tag--now">On the site today</p>
+            <p class="demo-tag demo-tag--now">On the site today</p>
             <img src="https://felidaefund.org/media/cache/autosized/images/static/cheetah-map-960.webp" alt="The current cheetah distribution map, a flat screenshot." loading="lazy" />
-            <p class="demo-note">A flat JPEG. Every shape on it is just coloured pixels. Nothing can be pointed at, nothing can be counted, nothing can be turned off, and it softens whenever it is shown larger than 1,020px.</p>
+            <p class="demo-note">A flat JPEG. Every shape on it is just coloured pixels. Nothing can be pointed at, nothing can be counted, nothing can be turned off, and it softens whenever it is shown larger than 1,020px.</p>
           </figure>
 
           <div class="demo-compare__item">
@@ -103,33 +103,33 @@
                 <span class="rangemap__hint">Point at a population. Use the buttons to show one band at a time.</span>
               </p>
             </div>
-            <p class="demo-note">Vector, so it stays sharp at any size. Drawn in Felidae's palette rather than Esri's. 28 separate populations, each one a thing the page can talk about.</p>
+            <p class="demo-note">Vector, so it stays sharp at any size. Drawn in Felidae's palette rather than Esri's. 28 separate populations, each one a thing the page can talk about.</p>
           </div>
         </div>
 
         <div class="prose reveal">
-          <h2>What the shapes make possible</h2>
+          <h2>What the shapes make possible</h2>
           <ul>
-            <li><strong>Each population is a separate object.</strong> The cheetah's range is not one blob, it is 28 fragments. The biggest is 23.3% of what is left. A flat image cannot say that; this one counted it.</li>
-            <li><strong>Bands can be switched off.</strong> Turn off "possibly resident" and you see only where the cheetah is confirmed. In the screenshot those colours are baked into the pixels.</li>
-            <li><strong>It stops going blurry.</strong> The shapes redraw at any size on any screen.</li>
-            <li><strong>It carries Felidae's colours,</strong> not the default styling of somebody else's map viewer.</li>
-            <li><strong>A population can link to a project.</strong> The Tsavo shape could point straight at the Tsavo Cheetah Project.</li>
+            <li><strong>Each population is a separate object.</strong> The cheetah's range is not one blob, it is 28 fragments. The biggest is 23.3% of what is left. A flat image cannot say that; this one counted it.</li>
+            <li><strong>Bands can be switched off.</strong> Turn off "possibly resident" and you see only where the cheetah is confirmed. In the screenshot those colours are baked into the pixels.</li>
+            <li><strong>It stops going blurry.</strong> The shapes redraw at any size on any screen.</li>
+            <li><strong>It carries Felidae's colours,</strong> not the default styling of somebody else's map viewer.</li>
+            <li><strong>A population can link to a project.</strong> The Tsavo shape could point straight at the Tsavo Cheetah Project.</li>
           </ul>
 
-          <h2>How it scales to the other pages</h2>
-          <p>The shapes were not drawn by hand. A script reads the existing map image, finds the two legend colours, traces the edges of every region and writes them out as vector paths. On this map that produced 28 shapes from 8KB of path data.</p>
-          <p>The same script runs on any of the 36 species maps without changes, because they all use the same two legend colours from the same IUCN viewer. Adding a species is running one command, not redrawing a map.</p>
+          <h2>How it scales to the other pages</h2>
+          <p>The shapes were not drawn by hand. A script reads the existing map image, finds the two legend colours, traces the edges of every region and writes them out as vector paths. On this map that produced 28 shapes from 8KB of path data.</p>
+          <p>The same script runs on any of the 36 species maps without changes, because they all use the same two legend colours from the same IUCN viewer. Adding a species is running one command, not redrawing a map.</p>
 
-          <h2>What to check before this goes anywhere</h2>
+          <h2>What to check before this goes anywhere</h2>
           <div class="demo-callout">
-            <p><strong>The shapes are traced from IUCN's map,</strong> which makes them a derivative of IUCN's data. For an internal prototype that is fine. Before it ships on the public site, that is the thing to put in writing to them, and it is a request, not a purchase.</p>
-            <p><strong>Tracing is approximate.</strong> Edges are simplified and regions smaller than a pixel threshold are dropped, so this is the shape of the range, not a survey. Good enough to point at, not good enough to cite.</p>
-            <p><strong>Holes are not cut out.</strong> A region with a gap in the middle is traced as its outer edge only.</p>
+            <p><strong>The shapes are traced from IUCN's map,</strong> which makes them a derivative of IUCN's data. For an internal prototype that is fine. Before it ships on the public site, that is the thing to put in writing to them, and it is a request, not a purchase.</p>
+            <p><strong>Tracing is approximate.</strong> Edges are simplified and regions smaller than a pixel threshold are dropped, so this is the shape of the range, not a survey. Good enough to point at, not good enough to cite.</p>
+            <p><strong>Holes are not cut out.</strong> A region with a gap in the middle is traced as its outer edge only.</p>
           </div>
 
-          <h2>The open question for the team</h2>
-          <p>Is a live map worth it on a page whose job is to make someone care about a cheetah? The argument for is that fragmentation <em>is</em> the story. Seeing 28 scattered pieces, and being able to switch off the ones that are only maybe still there, says something a static picture does not.</p>
+          <h2>The open question for the team</h2>
+          <p>Is a live map worth it on a page whose job is to make someone care about a cheetah? The argument for is that fragmentation <em>is</em> the story. Seeing 28 scattered pieces, and being able to switch off the ones that are only maybe still there, says something a static picture does not.</p>
         </div>
 
       </div>

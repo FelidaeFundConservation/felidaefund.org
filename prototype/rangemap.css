@@ -9,13 +9,14 @@
 .rangemap { --rm-water: color-mix(in srgb, var(--project-bapp) 13%, var(--cream-100)); }
 
 /* Fixed frame. Ranges differ wildly in shape, so drawn at natural size
-   a species page is 700px tall and another is 2,600px. A frame of one
-   height keeps the page predictable and lets the map be read at a
-   useful scale rather than shrunk to fit.
+   one species page ran 700px and another 2,600px. A frame of one height
+   keeps every page the same length and lets the map be read at a useful
+   scale rather than shrunk to fit.
 
-   Scrolling inside it is off until the frame is activated. A pane that
-   swallows the page scroll the moment the pointer crosses it is a trap;
-   this way nothing changes until the reader asks for it. */
+   It pans by dragging and zooms with its own buttons, so it never takes
+   the page's scroll away from the reader. */
+.rangemap__frame { position: relative; }
+
 .rangemap__stage {
   height: clamp(340px, 56vh, 620px);
   background: var(--rm-water);
@@ -23,63 +24,21 @@
   border-radius: var(--r-md);
   overflow: hidden;
   line-height: 0;
-  cursor: pointer;
+  cursor: grab;
+  touch-action: none;          /* the frame handles the drag itself */
 }
+.rangemap__stage.is-dragging { cursor: grabbing; }
 .rangemap__stage:focus-visible {
   outline: 3px solid var(--gold-400);
   outline-offset: 2px;
 }
-.rangemap__stage.is-live {
-  overflow: auto;
-  overscroll-behavior: contain;
-  cursor: default;
-  border-color: var(--gold-400);
-  box-shadow: 0 0 0 2px rgba(var(--gold-rgb), .4);
-}
-/* Width is set by script to cover the frame; this is the pre-script state. */
-.rangemap__svg { width: 100%; height: auto; display: block; }
+.rangemap__svg { width: 100%; height: 100%; display: block; }
 
-/* The cue sits outside the scroller, so it stays put while the map moves
-   underneath it. Inside, it scrolled away with the content. */
-.rangemap__frame { position: relative; }
-
-.rangemap__cue {
-  position: absolute; inset: 0; z-index: 1;
-
-  display: flex; align-items: flex-end; justify-content: center;
-  padding-bottom: 18px;
-  margin: 0; pointer-events: none;
-  background: linear-gradient(to bottom,
-    rgba(var(--brown-rgb), 0) 55%, rgba(var(--brown-rgb), .16));
-  transition: opacity .2s;
-}
-.rangemap__cue span {
-  font-family: var(--font-display); font-size: 12.5px; font-weight: 700;
-  letter-spacing: .08em; text-transform: uppercase;
-  color: var(--espresso-900);
-  background: var(--gold-400);
-  border-radius: 999px;
-  padding: 7px 16px 8px;
-  line-height: 1.1;
-}
-.rangemap__frame:has(.is-live) .rangemap__cue { opacity: 0; pointer-events: none; }
-
-.rm-land path {
-  fill: var(--cream-300);
-  stroke: rgba(var(--brown-rgb), .3);
-  stroke-width: .9;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-/* Type inside the SVG is in user units, so it shrinks with the map. At
-   375px the map renders about a third of its 1000-unit width, which put
-   a 13-unit label at roughly 4 real pixels. The sizes below are stepped
-   up so the rendered type stays near 11px, and the label list is cut
-   back as it grows, since bigger type on a smaller map collides. */
+/* Labels are counter-scaled by --rm-zoom so they stay the same size on
+   screen as the map zooms, the way they do on any real map. */
 .rm-labels text {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: calc(var(--rm-label, 13px) / var(--rm-zoom, 1));
   font-weight: 600;
   letter-spacing: .07em;
   text-transform: uppercase;
@@ -87,21 +46,32 @@
   text-anchor: middle;
   paint-order: stroke;
   stroke: var(--cream-300);
-  stroke-width: 3.5;
+  stroke-width: calc(var(--rm-label-stroke, 3.5px) / var(--rm-zoom, 1));
   stroke-linejoin: round;
 }
 
-.rm-scale line {
-  stroke: var(--brown-400);
-  stroke-width: 1.5;
-  vector-effect: non-scaling-stroke;
+/* ─── Scale bar ─────────────────────────────────────────────────────
+   Lives in the frame, not in the map: it has to stay put while the map
+   moves under it, and its length is recomputed on every zoom. */
+.rangemap__scale {
+  position: absolute; left: 14px; bottom: 12px; z-index: 2;
+  display: flex; flex-direction: column; gap: 3px;
+  font-family: var(--font-display); font-size: 11.5px; font-weight: 700;
+  letter-spacing: .05em; color: var(--brown-700); line-height: 1;
+  text-shadow: 0 0 3px var(--cream-100), 0 0 3px var(--cream-100);
 }
-.rm-scale text {
-  font-family: var(--font-display);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .05em;
-  fill: var(--brown-400);
+.rangemap__scale-bar {
+  display: block; height: 7px;
+  border: 1.5px solid var(--brown-700);
+  border-top: 0;
+}
+
+.rm-land path {
+  fill: var(--cream-300);
+  stroke: rgba(var(--brown-rgb), .3);
+  stroke-width: .9;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
 /* ─── Range shapes ──────────────────────────────────────────────────
@@ -115,7 +85,7 @@
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
   transition: fill .13s, fill-opacity .13s, stroke .13s, opacity .18s;
-  cursor: pointer;
+  cursor: inherit;
 }
 .rp--resident { fill: var(--gold-300); }
 .rp--possible { fill: var(--project-tsavo); fill-opacity: .3; }
@@ -129,6 +99,33 @@
 
 .rangemap.hide-resident .rp--resident,
 .rangemap.hide-possible .rp--possible { opacity: 0; pointer-events: none; }
+
+/* ─── Zoom controls ─────────────────────────────────────────────── */
+
+.rangemap__zoom {
+  position: absolute; right: 12px; top: 12px; z-index: 2;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.rmzoom {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 19px; font-weight: 600;
+  line-height: 1;
+  color: var(--espresso-900);
+  background: var(--cream-100);
+  border: 1px solid rgba(var(--brown-rgb), .25);
+  border-radius: var(--r-sm);
+  box-shadow: 0 2px 6px -2px rgba(var(--brown-rgb), .4);
+  transition: background .14s, border-color .14s, opacity .14s;
+}
+.rmzoom:hover { background: var(--gold-100); border-color: var(--gold-400); }
+.rmzoom:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .6); }
+.rmzoom:disabled { opacity: .4; cursor: default; }
+.rmzoom--reset {
+  width: auto; height: 28px; padding: 0 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase;
+}
 
 /* ─── Controls ──────────────────────────────────────────────────── */
 
@@ -221,26 +218,24 @@
 /* ─── Small screens ─────────────────────────────────────────────── */
 
 @media (max-width: 1080px) {
-  .rm-labels text { font-size: 17px; stroke-width: 4.5; }
-  .rm-scale text { font-size: 16px; }
+  .rangemap { --rm-label: 17px; --rm-label-stroke: 4.5px; }
   .rm-labels text:nth-of-type(n+19) { display: none; }
 }
 
 @media (max-width: 760px) {
-  .rm-labels text { font-size: 27px; stroke-width: 7; }
-  .rm-scale text { font-size: 25px; }
-  .rm-scale line { stroke-width: 1.8; }
+  .rangemap { --rm-label: 27px; --rm-label-stroke: 7px; }
   .rm-labels text:nth-of-type(n+10) { display: none; }
 }
 
 @media (max-width: 480px) {
-  .rm-labels text { font-size: 34px; stroke-width: 9; }
-  .rm-scale text { font-size: 31px; }
+  .rangemap { --rm-label: 34px; --rm-label-stroke: 9px; }
   .rm-labels text:nth-of-type(n+7) { display: none; }
 }
 
 @media (max-width: 700px) {
   .rangemap__stage { height: clamp(300px, 52vh, 460px); border-radius: var(--r-sm); }
+  .rangemap__zoom { right: 8px; top: 8px; }
+  .rmzoom { width: 38px; height: 38px; }
   .prose-figure.rangemap { margin: 24px 0; }
   .rangemap__bar { gap: 6px; margin-bottom: 8px; }
   .rmtoggle { font-size: 12px; padding: 6px 11px 7px; }
@@ -269,7 +264,4 @@
 .prose-figure.rangemap { margin: 32px 0; }
 .prose .rangemap__bar { margin: 0 0 8px; }
 .prose .rangemap__readout { margin: 0; max-width: none; }
-/* .prose p caps paragraph width. The cue is a positioned overlay, not
-   running text, so it has to beat that rule on specificity. */
-.prose .rangemap__cue { max-width: none; }
 .prose .rangemap__stage { line-height: 0; }

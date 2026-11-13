@@ -408,15 +408,26 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 
 /* Pictures that sit inside the body copy */
 .prose-figure { margin: 28px 0; }
+/* One height for every body image, so a page has a steady rhythm instead
+   of bands of 542, 641 and 639px. Cropped from the centre: these are
+   landscape wildlife photographs, where the subject sits mid-frame. */
 .prose-figure img {
-  width: 100%; height: auto; display: block;
+  width: 100%; display: block;
+  height: clamp(260px, 44vh, 440px);
+  object-fit: cover;
+  object-position: center;
   border-radius: var(--r-md); border: 1px solid rgba(var(--gold-rgb), .22);
 }
+/* The map draws its own frame and must not be cropped. */
+.prose-figure.rangemap img,
+.prose-figure.rangemap svg { height: auto; object-fit: initial; }
+.prose-figure--small img { height: auto; object-fit: initial; }
 .prose-figure figcaption {
   font-family: var(--font-display); font-size: 12px; line-height: 1.6;
   color: var(--brown-400); padding-top: 10px;
 }
 .prose-figure--small img { max-width: 320px; }
+
 
 /* Distribution maps. The master files are only ~1020px square, so at the
    full 1216px content width they were being upscaled 2.5x on a Retina
@@ -485,6 +496,23 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   gap: 7px;
   min-width: 0;
 }
+
+.fact {
+  transition: border-color .18s, box-shadow .18s, transform .18s;
+}
+.fact:hover {
+  border-color: rgba(var(--gold-rgb), .42);
+  /* Wide and faint rather than a tight bright ring: the glow should read
+     as the card lifting off the page, not as a second border. */
+  box-shadow: 0 0 0 1px rgba(var(--gold-rgb), .10),
+              0 4px 14px rgba(var(--gold-rgb), .14),
+              0 14px 40px -6px rgba(var(--brown-rgb), .14);
+  transform: translateY(-1px);
+}
+.fact--status:hover { border-color: var(--gold-400); }
+/* The project row is tertiary and has no box, so it keeps its own
+   quieter hover rather than lifting like a card. */
+.fact--project:hover { box-shadow: none; transform: none; }
 
 .fact__icon { width: 19px; height: 19px; color: var(--page-accent, var(--brown-700)); flex: none; }
 .fact__icon svg { width: 100%; height: 100%; display: block; }

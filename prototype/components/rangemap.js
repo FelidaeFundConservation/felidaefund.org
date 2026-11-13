@@ -1,7 +1,7 @@
 // Range map. The polygons are real shapes, so they can be pointed at,
-// measured and switched off. The readout and the toggles sit in a sticky
-// header: the map is often taller than the window, and a readout that
-// scrolls out of view while you are still pointing at the map is useless.
+// measured and switched off. The frame pans by dragging and zooms with
+// its own buttons, the way a map is expected to behave; nothing here
+// touches the page's own scrolling.
 (() => {
   const map = document.querySelector('.rangemap');
   if (!map) return;
@@ -22,60 +22,8 @@
       ' — ' + el.dataset.share + '% of this species’ mapped range';
   };
 
-  map.addEventListener('pointerover', (e) => {
-    const t = e.target.closest('.rp');
-    if (t) show(t);
-  });
   map.addEventListener('pointerleave', reset);
-  map.addEventListener('click', (e) => {
-    const t = e.target.closest('.rp');
-    if (t) show(t);
-  });
 
-  // The frame scrolls only once the reader activates it. Until then it
-  // is a picture, and the page scrolls normally over the top of it.
-  const stage = map.querySelector('.rangemap__stage');
-  if (stage) {
-    const svg = stage.querySelector('.rangemap__svg');
-    const vb = (svg.getAttribute('viewBox') || '0 0 1 1').split(/\s+/).map(Number);
-    const ratio = vb[2] / vb[3];
-
-    // Fill the frame in both axes. Width alone leaves dead space whenever
-    // the frame is taller than the map's aspect, which is most phones.
-    const cover = () => {
-      const w = stage.clientWidth, h = stage.clientHeight;
-      svg.style.width = Math.max(w, Math.ceil(h * ratio)) + 'px';
-      svg.style.height = 'auto';
-    };
-
-    const centre = () => {
-      cover();
-      stage.scrollTop = Math.max(0, (stage.scrollHeight - stage.clientHeight) / 2);
-      stage.scrollLeft = Math.max(0, (stage.scrollWidth - stage.clientWidth) / 2);
-    };
-    const live = (on) => {
-      stage.classList.toggle('is-live', on);
-      if (on) centre();
-    };
-    // Start showing the middle of the range rather than its top edge.
-    // The SVG has to be laid out first, so this runs again after load.
-    requestAnimationFrame(centre);
-    window.addEventListener('load', centre);
-    window.addEventListener('resize', () => {
-      if (!stage.classList.contains('is-live')) centre();
-    });
-    setTimeout(centre, 400);
-    stage.addEventListener('click', () => live(true));
-    stage.addEventListener('focus', () => live(true));
-    stage.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') { live(false); stage.blur(); }
-    });
-    document.addEventListener('click', (e) => {
-      if (!stage.contains(e.target)) live(false);
-    });
-  }
-
-  // Hiding a band is only possible because the shapes are drawn live.
   map.querySelectorAll('.rmtoggle').forEach(btn => {
     btn.addEventListener('click', () => {
       const on = btn.getAttribute('aria-pressed') === 'true';
@@ -84,4 +32,118 @@
       reset();
     });
   });
+
+  // ── Pan and zoom ──────────────────────────────────────────────────
+  const stage = map.querySelector('.rangemap__stage');
+  const svg = map.querySelector('.rangemap__svg');
+  if (!stage || !svg) return;
+
+  const base = (svg.dataset.base || '0 0 1000 1000').split(/\s+/).map(Number);
+  const MIN = 1, MAX = 8;
+  let zoom = 1, cx = base[0] + base[2] / 2, cy = base[1] + base[3] / 2;
+
+  // preserveAspectRatio="slice" covers the frame, so the visible window is
+  // narrower than the viewBox on one axis. Panning has to respect that,
+  // otherwise the map can be dragged past its own edge.
+  const visible = () => {
+    const w = base[2] / zoom, h = base[3] / zoom;
+    const fr = stage.clientWidth / stage.clientHeight;
+    const vr = w / h;
+    return fr > vr ? [w, w / fr] : [h * fr, h];
+  };
+
+  // Scale bar. Its length is recomputed every time the zoom changes, and
+  // the distance it stands for is rounded to something a reader can use.
+  const scaleEl = map.querySelector('.rangemap__scale');
+  const kmPerUnit = scaleEl ? parseFloat(scaleEl.dataset.kmpu) : 0;
+  const NICE = [1, 2, 5, 10, 25, 50, 100, 200, 250, 500, 1000, 2000, 2500, 5000];
+
+  const drawScale = (vw) => {
+    if (!scaleEl || !kmPerUnit) return;
+    const pxPerUnit = stage.clientWidth / vw;
+    const targetKm = (stage.clientWidth * 0.22) / pxPerUnit * kmPerUnit;
+    let km = NICE[0];
+    for (const n of NICE) if (n <= targetKm) km = n;
+    scaleEl.querySelector('.rangemap__scale-bar').style.width =
+      Math.round((km / kmPerUnit) * pxPerUnit) + 'px';
+    scaleEl.querySelector('.rangemap__scale-label').textContent =
+      km.toLocaleString() + ' km';
+  };
+
+  const apply = () => {
+    const w = base[2] / zoom, h = base[3] / zoom;
+    const [vw, vh] = visible();
+    cx = Math.min(base[0] + base[2] - vw / 2, Math.max(base[0] + vw / 2, cx));
+    cy = Math.min(base[1] + base[3] - vh / 2, Math.max(base[1] + vh / 2, cy));
+    svg.setAttribute('viewBox', `${cx - w / 2} ${cy - h / 2} ${w} ${h}`);
+    map.style.setProperty('--rm-zoom', zoom);
+    drawScale(vw);
+    map.querySelector('[data-zoom="in"]').disabled = zoom >= MAX - 1e-6;
+    map.querySelector('[data-zoom="out"]').disabled = zoom <= MIN + 1e-6;
+  };
+
+  const setZoom = (next) => { zoom = Math.min(MAX, Math.max(MIN, next)); apply(); };
+
+  map.querySelectorAll('.rmzoom').forEach(b => {
+    b.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const k = b.dataset.zoom;
+      if (k === 'in') setZoom(zoom * 1.5);
+      else if (k === 'out') setZoom(zoom / 1.5);
+      else { zoom = 1; cx = base[0] + base[2] / 2; cy = base[1] + base[3] / 2; apply(); }
+    });
+  });
+
+  // Drag to move. Pointer capture keeps the gesture alive if the cursor
+  // leaves the frame mid-drag.
+  let drag = null;
+  stage.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    const [vw, vh] = visible();
+    drag = { x: e.clientX, y: e.clientY, cx, cy,
+             ux: vw / stage.clientWidth, uy: vh / stage.clientHeight, moved: false };
+    stage.setPointerCapture(e.pointerId);
+    stage.classList.add('is-dragging');
+  });
+  stage.addEventListener('pointermove', (e) => {
+    if (drag) {
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (Math.abs(dx) + Math.abs(dy) > 3) drag.moved = true;
+      cx = drag.cx - dx * drag.ux;
+      cy = drag.cy - dy * drag.uy;
+      apply();
+      return;
+    }
+    const t = e.target.closest('.rp');
+    if (t) show(t);
+  });
+  const endDrag = (e) => {
+    if (!drag) return;
+    stage.classList.remove('is-dragging');
+    try { stage.releasePointerCapture(e.pointerId); } catch (_) {}
+    drag = null;
+  };
+  stage.addEventListener('pointerup', endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+
+  // Tapping a shape still reports it, as long as it was a tap not a drag.
+  stage.addEventListener('click', (e) => {
+    const t = e.target.closest('.rp');
+    if (t) show(t);
+  });
+
+  // Keyboard: arrows pan, +/- zoom, 0 resets.
+  stage.addEventListener('keydown', (e) => {
+    const [vw, vh] = visible();
+    const step = 0.12;
+    const moves = { ArrowLeft: [-vw * step, 0], ArrowRight: [vw * step, 0],
+                    ArrowUp: [0, -vh * step], ArrowDown: [0, vh * step] };
+    if (moves[e.key]) { e.preventDefault(); cx += moves[e.key][0]; cy += moves[e.key][1]; apply(); }
+    else if (e.key === '+' || e.key === '=') { e.preventDefault(); setZoom(zoom * 1.5); }
+    else if (e.key === '-' || e.key === '_') { e.preventDefault(); setZoom(zoom / 1.5); }
+    else if (e.key === '0') { e.preventDefault(); zoom = 1; cx = base[0] + base[2] / 2; cy = base[1] + base[3] / 2; apply(); }
+  });
+
+  window.addEventListener('resize', apply);
+  apply();
 })();
