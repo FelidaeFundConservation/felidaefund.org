@@ -30,10 +30,13 @@
   transition: fill .13s, opacity .18s;
   cursor: pointer;
 }
-.rp--resident { fill: var(--gold-400); }
-.rp--possible { fill: var(--project-tsavo); fill-opacity: .42; }
+/* Light at rest, darker on hover: the same hue going down a step, so the
+   band a shape belongs to never changes when you point at it. */
+.rp--resident { fill: var(--gold-300); }
+.rp--possible { fill: var(--project-tsavo); fill-opacity: .3; }
 
-.rp.is-on { fill: var(--espresso-900); fill-opacity: 1; }
+.rp--resident:hover, .rp--resident.is-on { fill: var(--gold-500); }
+.rp--possible:hover, .rp--possible.is-on { fill-opacity: .82; }
 
 .rangemap.hide-resident .rp--resident,
 .rangemap.hide-possible .rp--possible { opacity: 0; pointer-events: none; }
@@ -63,8 +66,8 @@
   width: 13px; height: 13px; border-radius: 3px; flex: none;
   border: 1px solid rgba(var(--brown-rgb), .3);
 }
-.sw--resident { background: var(--gold-400); }
-.sw--possible { background: color-mix(in srgb, var(--project-tsavo) 42%, var(--cream-200)); }
+.sw--resident { background: var(--gold-300); }
+.sw--possible { background: color-mix(in srgb, var(--project-tsavo) 30%, var(--cream-200)); }
 .rmtoggle__n { font-weight: 400; color: var(--brown-400); }
 
 .rangemap__readout {
@@ -117,7 +120,10 @@
 
 /* ─── Inside a species page's prose ─────────────────────────────────
    .prose styles figures, so the component resets what it needs. */
-.prose-figure.rangemap { margin: 30px 0; max-width: 620px; }
+/* Full column width. The basemap underneath is raster, but it is
+   desaturated to a faint backdrop and the shapes on top are vector, so
+   the detail that matters stays sharp. */
+.prose-figure.rangemap { margin: 32px 0; }
 .prose .rangemap__bar { margin-top: 12px; }
 .prose .rangemap__readout { margin: 0; max-width: none; }
 .prose .rangemap__stage { line-height: 0; }

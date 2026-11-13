@@ -423,7 +423,9 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
    screen. Capped at 520px they render about 1:1 and stay sharp. Matched
    on the filename for now; this becomes a class when the species figure
    is turned into a real component. */
-.prose-figure img[src*="-map-"] {
+/* Static distribution maps only. Inside the live component the basemap is
+   a backdrop under vector shapes and fills the frame. */
+.prose-figure:not(.rangemap) img[src*="-map-"] {
   max-width: 520px;
   margin-inline: auto;
 }
