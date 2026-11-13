@@ -3,12 +3,17 @@
    Page-specific sections stay in each page's own <style>. */
 /* ─── Reset ────────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background: var(--espresso-900); overflow-x: hidden; }@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; }
+    /* clip, not hidden. overflow-x:hidden computes overflow-y to auto,
+       which turns html and body into scroll containers and silently
+       breaks every position:sticky on the site. clip does the same job
+       without that. The hidden line stays first as a fallback. */
+    html { background: var(--espresso-900); overflow-x: hidden; overflow-x: clip; }@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; }
 }
     body {
       font-family: var(--font-body);
       touch-action: pan-y;
       overflow-x: hidden;
+      overflow-x: clip;
       background: var(--cream-100);
       color: var(--espresso-900);
       -webkit-font-smoothing: antialiased;

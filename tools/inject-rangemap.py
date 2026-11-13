@@ -43,8 +43,10 @@ def build(slug, data_dir):
                    f'<span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">{pos}</span></button>')
 
     frag = f'''<figure class="prose-figure rangemap">
-            <div class="rangemap__bar">{''.join(bar)}</div>
-            <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Point at a population.</span><span class="hint-touch">Tap a population.</span></span></p>
+            <div class="rangemap__head">
+              <div class="rangemap__bar">{''.join(bar)}</div>
+              <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
+            </div>
             <div class="rangemap__stage">
               <svg class="rangemap__svg" viewBox="0 0 {W} {H}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
                 <g class="rm-land">

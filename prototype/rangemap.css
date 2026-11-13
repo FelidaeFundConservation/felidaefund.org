@@ -85,9 +85,20 @@
 
 /* ─── Controls ──────────────────────────────────────────────────── */
 
+/* The map is routinely taller than the window, so the controls and the
+   readout stick to the top while it is on screen. Otherwise the answer
+   scrolls away while you are still pointing at the question. */
+.rangemap__head {
+  position: sticky;
+  top: calc(var(--nav-h) + 6px);
+  z-index: 2;
+  background: var(--cream-100);
+  padding: 8px 0 10px;
+}
+
 .rangemap__bar {
   display: flex; flex-wrap: wrap; gap: 8px;
-  margin: 0 0 10px;
+  margin: 0 0 8px;
 }
 .rmtoggle {
   display: inline-flex; align-items: center; gap: 8px;
@@ -115,7 +126,7 @@
 .rangemap__readout {
   font-family: var(--font-display); font-size: 14px; line-height: 1.5;
   color: var(--espresso-900);
-  min-height: 2.9em; padding: 0 2px 10px;
+  min-height: 1.6em; padding: 0 2px;
 }
 .rangemap__readout b { font-weight: 700; }
 .rangemap__hint { color: var(--brown-400); font-weight: 500; }
@@ -126,7 +137,7 @@
   .hint-touch { display: inline; }
 }
 .rangemap__status { color: var(--brown-700); }
-.rangemap__share { display: block; color: var(--brown-400); font-weight: 500; font-size: 13px; }
+.rangemap__share { color: var(--brown-400); font-weight: 500; }
 
 /* ─── Demo scaffolding (concept page only) ──────────────────────── */
 
@@ -186,7 +197,8 @@
   .prose-figure.rangemap { margin: 24px 0; }
   .rangemap__bar { gap: 6px; margin-bottom: 8px; }
   .rmtoggle { font-size: 12px; padding: 6px 11px 7px; }
-  .rangemap__readout { font-size: 13.5px; padding-bottom: 8px; min-height: 3.2em; }
+  .rangemap__readout { font-size: 13px; min-height: 2.9em; }
+  .rangemap__head { top: 6px; padding: 6px 0 8px; }
   .rangemap__share { font-size: 12.5px; }
   /* Touch targets: a thin peninsula is hard to hit with a finger, so the
      stroke is widened to give every shape a little more edge to catch. */
@@ -208,6 +220,6 @@
    without a second scroll. The maps are square, so height is the
    constraint, not width. */
 .prose-figure.rangemap { margin: 32px 0; }
-.prose .rangemap__bar { margin: 0 0 10px; }
-.prose .rangemap__readout { margin: 0 0 10px; max-width: none; }
+.prose .rangemap__bar { margin: 0 0 8px; }
+.prose .rangemap__readout { margin: 0; max-width: none; }
 .prose .rangemap__stage { line-height: 0; }

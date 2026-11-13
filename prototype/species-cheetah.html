@@ -12,17 +12,17 @@
 
   <script>document.documentElement.classList.add('js');</script>
 
-  <link rel="stylesheet" href="tokens.css?v=63" />
-  <link rel="stylesheet" href="base.css?v=63" />
-  <link rel="stylesheet" href="components.css?v=63" />
-  <link rel="stylesheet" href="rangemap.css?v=63" />
-  <link rel="stylesheet" href="page.css?v=63" />
+  <link rel="stylesheet" href="tokens.css?v=65" />
+  <link rel="stylesheet" href="base.css?v=65" />
+  <link rel="stylesheet" href="components.css?v=65" />
+  <link rel="stylesheet" href="rangemap.css?v=65" />
+  <link rel="stylesheet" href="page.css?v=65" />
 
-  <script src="components/site-nav.js?v=63"></script>
-  <script src="components/site-footer.js?v=63"></script>
-  <script src="components/site-donate.js?v=63"></script>
-  <script src="components/rangemap.js?v=63" defer></script>
-  <script src="components/page.js?v=63" defer></script>
+  <script src="components/site-nav.js?v=65"></script>
+  <script src="components/site-footer.js?v=65"></script>
+  <script src="components/site-donate.js?v=65"></script>
+  <script src="components/rangemap.js?v=65" defer></script>
+  <script src="components/page.js?v=65" defer></script>
 </head>
 
 <body style="--page-accent: var(--project-tsavo)" data-ported="joomla">
@@ -134,8 +134,10 @@
           <p>The cheetah prefers open country, such as grassy plains, open woodlands, and semi-desert. It has been estimated that in 1900 the world had more than 100,000 cheetahs distributed throughout at least 44 African and Asian countries. Today, the species is extinct from more than 20 countries. The 12,000 to 15,000 animals that remain are found mostly in small-pocketed populations in 24 to 26 countries in Africa (plus fewer than 100 individuals in Iran).</p>
           <p><em>Distribution map courtesy of IUCN (International Union for Conservation of Nature), compiled in 2015.</em></p>
           <figure class="prose-figure rangemap">
-            <div class="rangemap__bar"><button type="button" class="rmtoggle" data-band="resident" aria-pressed="true"><span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">13</span></button><button type="button" class="rmtoggle" data-band="possible" aria-pressed="true"><span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">14</span></button></div>
-            <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Point at a population.</span><span class="hint-touch">Tap a population.</span></span></p>
+            <div class="rangemap__head">
+              <div class="rangemap__bar"><button type="button" class="rmtoggle" data-band="resident" aria-pressed="true"><span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">13</span></button><button type="button" class="rmtoggle" data-band="possible" aria-pressed="true"><span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">14</span></button></div>
+              <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
+            </div>
             <div class="rangemap__stage">
               <svg class="rangemap__svg" viewBox="0 0 1000 1049" role="img" aria-label="Range map: 13 resident and 14 possibly resident populations.">
                 <g class="rm-land">
