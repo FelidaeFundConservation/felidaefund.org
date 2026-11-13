@@ -12,17 +12,17 @@
 
   <script>document.documentElement.classList.add('js');</script>
 
-  <link rel="stylesheet" href="tokens.css?v=65" />
-  <link rel="stylesheet" href="base.css?v=65" />
-  <link rel="stylesheet" href="components.css?v=65" />
-  <link rel="stylesheet" href="rangemap.css?v=65" />
-  <link rel="stylesheet" href="page.css?v=65" />
+  <link rel="stylesheet" href="tokens.css?v=71" />
+  <link rel="stylesheet" href="base.css?v=71" />
+  <link rel="stylesheet" href="components.css?v=71" />
+  <link rel="stylesheet" href="rangemap.css?v=71" />
+  <link rel="stylesheet" href="page.css?v=71" />
 
-  <script src="components/site-nav.js?v=65"></script>
-  <script src="components/site-footer.js?v=65"></script>
-  <script src="components/site-donate.js?v=65"></script>
-  <script src="components/rangemap.js?v=65" defer></script>
-  <script src="components/page.js?v=65" defer></script>
+  <script src="components/site-nav.js?v=71"></script>
+  <script src="components/site-footer.js?v=71"></script>
+  <script src="components/site-donate.js?v=71"></script>
+  <script src="components/rangemap.js?v=71" defer></script>
+  <script src="components/page.js?v=71" defer></script>
 </head>
 
 <body style="--page-accent: var(--project-tsavo)" data-ported="joomla">
@@ -138,8 +138,9 @@
               <div class="rangemap__bar"><button type="button" class="rmtoggle" data-band="resident" aria-pressed="true"><span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">13</span></button><button type="button" class="rmtoggle" data-band="possible" aria-pressed="true"><span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">14</span></button></div>
               <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
             </div>
-            <div class="rangemap__stage">
-              <svg class="rangemap__svg" viewBox="0 0 1000 1049" role="img" aria-label="Range map: 13 resident and 14 possibly resident populations.">
+            <div class="rangemap__frame">
+              <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, 13 resident and 14 possibly resident areas. Activate to scroll around it.">
+                <svg class="rangemap__svg" viewBox="0 0 1000 1049" role="img" aria-label="Range map: 13 resident and 14 possibly resident populations.">
                 <g class="rm-land">
                   <path d="M591,891L590,890L589,889L587,889L584,889L581,890L577,889L573,887L570,887L566,888L565,886L563,886L562,885L562,882L560,882L558,881L555,880L551,879L549,879L548,878L547,876L546,874L544,872L544,870L545,868L544,866L544,864L541,863L539,864L539,862L539,860L538,859L537,858L534,857L531,855L528,853L525,851L524,850L523,848L522,844L521,842L520,840L519,839L517,835L516,834L515,832L514,831L513,830L512,829L512,827L513,826L515,827L518,827L520,829L522,829L524,828L527,828L530,830L532,830L536,829L538,826L541,823L544,819L545,816L548,814L551,812L554,811L558,809L559,808L560,806L560,804L560,802L561,801L565,799L568,798L571,797L574,797L578,797L580,797L580,799L580,802L583,802L587,802L591,802L593,804L597,805L600,808L604,808L607,809L609,810L610,811L612,811L613,812L612,814L612,816L613,819L614,822L613,826L613,830L613,832L614,834L613,836L612,838L612,840L610,841L610,843L611,844L612,845L611,848L612,851L613,854L614,855L614,857L612,860L611,862L609,864L608,865L607,866L607,868L607,870L605,873L606,875L603,878L601,881L599,883L597,885L595,887L593,889L591,891Z"/>
                   <path d="M580,797L578,797L574,797L571,797L568,798L565,799L562,801L560,802L560,804L560,806L559,808L558,809L554,811L551,812L548,814L545,816L544,819L541,823L538,826L536,829L532,830L530,830L527,828L524,828L522,829L520,829L519,827L516,827L513,826L510,824L509,823L506,823L500,822L497,823L494,823L491,824L488,824L485,822L483,819L479,817L477,814L476,813L474,811L473,810L471,805L470,801L470,798L470,794L470,789L470,785L470,781L470,776L470,772L470,768L470,764L470,761L473,761L476,761L480,761L484,761L488,761L491,761L494,761L496,761L495,759L495,757L495,755L496,754L496,750L496,748L496,746L496,744L496,742L497,741L496,739L496,737L496,735L496,733L498,734L499,735L500,736L501,738L501,740L502,741L505,739L507,739L510,738L512,738L513,739L513,742L514,743L515,744L516,745L520,746L523,747L527,747L530,748L532,748L534,747L535,746L536,744L537,743L538,745L541,747L542,749L542,751L544,752L547,752L549,753L552,754L554,755L555,756L555,758L556,759L557,760L559,761L560,763L561,766L563,767L565,766L568,765L570,765L570,767L572,767L572,764L572,761L572,759L572,756L572,754L572,752L572,750L571,751L569,751L568,752L568,754L566,753L564,753L562,753L561,751L560,750L558,749L556,747L555,746L554,744L553,742L554,739L555,736L555,734L556,732L557,730L556,727L557,723L557,720L556,717L555,715L554,712L555,710L556,709L557,708L558,707L560,705L561,703L560,701L564,701L568,700L572,699L575,699L579,698L582,698L584,697L585,698L585,700L586,701L587,702L588,703L592,703L593,704L595,704L595,706L596,707L598,707L600,707L600,709L602,709L604,710L606,710L607,711L609,712L611,712L612,713L613,714L614,715L614,717L615,716L617,717L618,719L618,721L619,723L620,724L621,725L621,727L622,728L620,732L618,732L617,733L618,734L618,736L619,737L618,738L617,740L617,742L618,743L618,745L618,747L617,750L618,752L620,752L619,754L617,755L614,756L613,757L613,759L614,760L613,763L613,765L612,766L612,768L611,769L609,769L611,770L611,772L613,773L613,775L615,774L616,775L614,776L612,776L608,778L604,779L601,780L597,782L595,783L592,783L589,784L587,785L583,786L582,787L580,787L578,788L577,789L578,791L579,792L580,795L580,797Z"/>
@@ -305,6 +306,8 @@
                   <text x="35" y="992">2,000 km</text>
                 </g>
               </svg>
+              </div>
+              <p class="rangemap__cue" aria-hidden="true"><span>Click to explore</span></p>
             </div>
           </figure>
           <h2>Threats to the Cheetah</h2>

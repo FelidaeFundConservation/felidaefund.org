@@ -47,8 +47,9 @@ def build(slug, data_dir):
               <div class="rangemap__bar">{''.join(bar)}</div>
               <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
             </div>
-            <div class="rangemap__stage">
-              <svg class="rangemap__svg" viewBox="0 0 {W} {H}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+            <div class="rangemap__frame">
+              <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, {res} resident and {pos} possibly resident areas. Activate to scroll around it.">
+                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
                 <g class="rm-land">
 {land}
                 </g>
@@ -62,6 +63,8 @@ def build(slug, data_dir):
 {scale}
                 </g>
               </svg>
+              </div>
+              <p class="rangemap__cue" aria-hidden="true"><span>Click to explore</span></p>
             </div>
           </figure>'''
     return frag, res + pos

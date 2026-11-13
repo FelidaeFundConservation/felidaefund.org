@@ -8,14 +8,61 @@
    book, so the water stays inside the palette. */
 .rangemap { --rm-water: color-mix(in srgb, var(--project-bapp) 13%, var(--cream-100)); }
 
+/* Fixed frame. Ranges differ wildly in shape, so drawn at natural size
+   a species page is 700px tall and another is 2,600px. A frame of one
+   height keeps the page predictable and lets the map be read at a
+   useful scale rather than shrunk to fit.
+
+   Scrolling inside it is off until the frame is activated. A pane that
+   swallows the page scroll the moment the pointer crosses it is a trap;
+   this way nothing changes until the reader asks for it. */
 .rangemap__stage {
+  height: clamp(340px, 56vh, 620px);
   background: var(--rm-water);
   border: 1px solid rgba(var(--brown-rgb), .16);
   border-radius: var(--r-md);
   overflow: hidden;
   line-height: 0;
+  cursor: pointer;
 }
+.rangemap__stage:focus-visible {
+  outline: 3px solid var(--gold-400);
+  outline-offset: 2px;
+}
+.rangemap__stage.is-live {
+  overflow: auto;
+  overscroll-behavior: contain;
+  cursor: default;
+  border-color: var(--gold-400);
+  box-shadow: 0 0 0 2px rgba(var(--gold-rgb), .4);
+}
+/* Width is set by script to cover the frame; this is the pre-script state. */
 .rangemap__svg { width: 100%; height: auto; display: block; }
+
+/* The cue sits outside the scroller, so it stays put while the map moves
+   underneath it. Inside, it scrolled away with the content. */
+.rangemap__frame { position: relative; }
+
+.rangemap__cue {
+  position: absolute; inset: 0; z-index: 1;
+
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 18px;
+  margin: 0; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(var(--brown-rgb), 0) 55%, rgba(var(--brown-rgb), .16));
+  transition: opacity .2s;
+}
+.rangemap__cue span {
+  font-family: var(--font-display); font-size: 12.5px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--espresso-900);
+  background: var(--gold-400);
+  border-radius: 999px;
+  padding: 7px 16px 8px;
+  line-height: 1.1;
+}
+.rangemap__frame:has(.is-live) .rangemap__cue { opacity: 0; pointer-events: none; }
 
 .rm-land path {
   fill: var(--cream-300);
@@ -193,7 +240,7 @@
 }
 
 @media (max-width: 700px) {
-  .rangemap__stage { padding: 6px; border-radius: var(--r-sm); }
+  .rangemap__stage { height: clamp(300px, 52vh, 460px); border-radius: var(--r-sm); }
   .prose-figure.rangemap { margin: 24px 0; }
   .rangemap__bar { gap: 6px; margin-bottom: 8px; }
   .rmtoggle { font-size: 12px; padding: 6px 11px 7px; }
@@ -222,4 +269,7 @@
 .prose-figure.rangemap { margin: 32px 0; }
 .prose .rangemap__bar { margin: 0 0 8px; }
 .prose .rangemap__readout { margin: 0; max-width: none; }
+/* .prose p caps paragraph width. The cue is a positioned overlay, not
+   running text, so it has to beat that rule on specificity. */
+.prose .rangemap__cue { max-width: none; }
 .prose .rangemap__stage { line-height: 0; }
