@@ -26,6 +26,10 @@
   line-height: 0;
   cursor: grab;
   touch-action: none;          /* the frame handles the drag itself */
+  /* Without this, dragging across the map runs a text selection over the
+     country labels and they come up highlighted. */
+  -webkit-user-select: none;
+  user-select: none;
 }
 .rangemap__stage.is-dragging { cursor: grabbing; }
 

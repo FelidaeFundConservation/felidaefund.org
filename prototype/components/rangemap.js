@@ -109,6 +109,7 @@
   let drag = null;
   stage.addEventListener('pointerdown', (e) => {
     if (e.button !== 0) return;
+    e.preventDefault();          // no drag-select, no image ghost drag
     const [vw, vh] = visible();
     drag = { x: e.clientX, y: e.clientY, cx, cy,
              ux: vw / stage.clientWidth, uy: vh / stage.clientHeight, moved: false };
