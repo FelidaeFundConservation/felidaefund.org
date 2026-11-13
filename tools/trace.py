@@ -118,12 +118,19 @@ def main(src, out, eps=1.4):
     a = np.asarray(im).astype(int)
     W, H = im.size
     box = legend_box(a)
+    globals().update(W=W, H=H)
     shapes = []
     for key, rgb in BANDS.items():
         m = mask_for(a, rgb, TOL[key])
         if box:
             y0, y1, x0, x1 = box
             m[max(0, y0 - 4):y1 + 5, max(0, x0 - 4):x1 + 5] = False
+        # Leaflet's own furniture: the attribution strip along the bottom
+        # and the scale control in the bottom-left corner. Both were being
+        # traced as range shapes; the cheetah map carried the scale bar as
+        # a 271px "possibly resident" population.
+        m[int(H * .975):, :] = False
+        m[int(H * .930):, :int(W * .20)] = False
         for area, ring in trace(m, a, rgb):
             simp = dp(ring, eps)
             if len(simp) < 4:

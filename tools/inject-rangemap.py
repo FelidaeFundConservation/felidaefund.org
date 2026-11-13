@@ -1,39 +1,39 @@
-"""Swap a species page's static distribution map for the live component."""
-import json, re, sys, os
+"""Swap a species page's static distribution map for the live component.
+
+The map is drawn from scratch: land, borders, labels and scale bar come
+from Natural Earth (public domain), and the range shapes were traced out
+of the IUCN map and georeferenced back onto it. No screenshot is used,
+so the type, colour and framing are all ours.
+"""
+import json, re, sys, os, html
+
+LABEL = {'resident': 'Resident', 'possible': 'Possibly resident'}
+
 
 def build(slug, data_dir):
-    d = json.load(open(os.path.join(data_dir, f'{slug}-map.json')))
-    shapes = sorted(d['shapes'], key=lambda s: -s['area'])
-    total = sum(s['area'] for s in shapes) or 1
+    m = json.load(open(os.path.join(data_dir, 'maps', f'{slug}-map.json')))
+    W, H = m['w'], m['h']
     counts = {}
-    for s in shapes:
+    for s in m['shapes']:
         counts[s['band']] = counts.get(s['band'], 0) + 1
-    paths = '\n'.join(
-        f'              <path class="rp rp--{s["band"]}" d="{s["d"]}" '
-        f'data-band="{s["band"]}" data-share="{100.0*s["area"]/total:.1f}"/>'
-        for s in shapes)
-
-    # Crop to the range itself. The IUCN viewer frames every species in the
-    # same square, so most maps carry dead ocean on two sides; a narrow
-    # range like the snow leopard's wastes most of the frame. Cropping to
-    # the data makes the map wider than it is tall wherever the range is.
-    xs, ys = [], []
-    for sh in shapes:
-        for pt in sh['d'][1:-1].split('L'):
-            x, y = pt.split(',')
-            xs.append(float(x)); ys.append(float(y))
-    pad = max(d['w'], d['h']) * .025
-    vx0 = max(0, min(xs) - pad); vy0 = max(0, min(ys) - pad)
-    vx1 = min(d['w'], max(xs) + pad); vy1 = min(d['h'], max(ys) + pad)
-    vb = f'{vx0:.0f} {vy0:.0f} {vx1-vx0:.0f} {vy1-vy0:.0f}'
     res, pos = counts.get('resident', 0), counts.get('possible', 0)
-    # IUCN's own legend is covered: the toggles above the map replace it,
-    # and two legends saying the same thing in different styles is noise.
-    lg = d.get('legend')
-    fill = d.get('legendFill', '#ddd9d0')
-    mask = ('' if not lg else
-            f'\n                <rect class="rp-mask" x="{lg["x"]}" y="{lg["y"]}" '
-            f'width="{lg["w"]}" height="{lg["h"]}" rx="3" fill="{fill}"/>')
+
+    land = '\n'.join(f'                  <path d="{d}"/>' for d in m['land'])
+    rng = '\n'.join(
+        f'                  <path class="rp rp--{s["band"]}" d="{s["d"]}" '
+        f'data-band="{s["band"]}" data-share="{s["share"]}"/>'
+        for s in m['shapes'])
+    labels = '\n'.join(
+        f'                  <text x="{x:.0f}" y="{y:.0f}">{html.escape(n)}</text>'
+        for x, y, n in m['labels'])
+
+    bw = m['scale']['units']
+    bx, by = W * .035, H - H * .045
+    scale = (f'                  <line x1="{bx:.0f}" y1="{by:.0f}" x2="{bx+bw:.0f}" y2="{by:.0f}"/>\n'
+             f'                  <line x1="{bx:.0f}" y1="{by-5:.0f}" x2="{bx:.0f}" y2="{by+5:.0f}"/>\n'
+             f'                  <line x1="{bx+bw:.0f}" y1="{by-5:.0f}" x2="{bx+bw:.0f}" y2="{by+5:.0f}"/>\n'
+             f'                  <text x="{bx:.0f}" y="{by-10:.0f}">{m["scale"]["km"]:,} km</text>')
+
     bar = []
     if res:
         bar.append('<button type="button" class="rmtoggle" data-band="resident" aria-pressed="true">'
@@ -41,16 +41,29 @@ def build(slug, data_dir):
     if pos:
         bar.append('<button type="button" class="rmtoggle" data-band="possible" aria-pressed="true">'
                    f'<span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">{pos}</span></button>')
-    return f'''<figure class="prose-figure rangemap">
+
+    frag = f'''<figure class="prose-figure rangemap">
             <div class="rangemap__bar">{''.join(bar)}</div>
             <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Point at a population.</span><span class="hint-touch">Tap a population.</span></span></p>
             <div class="rangemap__stage">
-              <svg class="rangemap__svg" viewBox="{vb}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
-                <image class="rangemap__base" href="https://felidaefund.org/media/cache/autosized/images/static/{slug}-map-960.webp" x="0" y="0" width="{d['w']}" height="{d['h']}" preserveAspectRatio="none"/>{mask}
-{paths}
+              <svg class="rangemap__svg" viewBox="0 0 {W} {H}" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+                <g class="rm-land">
+{land}
+                </g>
+                <g class="rm-range">
+{rng}
+                </g>
+                <g class="rm-labels" aria-hidden="true">
+{labels}
+                </g>
+                <g class="rm-scale" aria-hidden="true">
+{scale}
+                </g>
               </svg>
             </div>
-          </figure>''', res + pos
+          </figure>'''
+    return frag, res + pos
+
 
 def inject(page, slug, data_dir, ver):
     s = open(page).read()
@@ -58,7 +71,7 @@ def inject(page, slug, data_dir, ver):
                      + r'-map-960\.webp"[^>]*/></figure>')
     m = pat.search(s)
     if not m:
-        print(f'  no static map figure found in {os.path.basename(page)}')
+        print(f'  no static map figure in {os.path.basename(page)}')
         return 0
     frag, n = build(slug, data_dir)
     s = s[:m.start()] + frag + s[m.end():]
@@ -73,6 +86,7 @@ def inject(page, slug, data_dir, ver):
     open(page, 'w').write(s)
     print(f'  {os.path.basename(page)}: {n} populations')
     return n
+
 
 if __name__ == '__main__':
     page, slug, data_dir, ver = sys.argv[1:5]

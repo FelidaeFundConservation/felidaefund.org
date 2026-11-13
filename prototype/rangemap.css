@@ -1,37 +1,67 @@
 /* ─── Range map ─────────────────────────────────────────────────────
-   The IUCN map screenshot as a pale base layer, with its range bands
-   traced out and redrawn as live vector shapes on top. */
+   Drawn from scratch. Land, borders, country names and the scale bar are
+   Natural Earth (public domain); the range shapes were traced out of the
+   IUCN map and georeferenced onto it. No screenshot, so the type, the
+   colours and the framing are ours.
 
-.rangemap { margin: 0; }
+   --rm-water is mixed from --project-bapp, the blue in the 2021 brand
+   book, so the water stays inside the palette. */
+.rangemap { --rm-water: color-mix(in srgb, var(--project-bapp) 13%, var(--cream-100)); }
 
 .rangemap__stage {
-  background: var(--cream-200);
+  background: var(--rm-water);
   border: 1px solid rgba(var(--brown-rgb), .16);
   border-radius: var(--r-md);
   overflow: hidden;
   line-height: 0;
 }
-/* The basemap lives inside the SVG so that cropping the viewBox crops the
-   picture and the shapes together, and they can never drift apart. */
-.rangemap__base {
-  filter: grayscale(1) contrast(.42) brightness(1.2);
-  opacity: .62;
-}
 .rangemap__svg { width: 100%; height: auto; display: block; }
 
-/* Covers IUCN's own legend panel. Matches the desaturated basemap rather
-   than the stage, so it reads as part of the map, not a patch on it. */
-.rp-mask {
-  stroke: none;
-  pointer-events: none;
-  /* The fill is computed per map from the pixels around the panel, so it
-     lands on the basemap's own tone. The blur dissolves the edges. */
-  filter: blur(5px);
+.rm-land path {
+  fill: var(--cream-300);
+  stroke: rgba(var(--brown-rgb), .3);
+  stroke-width: .9;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
-/* No outline at rest. Two abutting shapes each carrying a stroke drew a
-   double line that read as a seam between them; the fills are distinct
-   enough on their own. The outline appears on the one being pointed at. */
+/* Type inside the SVG is in user units, so it shrinks with the map. At
+   375px the map renders about a third of its 1000-unit width, which put
+   a 13-unit label at roughly 4 real pixels. The sizes below are stepped
+   up so the rendered type stays near 11px, and the label list is cut
+   back as it grows, since bigger type on a smaller map collides. */
+.rm-labels text {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  fill: var(--brown-400);
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--cream-300);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+}
+
+.rm-scale line {
+  stroke: var(--brown-400);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.rm-scale text {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  fill: var(--brown-400);
+}
+
+/* ─── Range shapes ──────────────────────────────────────────────────
+   No outline at rest: two abutting shapes each carrying a stroke drew a
+   double line that read as a seam. The outline appears on the one being
+   pointed at. Light at rest, darker on hover, same hue either way, so
+   the band a shape belongs to never changes when you point at it. */
 .rp {
   stroke: transparent;
   stroke-width: 1.6;
@@ -40,8 +70,6 @@
   transition: fill .13s, fill-opacity .13s, stroke .13s, opacity .18s;
   cursor: pointer;
 }
-/* Light at rest, darker on hover: the same hue going down a step, so the
-   band a shape belongs to never changes when you point at it. */
 .rp--resident { fill: var(--gold-300); }
 .rp--possible { fill: var(--project-tsavo); fill-opacity: .3; }
 
@@ -133,6 +161,25 @@
 .demo-callout p:last-child { margin-bottom: 0; }
 
 /* ─── Small screens ─────────────────────────────────────────────── */
+
+@media (max-width: 1080px) {
+  .rm-labels text { font-size: 17px; stroke-width: 4.5; }
+  .rm-scale text { font-size: 16px; }
+  .rm-labels text:nth-of-type(n+19) { display: none; }
+}
+
+@media (max-width: 760px) {
+  .rm-labels text { font-size: 27px; stroke-width: 7; }
+  .rm-scale text { font-size: 25px; }
+  .rm-scale line { stroke-width: 1.8; }
+  .rm-labels text:nth-of-type(n+10) { display: none; }
+}
+
+@media (max-width: 480px) {
+  .rm-labels text { font-size: 34px; stroke-width: 9; }
+  .rm-scale text { font-size: 31px; }
+  .rm-labels text:nth-of-type(n+7) { display: none; }
+}
 
 @media (max-width: 700px) {
   .rangemap__stage { padding: 6px; border-radius: var(--r-sm); }
