@@ -80,8 +80,12 @@ def build(slug, data_dir):
     return frag, res + pos
 
 
+CREDIT = re.compile(
+    r'[ \t]*<p><em>(Distribution map courtesy of(?:(?!</em>).)*)</em></p>\n?', re.I | re.S)
+
+
 def inject(page, slug, data_dir, ver):
-    s = open(page).read()
+    s = open(page, encoding='utf-8').read()
     pat = re.compile(r'<figure class="prose-figure"><img src="[^"]*' + re.escape(slug)
                      + r'-map-960\.webp"[^>]*/></figure>')
     m = pat.search(s)
@@ -89,7 +93,18 @@ def inject(page, slug, data_dir, ver):
         print(f'  no static map figure in {os.path.basename(page)}')
         return 0
     frag, n = build(slug, data_dir)
+
+    # The IUCN credit was a paragraph of body prose sitting above the map.
+    # It belongs to the map, so it moves inside the figure as a caption.
+    credit = CREDIT.search(s)
+    if credit:
+        line = credit.group(1).strip()
+        frag = frag.replace('</figure>',
+                            f'              <figcaption class="rangemap__credit">{line}</figcaption>\n            </figure>')
+
     s = s[:m.start()] + frag + s[m.end():]
+    if credit:
+        s = CREDIT.sub('', s, count=1)
     if 'rangemap.css' not in s:
         s = s.replace('<link rel="stylesheet" href="page.css?v=',
                       f'<link rel="stylesheet" href="rangemap.css?v={ver}" />\n  '
@@ -98,7 +113,7 @@ def inject(page, slug, data_dir, ver):
         s = s.replace('<script src="components/page.js?v=',
                       f'<script src="components/rangemap.js?v={ver}" defer></script>\n  '
                       '<script src="components/page.js?v=', 1)
-    open(page, 'w').write(s)
+    open(page, 'w', encoding='utf-8').write(s)
     print(f'  {os.path.basename(page)}: {n} populations')
     return n
 
