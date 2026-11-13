@@ -88,6 +88,13 @@
     svg.setAttribute('viewBox', `${cx - w / 2} ${cy - h / 2} ${w} ${h}`);
     map.style.setProperty('--rm-zoom', zoom);
     drawScale(vw);
+    // Reset only has a job once the view has actually moved.
+    if (frame) {
+      const moved = Math.abs(zoom - 1) > 1e-6
+        || Math.abs(cx - (base[0] + base[2] / 2)) > 0.5
+        || Math.abs(cy - (base[1] + base[3] / 2)) > 0.5;
+      frame.classList.toggle('is-moved', moved);
+    }
     map.querySelector('[data-zoom="in"]').disabled = zoom >= MAX - 1e-6;
     map.querySelector('[data-zoom="out"]').disabled = zoom <= MIN + 1e-6;
   };
