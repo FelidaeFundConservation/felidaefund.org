@@ -862,7 +862,11 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 .toc__list a.is-current {
   color: var(--espresso-900);
   font-weight: 600;
-  border-left-color: var(--page-accent, var(--gold-400));
+  /* --gold-400 is the system's primary. The marker used --page-accent,
+     which is the species' project colour, so the cheetah's rail came up
+     in Tsavo red and every species would have marked the current section
+     in a different colour. */
+  border-left-color: var(--gold-400);
 }
 .toc__list a:focus-visible {
   outline: none; color: var(--espresso-900);
