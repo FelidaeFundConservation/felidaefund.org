@@ -749,7 +749,8 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 @media (max-width: 620px) {
   .spnav { padding: 30px 0 40px; }
   .spnav__inner { grid-template-columns: 1fr; gap: 10px; }
-  .spnav__slot--next { justify-content: flex-start; text-align: left; flex-direction: row-reverse; }
+  .spnav__slot--next { justify-content: flex-start; text-align: left; }
+  .spnav__slot--next .spnav__media { order: -1; }
   .spnav__slot--empty { display: none; }
   .spnav__media { width: 54px; height: 54px; }
   .spnav__name { font-size: 16px; }
@@ -862,11 +863,11 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 .toc__list a.is-current {
   color: var(--espresso-900);
   font-weight: 600;
-  /* --gold-400 is the system's primary. The marker used --page-accent,
-     which is the species' project colour, so the cheetah's rail came up
-     in Tsavo red and every species would have marked the current section
-     in a different colour. */
-  border-left-color: var(--gold-400);
+  /* tokens.css calls --brown-700 the focus-border colour, and a 2px tick
+     needs the contrast: gold is too pale against cream at that width.
+     It was on --page-accent, the species' PROJECT colour, so the cheetah
+     marked its current section in Tsavo red. */
+  border-left-color: var(--brown-700);
 }
 .toc__list a:focus-visible {
   outline: none; color: var(--espresso-900);
@@ -874,8 +875,118 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   border-radius: 3px;
 }
 
-/* Below this the rail would squeeze the article, so it goes. */
+/* Anchor jumps land under the fixed nav without this. */
+.prose h2[id] { scroll-margin-top: calc(var(--nav-h) + 20px); }
+
+/* Below this the rail would squeeze the article, so it goes — the jump
+   pill below takes over. */
 @media (max-width: 1040px) {
   .page-body__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .toc { display: none; }
+}
+
+/* ─── Jump pill (narrow screens) ────────────────────────────────────
+   The rail is the only way to see the shape of a six-section page and
+   move about it, and it is the first thing a narrow screen loses. The
+   pill carries both jobs: it names the section being read, and it opens
+   the same list plus the two ends of the page. Built from the rail's own
+   markup by page.js, so it costs the HTML nothing. */
+
+.jump { display: none; }
+
+@media (max-width: 1040px) {
+  .jump { display: block; }
+
+  .jump__fab {
+    position: fixed; z-index: 900;
+    left: 50%; bottom: 18px;
+    transform: translate(-50%, 24px);
+    display: flex; align-items: center; gap: 9px;
+    max-width: min(82vw, 420px);
+    padding: 11px 18px 12px;
+    font-family: var(--font-display); font-size: 13px; font-weight: 600;
+    color: var(--cream-100);
+    background: var(--espresso-900);
+    border: 0; border-radius: 999px;
+    box-shadow: 0 2px 6px rgba(var(--brown-rgb), .18),
+                0 12px 32px -8px rgba(var(--brown-rgb), .45);
+    opacity: 0; pointer-events: none;
+    transition: opacity .22s, transform .22s;
+  }
+  /* Held back until the reader is into the article; over the hero it
+     would cover the photo and have nothing useful to say. */
+  .jump.is-ready .jump__fab { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .jump__fab:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--cream-100), 0 0 0 6px var(--brown-700); }
+
+  .jump__here {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .jump__caret { flex: none; opacity: .65; transition: transform .2s; }
+  .jump.is-open .jump__caret { transform: rotate(180deg); }
+
+  .jump__scrim {
+    position: fixed; inset: 0; z-index: 1040;
+    background: rgba(var(--brown-rgb), .34);
+    opacity: 0; pointer-events: none; transition: opacity .22s;
+  }
+  .jump.is-open .jump__scrim { opacity: 1; pointer-events: auto; }
+
+  .jump__sheet {
+    position: fixed; z-index: 1050;
+    left: 0; right: 0; bottom: 0;
+    max-height: 76vh; overflow-y: auto; overscroll-behavior: contain;
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom));
+    background: var(--cream-100);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: 0 -8px 40px -8px rgba(var(--brown-rgb), .5);
+    transform: translateY(101%);
+    transition: transform .26s cubic-bezier(.22, .8, .3, 1);
+  }
+  .jump.is-open .jump__sheet { transform: translateY(0); }
+
+  .jump__grip {
+    width: 38px; height: 4px; border-radius: 2px;
+    background: rgba(var(--brown-rgb), .22);
+    margin: 0 auto 14px;
+  }
+  .jump__title {
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 700;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--brown-400); margin: 0 0 12px;
+  }
+
+  .jump__ends { display: flex; gap: 8px; margin-bottom: 14px; }
+  .jump__end {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
+    font-family: var(--font-display); font-size: 13px; font-weight: 600;
+    color: var(--brown-800); background: transparent;
+    border: 1px solid rgba(var(--brown-rgb), .2);
+    border-radius: var(--r-sm); padding: 11px 10px 12px;
+  }
+  .jump__end:hover { border-color: var(--brown-700); }
+
+  .jump__list {
+    list-style: none; margin: 0; padding: 0;
+    border-top: 1px solid rgba(var(--brown-rgb), .14);
+  }
+  .jump__list li { margin: 0; border-bottom: 1px solid rgba(var(--brown-rgb), .14); }
+  .jump__link {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    width: 100%; text-align: left;
+    font-family: var(--font-body); font-size: 16px; line-height: 1.3;
+    color: var(--brown-800); background: transparent; border: 0;
+    padding: 14px 2px;
+  }
+  .jump__link[aria-current="true"] { color: var(--espresso-900); font-weight: 600; }
+  .jump__link[aria-current="true"]::after {
+    content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--brown-700);
+  }
+  .jump__end:focus-visible, .jump__link:focus-visible {
+    outline: none; box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .55); border-radius: var(--r-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jump__fab, .jump__sheet, .jump__scrim, .jump__caret { transition: none; }
 }
