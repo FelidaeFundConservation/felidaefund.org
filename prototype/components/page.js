@@ -27,3 +27,16 @@ if (stillMotion.matches || !('IntersectionObserver' in window)) {
   // observer did not fire.
   window.setTimeout(() => reveals.forEach(show), 2500);
 }
+
+// Species call to action: the monthly amount chips behave as one choice.
+document.querySelectorAll('.cta__amounts').forEach(group => {
+  group.addEventListener('click', (e) => {
+    const b = e.target.closest('.cta__amt');
+    if (!b) return;
+    group.querySelectorAll('.cta__amt').forEach(x => {
+      const on = x === b;
+      x.classList.toggle('is-on', on);
+      x.setAttribute('aria-pressed', String(on));
+    });
+  });
+});

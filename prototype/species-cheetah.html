@@ -12,17 +12,17 @@
 
   <script>document.documentElement.classList.add('js');</script>
 
-  <link rel="stylesheet" href="tokens.css?v=103" />
-  <link rel="stylesheet" href="base.css?v=103" />
-  <link rel="stylesheet" href="components.css?v=103" />
-  <link rel="stylesheet" href="rangemap.css?v=103" />
-  <link rel="stylesheet" href="page.css?v=103" />
+  <link rel="stylesheet" href="tokens.css?v=105" />
+  <link rel="stylesheet" href="base.css?v=105" />
+  <link rel="stylesheet" href="components.css?v=105" />
+  <link rel="stylesheet" href="rangemap.css?v=105" />
+  <link rel="stylesheet" href="page.css?v=105" />
 
-  <script src="components/site-nav.js?v=103"></script>
-  <script src="components/site-footer.js?v=103"></script>
-  <script src="components/site-donate.js?v=103"></script>
-  <script src="components/rangemap.js?v=103" defer></script>
-  <script src="components/page.js?v=103" defer></script>
+  <script src="components/site-nav.js?v=105"></script>
+  <script src="components/site-footer.js?v=105"></script>
+  <script src="components/site-donate.js?v=105"></script>
+  <script src="components/rangemap.js?v=105" defer></script>
+  <script src="components/page.js?v=105" defer></script>
 </head>
 
 <body style="--page-accent: var(--project-tsavo)" data-ported="joomla">
@@ -316,10 +316,25 @@
             </figure>
           <h2>Threats to the Cheetah</h2>
           <p>Threats to the cheetah’s survival in the wild include habitat loss, declining prey numbers, and pressure from other species, including the lion, hyena, and the leopard. The cheetah is classified as Vulnerable (VU) by the International Union for Conservation of Nature (IUCN), and is listed in appendix I (which includes species that are most threatened) of the Convention of International Trade in Endangered Species (CITES).</p>
-          <h3>Want to help us research and conserve this species?</h3>
-          <p>Felidae Conservation Fund helps researchers around the world study and protect felids of all sizes.</p>
-          <p><em>Make sure you write a comment with "Cheetah" so we can designate 100% of your donation to go to protecting this species.</em></p>
         </div>
+      </div>
+
+      <div class="container">
+        <aside class="cta" aria-labelledby="cta-h">
+          <div class="cta__text">
+            <h2 class="cta__title" id="cta-h">Help us protect the cheetah</h2>
+            <p class="cta__body">Felidae Conservation Fund helps researchers around the world study and protect felids of all sizes.</p>
+          </div>
+          <div class="cta__action">
+            <div class="cta__amounts" role="group" aria-label="Monthly amount"><button type="button" class="cta__amt" aria-pressed="false">$10</button><button type="button" class="cta__amt is-on" aria-pressed="true">$25</button><button type="button" class="cta__amt" aria-pressed="false">$50</button><span class="cta__per">a month</span></div>
+            <a class="btn-gold cta__go" href="#" onclick="openDonate(event)">Protect this cat</a>
+            <p class="cta__note">Write &ldquo;Cheetah&rdquo; in the comment so we can designate 100% of your gift to this species.</p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="container" hidden>
+        <div>        </div>
       </div>
     </section>
 
