@@ -18,11 +18,9 @@ def build(slug, data_dir):
         counts[s['band']] = counts.get(s['band'], 0) + 1
         shares[s['band']] = shares.get(s['band'], 0.0) + s['share']
     res, pos = counts.get('resident', 0), counts.get('possible', 0)
-    # Share of mapped range, not a count of shapes. The count is an
-    # artifact of the tracing threshold and moved between 23 and 37 for
-    # the cheetah as the filters changed; the area barely shifts.
-    res_pc = round(shares.get('resident', 0))
-    pos_pc = round(shares.get('possible', 0))
+    # The toggles carry no number. A count was an artifact of the tracing
+    # threshold, and a share of range was one more figure to read next to
+    # the one the hover readout already gives per area.
 
     land = '\n'.join(f'                  <path d="{d}"/>' for d in m['land'])
     rng = '\n'.join(
@@ -40,10 +38,10 @@ def build(slug, data_dir):
     bar = []
     if res:
         bar.append('<button type="button" class="rmtoggle" data-band="resident" aria-pressed="true">'
-                   f'<span class="sw sw--resident"></span>Resident <span class="rmtoggle__n">{res_pc}%</span></button>')
+                   '<span class="sw sw--resident"></span>Resident</button>')
     if pos:
         bar.append('<button type="button" class="rmtoggle" data-band="possible" aria-pressed="true">'
-                   f'<span class="sw sw--possible"></span>Possibly resident <span class="rmtoggle__n">{pos_pc}%</span></button>')
+                   '<span class="sw sw--possible"></span>Possibly resident</button>')
 
     frag = f'''<figure class="prose-figure rangemap">
             <div class="rangemap__head">

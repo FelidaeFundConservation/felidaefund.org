@@ -267,7 +267,6 @@
 }
 .sw--resident { background: var(--gold-300); }
 .sw--possible { background: color-mix(in srgb, var(--project-tsavo) 30%, var(--cream-200)); }
-.rmtoggle__n { font-weight: 400; color: var(--brown-400); }
 
 .rangemap__readout {
   font-family: var(--font-display); font-size: 14px; line-height: 1.5;
