@@ -815,3 +815,61 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   .cta__action { align-items: stretch; }
   .cta__note { max-width: none; }
 }
+
+/* ─── Contents rail ─────────────────────────────────────────────────
+   Six sections deep with no way to see the shape of the page or jump
+   about. The rail lists the h2s and marks the one being read. It is
+   sticky, which only works because html/body use overflow-x:clip rather
+   than hidden. */
+
+.page-body__grid {
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr);
+  gap: 0 56px;
+  align-items: start;
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--nav-h) + 28px);
+  align-self: start;
+  max-height: calc(100vh - var(--nav-h) - 56px);
+  overflow-y: auto;
+}
+.toc__label {
+  font-family: var(--font-display); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brown-400); margin: 0 0 12px; padding-left: 15px;
+}
+.toc__list {
+  list-style: none; margin: 0; padding: 0;
+  border-left: 2px solid rgba(var(--brown-rgb), .16);
+}
+.toc__list li { margin: 0; }
+.toc__list a {
+  display: block;
+  font-family: var(--font-body); font-size: 14px; line-height: 1.35;
+  color: var(--brown-400);
+  padding: 9px 0 9px 13px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  text-decoration: none;
+  transition: color .15s, border-color .15s;
+}
+.toc__list a:hover { color: var(--brown-800); }
+.toc__list a.is-current {
+  color: var(--espresso-900);
+  font-weight: 600;
+  border-left-color: var(--page-accent, var(--gold-400));
+}
+.toc__list a:focus-visible {
+  outline: none; color: var(--espresso-900);
+  box-shadow: 0 0 0 3px rgba(var(--gold-rgb), .5);
+  border-radius: 3px;
+}
+
+/* Below this the rail would squeeze the article, so it goes. */
+@media (max-width: 1040px) {
+  .page-body__grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .toc { display: none; }
+}

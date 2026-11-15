@@ -40,3 +40,36 @@ document.querySelectorAll('.cta__amounts').forEach(group => {
     });
   });
 });
+
+// Contents rail: mark the section being read. Uses scroll position rather
+// than an IntersectionObserver because sections vary from one short
+// paragraph to a screenful, and "which heading did I last pass" is the
+// question the rail answers.
+(() => {
+  const toc = document.querySelector('.toc');
+  if (!toc) return;
+  const links = [...toc.querySelectorAll('a[href^="#"]')];
+  const targets = links
+    .map(a => ({ a, el: document.getElementById(a.getAttribute('href').slice(1)) }))
+    .filter(t => t.el);
+  if (!targets.length) return;
+
+  const navH = parseInt(getComputedStyle(document.documentElement)
+    .getPropertyValue('--nav-h'), 10) || 86;
+
+  let frame = null;
+  const mark = () => {
+    frame = null;
+    const line = window.scrollY + navH + 90;
+    let current = targets[0];
+    for (const t of targets) {
+      if (t.el.getBoundingClientRect().top + window.scrollY <= line) current = t;
+    }
+    for (const t of targets) t.a.classList.toggle('is-current', t === current);
+  };
+  const queue = () => { if (!frame) frame = requestAnimationFrame(mark); };
+
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  mark();
+})();
