@@ -438,6 +438,8 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
 /* The map draws its own frame and must not be cropped. */
 .prose-figure.rangemap img,
 .prose-figure.rangemap svg { height: auto; object-fit: initial; }
+/* The credit is a caption, not running text: no measure, no wrap. */
+.prose .rangemap__credit { max-width: none; }
 .prose-figure--small img { height: auto; object-fit: initial; }
 .prose-figure figcaption {
   font-family: var(--font-display); font-size: 12px; line-height: 1.6;

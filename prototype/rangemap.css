@@ -24,8 +24,10 @@
   height: clamp(340px, 56vh, 620px);
   width: 100%;
   background: var(--rm-water);
-  border: 1px solid rgba(var(--brown-rgb), .16);
+  border: 0;
   border-radius: var(--r-md);
+  box-shadow: 0 1px 3px rgba(var(--brown-rgb), .10),
+              0 10px 30px -12px rgba(var(--brown-rgb), .22);
   overflow: hidden;
   line-height: 0;
   cursor: grab;
@@ -181,14 +183,16 @@
 /* The IUCN credit. It was a paragraph of body prose above the map; as a
    caption it reads as a note about the map rather than part of the
    article, and it travels with the figure. */
+/* One line. The credit is a footnote to the map, not a block of text, so
+   it runs the width of the frame rather than wrapping inside a measure. */
 .rangemap__credit {
   font-family: var(--font-display);
   font-size: 11.5px;
   line-height: 1.5;
   letter-spacing: .02em;
   color: var(--brown-400);
-  padding: 9px 2px 0;
-  max-width: 64ch;
+  padding: 10px 2px 0;
+  max-width: none;
 }
 
 /* ─── Zoom controls ─────────────────────────────────────────────── */
