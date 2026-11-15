@@ -137,7 +137,6 @@
 .support {
   background: var(--espresso-900);
   padding: 64px 0;
-  border-top: 3px solid var(--page-accent);
 }
 .support__inner {
   display: flex; align-items: center; justify-content: space-between;
