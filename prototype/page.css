@@ -695,14 +695,6 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   margin: -4px 0 14px;
 }
 
-/* ─────────────────────────────────────────────────────────────────────
-   Split prose: text left, image right.
-   Wraps an <h2> + its paragraphs + the figure that follows it.
-   Stacks below 860px, text first.
-   ───────────────────────────────────────────────────────────────────── */
-
-}
-
 /* ─── Previous / next species ───────────────────────────────────────
    Present on every live species page, dropped in the port. Order is
    alphabetical, matching the index, so moving through pages matches
