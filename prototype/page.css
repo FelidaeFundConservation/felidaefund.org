@@ -69,10 +69,9 @@
    body setting, 17px Literata. */
 .prose { font-family: var(--font-body); color: var(--brown-800); --measure: 630px; }
 
-/* The text column is centred in the container rather than flush left.
-   At 1216px wide, a 630px measure pinned to the left edge left 586px of
-   empty cream beside every paragraph. Figures, the facts grid and the
-   range map stay full width; only the running text is constrained. */
+/* The text column is flush left, aligned with the page title above it.
+   Figures, the facts grid and the range map stay full width; only the
+   running text is constrained. */
 .prose > p,
 .prose > h2,
 .prose > h3,
@@ -82,12 +81,11 @@
 .prose > blockquote,
 .prose > .prose-list {
   max-width: var(--measure);
-  margin-inline: auto;
 }
 .prose h2 {
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(22px, 2.4vw, 30px); line-height: 1.2;
-  color: var(--espresso-900); margin: 44px auto 16px;
+  color: var(--espresso-900); margin: 44px 0 16px;
 }
 .prose h2:first-child { margin-top: 0; }
 .prose p { font-size: 17px; line-height: 1.8; margin-bottom: 20px; max-width: var(--measure); }
@@ -286,7 +284,7 @@
 @media (max-width: 700px)  { .proj-grid { grid-template-columns: 1fr; } }
 
 /* Lists inside ported body copy */
-.prose-list { list-style: none; display: grid; gap: 10px; margin: 0 auto 22px; max-width: var(--measure); }
+.prose-list { list-style: none; display: grid; gap: 10px; margin: 0 0 22px; max-width: var(--measure); }
 .prose-list li {
   position: relative; padding-left: 22px;
   font-family: var(--font-body); font-size: 17px; line-height: 1.7; color: var(--brown-800);
@@ -394,7 +392,7 @@
   font-family: var(--font-display); font-weight: 700;
   font-size: 17px; line-height: 1.3; letter-spacing: .01em;
   color: var(--espresso-900);
-  margin: 32px auto 12px;
+  margin: 32px 0 12px;
 }
 .prose h3 + p, .prose h4 + p { margin-top: 0; }
 .prose h2 + h3 { margin-top: 18px; }
