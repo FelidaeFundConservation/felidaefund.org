@@ -91,10 +91,9 @@
 }
 .prose h2:first-child { margin-top: 0; }
 /* Leading, the space between lines inside a paragraph. 1.8 let the lines
-   drift apart so a paragraph stopped reading as a block. 1.58 sits
-   between that and the 1.47 It's Nice That uses, which is tight for
-   Literata's larger x-height. Paragraph spacing is separate, below. */
-.prose p { font-size: 17px; line-height: 1.58; margin-bottom: 20px; max-width: var(--measure); }
+   drift apart so a paragraph stopped reading as a block; 1.58 went too
+   far the other way. Paragraph spacing is a separate control, below. */
+.prose p { font-size: 17px; line-height: 1.68; margin-bottom: 20px; max-width: var(--measure); }
 .prose p:last-child { margin-bottom: 0; }
 /* Emphasis should read as weight, not as a colour change. Literata is
    loaded at 600 so this is a real semibold rather than 500 plus a
