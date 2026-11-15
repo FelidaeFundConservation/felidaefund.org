@@ -368,6 +368,9 @@
 .prose-figure.rangemap { margin: 32px 0; }
 .prose .rangemap__bar { margin: 0 0 8px; }
 .prose .rangemap__readout { margin: 0; max-width: none; }
-/* .prose p caps paragraph width; the cue is an overlay, not running text. */
-.prose .rangemap__cue { max-width: none; }
+/* .prose p caps paragraph width AND gives it a 20px bottom margin, and it
+   beats .rangemap__cue on specificity. The cue is a <p>, so the margin was
+   holding its inset:0 box 20px clear of the stage floor and its faint wash
+   stopped in a hard line above the bottom edge of the map. */
+.prose .rangemap__cue { max-width: none; margin: 0; }
 .prose .rangemap__stage { line-height: 0; }
