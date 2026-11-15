@@ -49,13 +49,22 @@
   map.querySelectorAll('.rmzoom').forEach(b => b.addEventListener('focus', wake));
 
   const base = (svg.dataset.base || '0 0 1000 1000').split(/\s+/).map(Number);
-  const MIN = 1, MAX = 8;
+  const MAX = 8;
   let zoom = 1, cx = base[0] + base[2] / 2, cy = base[1] + base[3] / 2;
 
-  // The frame matches the map's aspect and the SVG is fitted with "meet",
-  // so the whole viewBox is on screen and the visible window is simply
-  // the viewBox itself.
-  const visible = () => [base[2] / zoom, base[3] / zoom];
+  // The frame is a fixed rectangle, so the window onto the map is cut to
+  // the frame's shape, not the map's. Zoom 1 is the largest such window
+  // that still fits inside the range, which means the map fills the frame
+  // with no dead space. Zooming out widens the window until the whole
+  // range is in view; that is the minimum.
+  const ar = () => stage.clientWidth / stage.clientHeight;
+  const win = (z) => {
+    const w = Math.min(base[2], base[3] * ar()) / z;
+    return [w, w / ar()];
+  };
+  const minZoom = () =>
+    Math.min(base[2], base[3] * ar()) / Math.max(base[2], base[3] * ar());
+  const visible = () => win(zoom);
 
   // Scale bar. Its length is recomputed every time the zoom changes, and
   // the distance it stands for is rounded to something a reader can use.
@@ -76,13 +85,16 @@
   };
 
   const apply = () => {
-    const w = base[2] / zoom, h = base[3] / zoom;
-    const [vw, vh] = visible();
-    cx = Math.min(base[0] + base[2] - vw / 2, Math.max(base[0] + vw / 2, cx));
-    cy = Math.min(base[1] + base[3] - vh / 2, Math.max(base[1] + vh / 2, cy));
+    const [w, h] = win(zoom);
+    // Keep the window over the map. When it is larger than the map on an
+    // axis, centre on that axis rather than clamping to an edge.
+    cx = w >= base[2] ? base[0] + base[2] / 2
+       : Math.min(base[0] + base[2] - w / 2, Math.max(base[0] + w / 2, cx));
+    cy = h >= base[3] ? base[1] + base[3] / 2
+       : Math.min(base[1] + base[3] - h / 2, Math.max(base[1] + h / 2, cy));
     svg.setAttribute('viewBox', `${cx - w / 2} ${cy - h / 2} ${w} ${h}`);
     map.style.setProperty('--rm-zoom', zoom);
-    drawScale(vw);
+    drawScale(w);
     // Reset only has a job once the view has actually moved.
     if (frame) {
       const moved = Math.abs(zoom - 1) > 1e-6
@@ -91,10 +103,10 @@
       frame.classList.toggle('is-moved', moved);
     }
     map.querySelector('[data-zoom="in"]').disabled = zoom >= MAX - 1e-6;
-    map.querySelector('[data-zoom="out"]').disabled = zoom <= MIN + 1e-6;
+    map.querySelector('[data-zoom="out"]').disabled = zoom <= minZoom() + 1e-6;
   };
 
-  const setZoom = (next) => { zoom = Math.min(MAX, Math.max(MIN, next)); apply(); };
+  const setZoom = (next) => { zoom = Math.min(MAX, Math.max(minZoom(), next)); apply(); };
 
   map.querySelectorAll('.rmzoom').forEach(b => {
     b.addEventListener('click', (e) => {
