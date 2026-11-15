@@ -433,7 +433,9 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   height: clamp(260px, 44vh, 440px);
   object-fit: cover;
   object-position: center;
-  border-radius: var(--r-md); border: 1px solid rgba(var(--gold-rgb), .22);
+  /* Squarer than the cards. A photograph carries its own edge, so it does
+     not need the same rounding as a UI surface. */
+  border-radius: var(--r-sm); border: 1px solid rgba(var(--gold-rgb), .22);
 }
 /* The map draws its own frame and must not be cropped. */
 .prose-figure.rangemap img,
