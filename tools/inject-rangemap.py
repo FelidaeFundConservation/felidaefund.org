@@ -7,7 +7,9 @@ so the type, colour and framing are all ours.
 """
 import json, re, sys, os, html
 
-LABEL = {'resident': 'Resident', 'possible': 'Possibly resident'}
+# IUCN's own legend wording, so the component and the source it was
+# traced from say the same thing.
+LABEL = {'resident': 'Extant (resident)', 'possible': 'Possibly Extant (resident)'}
 
 
 def build(slug, data_dir):
@@ -38,10 +40,10 @@ def build(slug, data_dir):
     bar = []
     if res:
         bar.append('<button type="button" class="rmtoggle" data-band="resident" aria-pressed="true">'
-                   '<span class="sw sw--resident"></span>Resident</button>')
+                   '<span class="sw sw--resident"></span>Extant (resident)</button>')
     if pos:
         bar.append('<button type="button" class="rmtoggle" data-band="possible" aria-pressed="true">'
-                   '<span class="sw sw--possible"></span>Possibly resident</button>')
+                   '<span class="sw sw--possible"></span>Possibly Extant (resident)</button>')
 
     frag = f'''<figure class="prose-figure rangemap">
             <div class="rangemap__head">
@@ -49,8 +51,8 @@ def build(slug, data_dir):
               <p class="rangemap__readout" role="status" aria-live="polite"><span class="rangemap__hint"><span class="hint-hover">Hover an area to see its share of the range.</span><span class="hint-touch">Tap an area to see its share of the range.</span></span></p>
             </div>
             <div class="rangemap__frame" style="--rm-ar: {W} / {H}">
-              <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, {res} resident and {pos} possibly resident areas. Drag to move it, arrow keys to pan, plus and minus to zoom.">
-                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" data-base="0 0 {W} {H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Range map: {res} resident and {pos} possibly resident populations.">
+              <div class="rangemap__stage" tabindex="0" role="group" aria-label="Range map, {res} extant and {pos} possibly extant areas. Drag to move it, arrow keys to pan, plus and minus to zoom.">
+                <svg class="rangemap__svg" viewBox="0 0 {W} {H}" data-base="0 0 {W} {H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Range map: {res} extant and {pos} possibly extant populations.">
                 <g class="rm-land">
 {land}
                 </g>

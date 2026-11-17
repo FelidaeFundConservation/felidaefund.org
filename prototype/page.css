@@ -54,7 +54,11 @@
 }
 .page-hero figcaption {
   font-family: var(--font-display); font-size: 12px; line-height: 1.6;
-  color: var(--brown-400); padding: 10px 0 0;
+  color: var(--brown-400);
+  /* padding-top only. The caption carries .container for the page gutter,
+     and the shorthand was resetting its left and right padding to 0, so
+     the credit sat hard against the viewport edge. */
+  padding-top: 10px;
 }
 
 /* ─── Body: prose + fact box ───────────────────────────────────────── */
@@ -561,6 +565,21 @@ ol.prose-list > li::before, ol.prose-sublist > li::before {
   line-height: 1.4;
   color: var(--brown-400);
 }
+
+/* The source is a citation, not a caption: it has to look clickable
+   without competing with the status word above it. Underline on hover
+   only, so the resting card stays quiet. */
+.fact__source {
+  display: inline-flex; align-items: center; gap: 4px;
+  width: fit-content;
+  color: var(--brown-700);
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--brown-rgb), .3);
+  text-underline-offset: 2px;
+  transition: color .18s, text-decoration-color .18s;
+}
+.fact__source:hover { color: var(--brown-600); text-decoration-color: currentColor; }
+.fact__ext { font-size: 10px; opacity: .7; }
 
 /* ── Conservation status: the full IUCN scale, not just a label ────── */
 

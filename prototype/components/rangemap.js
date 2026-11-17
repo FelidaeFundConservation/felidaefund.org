@@ -8,7 +8,10 @@
 
   const readout = map.querySelector('.rangemap__readout');
   const idle = readout ? readout.innerHTML : '';
-  const LABEL = { resident: 'Resident', possible: 'Possibly resident' };
+  // IUCN's own legend wording. The live site says "Extant (Resident)",
+  // and the readout has to match the source it is drawn from.
+  const LABEL = { resident: 'Extant (resident)',
+                  possible: 'Possibly Extant (resident)' };
 
   const clear = () => map.querySelectorAll('.rp.is-on').forEach(p => p.classList.remove('is-on'));
   const reset = () => { clear(); readout.innerHTML = idle; };
