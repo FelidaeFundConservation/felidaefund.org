@@ -198,6 +198,27 @@ the `src` in the article to match.
 
 ## After the switch: check for leftover modules
 
+## Where the homepage actually lives
+
+**Site module 274**, a Custom HTML module in position `after-content`. Not
+an article. Steps 5 and 6 above describe the article route, which is what
+was planned; the deploy used the module instead and the steps were never
+corrected. The article it points at, `Home - new design test`, is empty,
+and its edit form has no body field at all -- the Content tab shows only
+the sidebar fields and the `Page Content` tab is a custom field that was
+never filled. An hour went into that on 2026-11-17. Go to
+Content -> Site Modules, filter Position to `after-content`.
+
+The module's content is `article.html` followed by `homepage.js` inside a
+`<script>` tag -- that is, the `</div>` closing `.fx-home` sits *above*
+the script, not at the end of the box. Anything appended at the bottom
+lands outside the wrapper, where none of the CSS matches, because every
+rule is scoped `.fx-home ...`. The 2025 Impact Report band is therefore
+wrapped in its own `<div class="fx-home">` and carries no `reveal` class:
+`homepage.js` takes `root = document.querySelector('.fx-home')` and only
+observes inside the first one, so a `reveal` in a second wrapper would
+stay at `opacity: 0` for good.
+
 Shipped on 2026-10-22. Two things caught us out, both worth checking on any
 site that reuses this:
 
