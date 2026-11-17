@@ -544,16 +544,6 @@ body.always-light {
   .fx-home .cta-panel__option { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 13.5px; color: rgba(var(--cream-rgb),.8); }
   .fx-home .cta-panel__option::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-400); flex-shrink: 0; }
   .fx-home .cta-panel__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
-  .fx-home .report { background: var(--espresso-900); padding: 72px 0; }
-  .fx-home .report__inner { display: grid; grid-template-columns: 196px 1fr; gap: 52px; align-items: center; }
-  .fx-home .report__cover { display: block; border-radius: var(--r-sm); overflow: hidden; box-shadow: 0 18px 44px rgba(var(--black-rgb),.5); transition: transform .25s ease, box-shadow .25s ease; }
-  .fx-home .report__cover:hover { transform: translateY(-5px); box-shadow: 0 24px 56px rgba(var(--black-rgb),.6); }
-  .fx-home .report__cover img { display: block; width: 100%; height: auto; }
-  .fx-home .report__body { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
-  .fx-home .report__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
-  .fx-home .report__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 36px); color: var(--cream-100); line-height: 1.2; }
-  .fx-home .report__text { font-size: 15.5px; line-height: 1.75; color: rgba(var(--cream-rgb),.75); max-width: 52ch; }
-  .fx-home .report__meta { font-family: var(--font-display); font-size: 11.5px; letter-spacing: .07em; color: rgba(var(--cream-rgb),.42); }
   .fx-home .donate-badges { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(var(--cream-rgb),.12); }
   .fx-home .donate-badges a { display: flex; align-items: center; justify-content: center; transition: opacity .2s; }
   .fx-home .donate-badges a:hover { opacity: .8; }
@@ -566,9 +556,6 @@ body.always-light {
   @media (max-width: 768px) {
     .fx-home .cta-split { grid-template-columns: 1fr; }
     .fx-home .cta-panel { padding: 56px 32px; }
-    .fx-home .report { padding: 56px 0; }
-    .fx-home .report__inner { grid-template-columns: 1fr; gap: 28px; justify-items: start; }
-    .fx-home .report__cover { width: 150px; }
     .fx-home .mission__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
     .fx-home .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
     .fx-home .news__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
@@ -1289,21 +1276,6 @@ body.always-light {
       </div>
     </div>
   </div>
-  
-  <section class="report full-width" aria-labelledby="report-title">
-    <div class="container report__inner reveal">
-      <a class="report__cover" href="/images/reports/felidae-impact-report-2025.pdf" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-        <img src="assets/impact-report-2025-cover.jpg" alt="" width="640" height="828" loading="lazy" />
-      </a>
-      <div class="report__body">
-        <div class="report__eyebrow">Annual Report</div>
-        <h2 class="report__title" id="report-title">Felidae Impact Report 2025</h2>
-        <p class="report__text">A year of field research, community science and wild cat conservation — the projects, the numbers, and the people behind them.</p>
-        <a class="btn-gold" href="/images/reports/felidae-impact-report-2025.pdf" target="_blank" rel="noopener">Read the Report</a>
-        <p class="report__meta">PDF · 34 pages · 9.4 MB</p>
-      </div>
-    </div>
-  </section>
 </div>
 
     </div></div>
