@@ -329,8 +329,10 @@ body.always-light {
    container, buttons, section labels, reveal animation.
    Page-specific sections stay in each page's own <style>. */
   .fx-home *, .fx-home *::before, .fx-home *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  .fx-home { font-family: var(--font-body); touch-action: pan-y; overflow-x: hidden; background: var(--cream-100); color: var(--espresso-900); -webkit-font-smoothing: antialiased; }
+  .fx-home { font-family: var(--font-body); touch-action: pan-y; overflow-x: hidden; overflow-x: clip; background: var(--cream-100); color: var(--espresso-900); -webkit-font-smoothing: antialiased; }
   .fx-home img { display: block; max-width: 100%; }
+  .fx-home h1, .fx-home h2, .fx-home h3, .fx-home h4, .fx-home h5, .fx-home h6, .fx-home .page-title, .fx-home .section-title, .fx-home .page-eyebrow, .fx-home .section-label, .fx-home .fact__label, .fx-home .fact__value, .fx-home .crumbs { text-wrap: balance; }
+  .fx-home p, .fx-home li, .fx-home dd, .fx-home figcaption, .fx-home blockquote, .fx-home .page-lede, .fx-home .fact__note, .fx-home .iucn__now { text-wrap: pretty; }
   .fx-home a { color: inherit; text-decoration: none; }
   .fx-home button { cursor: pointer; border: none; background: none; font: inherit; }
   .fx-home .container { max-width: var(--max-w); margin: 0 auto; padding: 0 32px; }
@@ -347,8 +349,14 @@ body.always-light {
       0%, 100% { transform: translateX(-50%) translateY(0); }
       50%       { transform: translateX(-50%) translateY(6px); }
     }
-  .fx-home .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; will-change: transform, opacity; }
-  .fx-home .reveal.visible { opacity: 1; transform: translateY(0); will-change: auto; }
+  /* Scoped to .js, set by an inline script in <head>. Without working
+       JavaScript the content renders normally instead of staying blank:
+       the reveal is an enhancement, never a prerequisite for reading. */
+  .fx-home .js .reveal { opacity: 0; transform: translateY(32px); transition: opacity .65s ease, transform .65s ease; will-change: transform, opacity; }
+  .fx-home .js .reveal.visible { opacity: 1; transform: translateY(0); will-change: auto; }
+  @media (prefers-reduced-motion: reduce) {
+    .fx-home .js .reveal { opacity: 1; transform: none; transition: none; }
+  }
   .fx-home .reveal-delay-1 { transition-delay: .1s; }
   .fx-home .reveal-delay-2 { transition-delay: .2s; }
   .fx-home .reveal-delay-3 { transition-delay: .3s; }
@@ -536,6 +544,16 @@ body.always-light {
   .fx-home .cta-panel__option { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-size: 13.5px; color: rgba(var(--cream-rgb),.8); }
   .fx-home .cta-panel__option::before { content: ''; display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--gold-400); flex-shrink: 0; }
   .fx-home .cta-panel__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 8px; }
+  .fx-home .report { background: var(--espresso-900); padding: 72px 0; }
+  .fx-home .report__inner { display: grid; grid-template-columns: 196px 1fr; gap: 52px; align-items: center; }
+  .fx-home .report__cover { display: block; border-radius: var(--r-sm); overflow: hidden; box-shadow: 0 18px 44px rgba(var(--black-rgb),.5); transition: transform .25s ease, box-shadow .25s ease; }
+  .fx-home .report__cover:hover { transform: translateY(-5px); box-shadow: 0 24px 56px rgba(var(--black-rgb),.6); }
+  .fx-home .report__cover img { display: block; width: 100%; height: auto; }
+  .fx-home .report__body { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .fx-home .report__eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-300); }
+  .fx-home .report__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(24px, 2.8vw, 36px); color: var(--cream-100); line-height: 1.2; }
+  .fx-home .report__text { font-size: 15.5px; line-height: 1.75; color: rgba(var(--cream-rgb),.75); max-width: 52ch; }
+  .fx-home .report__meta { font-family: var(--font-display); font-size: 11.5px; letter-spacing: .07em; color: rgba(var(--cream-rgb),.42); }
   .fx-home .donate-badges { display: flex; align-items: center; justify-content: flex-start; flex-wrap: wrap; gap: 16px 24px; margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(var(--cream-rgb),.12); }
   .fx-home .donate-badges a { display: flex; align-items: center; justify-content: center; transition: opacity .2s; }
   .fx-home .donate-badges a:hover { opacity: .8; }
@@ -548,6 +566,9 @@ body.always-light {
   @media (max-width: 768px) {
     .fx-home .cta-split { grid-template-columns: 1fr; }
     .fx-home .cta-panel { padding: 56px 32px; }
+    .fx-home .report { padding: 56px 0; }
+    .fx-home .report__inner { grid-template-columns: 1fr; gap: 28px; justify-items: start; }
+    .fx-home .report__cover { width: 150px; }
     .fx-home .mission__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
     .fx-home .projects__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
     .fx-home .news__grid { grid-template-columns: 1fr; max-width: 560px; margin-left: auto; margin-right: auto; }
@@ -957,7 +978,7 @@ body.always-light {
     <div class="hero__texture"></div>
     <div class="hero__content">
       <h1 class="hero__title">
-        The Cat in the Bottleneck
+        The Cat in the Bottleneck
       </h1>
       <p class="hero__subtitle">
         A young male puma must cross freeways and developed areas
@@ -969,7 +990,7 @@ body.always-light {
           Donate Now
         </a>
       </div>
-      <p class="hero__credit">Photo by Sharon Osberg</p>
+      <p class="hero__credit">Photo by Sharon Osberg</p>
     </div>
   </section>
   
@@ -978,7 +999,7 @@ body.always-light {
     <div class="container impact__inner">
       <div class="impact__header reveal">
         <div class="section-label">Impact by the Numbers</div>
-        <h2 class="section-title" id="impact-title">Decades of work. Measurable results.</h2>
+        <h2 class="section-title" id="impact-title">Decades of work. Measurable results.</h2>
       </div>
       <div class="impact__grid">
         <div class="impact__stat reveal reveal-delay-1">
@@ -1008,16 +1029,16 @@ body.always-light {
     <div class="container">
       <div class="mission__header reveal">
         <div class="section-label">Our Mission</div>
-        <h2 class="section-title" id="mission-title">Protecting local wildlife and the spaces they call home</h2>
-        <p class="section-body">Innovative Wild Cat Research and Conservation</p>
+        <h2 class="section-title" id="mission-title">Protecting local wildlife and the spaces they call home</h2>
+        <p class="section-body">Innovative Wild Cat Research and Conservation</p>
       </div>
       <div class="mission__grid">
         <div class="mission__card reveal reveal-delay-1">
           <a class="mission__card-link" href="/projects/research" aria-label="Field Research — explore our projects"></a>
           <img loading="lazy" class="mission__card-img" src="assets/field-research-913.webp" alt="Research team hiking through Patagonian grassland">
           <div class="mission__card-content">
-            <h3 class="mission__card-title">Field Research</h3>
-            <p class="mission__card-body">Camera traps, fecal surveys, hair surveys, bioacoustics, and health biomarkers across two continents give us the data to act precisely where it matters most.</p>
+            <h3 class="mission__card-title">Field Research</h3>
+            <p class="mission__card-body">Camera traps, fecal surveys, hair surveys, bioacoustics, and health biomarkers across two continents give us the data to act precisely where it matters most.</p>
             <a href="/projects/research" class="mission__link">
               Explore our projects
               <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
@@ -1029,8 +1050,8 @@ body.always-light {
           <a class="mission__card-link" href="/learn/protecting-healthy-ecosystems" aria-label="Habitat Protection — learn about ecosystems"></a>
           <img loading="lazy" class="mission__card-img" src="assets/habitat-protection.jpg" alt="Puma moving through mossy forest">
           <div class="mission__card-content">
-            <h3 class="mission__card-title">Habitat Protection</h3>
-            <p class="mission__card-body">Working with landowners, policymakers, government agencies, and indigenous communities to identify and maintain corridors where wild cats can move through safely.</p>
+            <h3 class="mission__card-title">Habitat Protection</h3>
+            <p class="mission__card-body">Working with landowners, policymakers, government agencies, and indigenous communities to identify and maintain corridors where wild cats can move through safely.</p>
             <a href="/learn/protecting-healthy-ecosystems" class="mission__link">
               Learn about ecosystems
               <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
@@ -1043,7 +1064,7 @@ body.always-light {
           <img loading="lazy" class="mission__card-img" src="assets/pu-0107--1--836-1600-1000-90-crop.jpg" alt="Puma in the wild">
           <div class="mission__card-content">
             <h3 class="mission__card-title">Education &amp; Coexistence</h3>
-            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats. Reducing conflict, building the understanding that fuels long-term protection.</p>
+            <p class="mission__card-body">Equipping communities with tools to live alongside wild cats. Reducing conflict, building the understanding that fuels long‑term protection.</p>
             <a href="/learn/living-alongside-wild-cats" class="mission__link">
               Coexistence resources
               <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
@@ -1059,7 +1080,7 @@ body.always-light {
       <div class="species__header">
         <div class="reveal">
           <div class="section-label">Wild Cats of the World</div>
-          <h2 class="section-title" id="species-title">40 species. Each worth protecting.</h2>
+          <h2 class="section-title" id="species-title">40 species. Each worth protecting.</h2>
         </div>
         <a href="/learn/cats" class="mission__link reveal" style="flex-shrink:0">
           Explore all species
@@ -1112,7 +1133,7 @@ body.always-light {
       <div class="projects__header">
         <div class="reveal">
           <div class="section-label">Current Research</div>
-          <h2 class="section-title" id="projects-title">In the field, right now.</h2>
+          <h2 class="section-title" id="projects-title">In the field, right now.</h2>
         </div>
         <a href="/projects/research" class="mission__link reveal" style="flex-shrink:0">
           All projects
@@ -1128,8 +1149,8 @@ body.always-light {
           </div>
           <div class="project-card__body">
             <div class="project-card__region">North America · California</div>
-            <h3 class="project-card__title">Bay Area Puma Project</h3>
-            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area. Building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
+            <h3 class="project-card__title">Bay Area Puma Project</h3>
+            <p class="project-card__desc">Tracking puma movement, survival, and habitat use across the greater Bay Area. Building the science needed to protect corridors between the Santa Cruz Mountains and Diablo Range.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">14 individuals tracked</span>
               <a href="/projects/research/bay-area-puma-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -1145,8 +1166,8 @@ body.always-light {
           </div>
           <div class="project-card__body">
             <div class="project-card__region">South America · Argentina &amp; Chile</div>
-            <h3 class="project-card__title">Patagonia Wild Cats Project</h3>
-            <p class="project-card__desc">Studying puma movement and Andean cat behavior across Patagonia's steppe. GPS collar data is reshaping conservation boundaries for protected areas across the region.</p>
+            <h3 class="project-card__title">Patagonia Wild Cats Project</h3>
+            <p class="project-card__desc">Studying puma movement and Andean cat behavior across Patagonia's steppe. GPS collar data is reshaping conservation boundaries for protected areas across the region.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">18-month study</span>
               <a href="/projects/research/patagonia-cats-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -1162,8 +1183,8 @@ body.always-light {
           </div>
           <div class="project-card__body">
             <div class="project-card__region">California · Bay Area</div>
-            <h3 class="project-card__title">Bay Area Bobcat Project</h3>
-            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface. Building the case for wildlife corridor protections across the East Bay hills.</p>
+            <h3 class="project-card__title">Bay Area Bobcat Project</h3>
+            <p class="project-card__desc">Tracking bobcat survival, reproduction, and movement through the fragmented wildland-urban interface. Building the case for wildlife corridor protections across the East Bay hills.</p>
             <div class="project-card__footer">
               <span class="project-card__stat">12 camera traps</span>
               <a href="/projects/research/bay-area-bobcat-project" class="project-card__link">Learn more <svg class="arrow-right" viewBox="0 0 14 14"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
@@ -1192,8 +1213,8 @@ body.always-light {
           <a class="news-card__link" href="https://felidaefund.org/news/the-hidden-toll-of-rodenticides-poisoning-pumas-and-bobcats" aria-label="Read: The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats"></a>
           <div class="news-card__body">
             <div class="news-card__cat">News</div>
-            <h3 class="news-card__title">The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats</h3>
-            <p class="news-card__excerpt">If there is one fundamental truth about chemical poisons, it is that they never stay where we put them.</p>
+            <h3 class="news-card__title">The Hidden Toll of Rodenticides Poisoning Pumas and Bobcats</h3>
+            <p class="news-card__excerpt">If there is one fundamental truth about chemical poisons, it is that they never stay where we put them.</p>
             <div class="news-card__meta">October 13, 2026</div>
           </div>
         </article>
@@ -1202,8 +1223,8 @@ body.always-light {
           <a class="news-card__link" href="https://felidaefund.org/news/the-wild-cats-of-japan-a-fight-for-survival" aria-label="Read: The Wild Cats of Japan: A Fight for Survival"></a>
           <div class="news-card__body">
             <div class="news-card__cat">News</div>
-            <h3 class="news-card__title">The Wild Cats of Japan: A Fight for Survival</h3>
-            <p class="news-card__excerpt">Japan’s only two native wild cats, the Tsushima leopard cat and the Iriomote cat, are on the brink of extinction.</p>
+            <h3 class="news-card__title">The Wild Cats of Japan: A Fight for Survival</h3>
+            <p class="news-card__excerpt">Japan’s only two native wild cats, the Tsushima leopard cat and the Iriomote cat, are on the brink of extinction.</p>
             <div class="news-card__meta">October 07, 2026</div>
           </div>
         </article>
@@ -1212,8 +1233,8 @@ body.always-light {
           <a class="news-card__link" href="https://felidaefund.org/news/a-genetic-mishap-decoding-the-cheetah-s-dna" aria-label="Read: A Genetic Mishap: Decoding the Cheetah’s DNA"></a>
           <div class="news-card__body">
             <div class="news-card__cat">News</div>
-            <h3 class="news-card__title">A Genetic Mishap: Decoding the Cheetah’s DNA</h3>
-            <p class="news-card__excerpt">The cheetah (Acinonyx jubatus) is the undisputed speed champion of the land, but behind that incredible athleticism lies a complicated genetic history.</p>
+            <h3 class="news-card__title">A Genetic Mishap: Decoding the Cheetah’s DNA</h3>
+            <p class="news-card__excerpt">The cheetah (Acinonyx jubatus) is the undisputed speed champion of the land, but behind that incredible athleticism lies a complicated genetic history.</p>
             <div class="news-card__meta">August 21, 2026</div>
           </div>
         </article>
@@ -1224,8 +1245,8 @@ body.always-light {
   <div class="cta-split" aria-label="Get involved">
     <div class="cta-panel cta-panel--volunteer">
       <div class="cta-panel__eyebrow">Get Involved</div>
-      <h2 class="cta-panel__title">Your time creates lasting change.</h2>
-      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer, there's a role for you in wild cat conservation.</p>
+      <h2 class="cta-panel__title">Your time creates lasting change.</h2>
+      <p class="cta-panel__body">Whether you're a scientist, a hiker, or a wildlife photographer, there's a role for you in wild cat conservation.</p>
       <div class="cta-panel__options">
         <div class="cta-panel__option">Volunteer in the field</div>
         <div class="cta-panel__option">Become a community scientist</div>
@@ -1237,8 +1258,8 @@ body.always-light {
     
     <div class="cta-panel cta-panel--donate">
       <div class="cta-panel__eyebrow">Support our Work</div>
-      <h2 class="cta-panel__title">Make a difference today.</h2>
-      <p class="cta-panel__body">Every dollar funds real science: camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
+      <h2 class="cta-panel__title">Make a difference today.</h2>
+      <p class="cta-panel__body">Every dollar funds real science: camera traps, GPS collars, field teams, and community programs that protect wild cats.</p>
       <div class="cta-panel__options">
         <div class="cta-panel__option">Monthly giving sustains long-term projects</div>
         <div class="cta-panel__option">One-time gifts fund equipment and travel</div>
@@ -1268,6 +1289,21 @@ body.always-light {
       </div>
     </div>
   </div>
+  
+  <section class="report full-width" aria-labelledby="report-title">
+    <div class="container report__inner reveal">
+      <a class="report__cover" href="/images/reports/felidae-impact-report-2025.pdf" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+        <img src="assets/impact-report-2025-cover.jpg" alt="" width="640" height="828" loading="lazy" />
+      </a>
+      <div class="report__body">
+        <div class="report__eyebrow">Annual Report</div>
+        <h2 class="report__title" id="report-title">Felidae Impact Report 2025</h2>
+        <p class="report__text">A year of field research, community science and wild cat conservation — the projects, the numbers, and the people behind them.</p>
+        <a class="btn-gold" href="/images/reports/felidae-impact-report-2025.pdf" target="_blank" rel="noopener">Read the Report</a>
+        <p class="report__meta">PDF · 34 pages · 9.4 MB</p>
+      </div>
+    </div>
+  </section>
 </div>
 
     </div></div>
